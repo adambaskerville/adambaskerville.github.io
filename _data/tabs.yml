@@ -28,9 +28,8 @@
   icon: "fas fa-newspaper"
   path: tabs
   url: presentations
-- 
-  name: Categories
-  icon: "fas fa-stream"
-  path: tabs
-  url: categories
--  
+#- 
+#  name: Categories
+#  icon: "fas fa-stream"
+#  path: tabs
+#  url: categories
