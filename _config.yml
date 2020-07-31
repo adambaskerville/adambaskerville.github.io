@@ -20,7 +20,7 @@ description: >-                        # used by seo meta and the atom feed
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'protocol://domain'
 
-author: your_full_name                  # change to your full name
+author: Dr Adam Luke Baskerville        # change to your full name
 
 avatar: /assets/img/sample/avatar.jpg   # support internet resources
 
@@ -28,18 +28,18 @@ github:
   username: github_username             # change to your github username
 
 twitter:
-  username: twitter_username            # change to your twitter username
+  username: AdamBask            # change to your twitter username
 
 social:
-  name: your_full_name                  # it will shows as the copyright owner in Footer
-  email: example@doamin.com             # change to your email address
+  name: Adam Luke Baskerville                  # it will shows as the copyright owner in Footer
+  email: ab695@sussex.ac.uk             # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/username      # change to your twitter homepage
+    - https://twitter.com/AdamBask      # change to your twitter homepage
     - https://github.com/username       # change to your github homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
-    # - https://www.linkedin.com/in/username
+   - https://www.linkedin.com/in/adam-baskerville-6710811b2
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
@@ -51,7 +51,7 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 baseurl: ''
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
-timezone: Asia/Shanghai
+timezone: Europe/London
 
 google_analytics:
   id: ''          # Fill with your Google Analytics ID
