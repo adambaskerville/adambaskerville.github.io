@@ -8,6 +8,9 @@
   type: github
   icon: 'fab fa-github-alt'
 -
+  type: researchgate
+  icon: 'fab fa-researchgate'
+-
   type: twitter
   icon: 'fab fa-twitter'
 -
@@ -15,9 +18,10 @@
   icon: 'fas fa-envelope'
   noblank: true            # open link in current tab
 -
-  type: rss
-  icon: 'fas fa-rss'
+  type: linkedin
+  icon: 'fab fa-linkedin'
   noblank: true
+-
 
 # Uncomment and complete the url below to enable more contact options
 # -

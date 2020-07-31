@@ -1,5 +1,5 @@
 ---
-title: Archives
+title: All T>T blog Posts
 type: archives
 # The Archives of posts.
 # v2.0

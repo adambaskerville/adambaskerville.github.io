@@ -1,0 +1,139 @@
+
+\documentclass{standalone}
+\usepackage{pgfplots}
+\pgfplotsset{compat = 1.3}
+
+\definecolor{PastelBlue}{RGB}{174,198,207}
+\definecolor{PastelGreen}{RGB}{119,221,119}
+\definecolor{PastelRed}{RGB}{255,105,98}
+\definecolor{PastelOrange}{RGB}{255,179,71}
+\definecolor{Honeydew}{RGB}{131,139,131}
+
+\begin{document}
+\begin{tikzpicture}
+	\begin{axis}[	
+		ylabel shift= 0.01cm,
+		legend style={at={(0.5,1)}, anchor=north, fill=none, draw=none},
+		axis lines=left, 
+		legend cell align={left},
+		xlabel= {$a,b,c,d,e,f$},
+		ylabel={CPU time / s},
+		ymax = 180000,
+		yticklabel style={
+			scaled y ticks = false,
+			/pgf/number format/precision=4,
+			/pgf/number format/fixed},
+		]
+	\addplot[color=PastelRed,solid,thick,mark=*, mark options={solid,scale=0.7}] 
+	coordinates {
+		(1,  0.235)            
+		(2,  0.247)       	           
+		(3,  0.326)                   
+		(4,  0.570)                   
+		(5,  1.834)
+		(6,  5.644)
+		(7,  14.916)
+		(8,  36.976)
+		(9,  93.042)
+		(10, 191.577)
+		(11, 413.346)
+		(12, 772.873)
+		(13, 1392.132)
+		(14, 2374.669)
+		(15, 4673.724)
+		(16, 9314.732)
+		(17, 18843.703)
+		(18, 37442.437)
+		(19, 75386.603)
+		(20, 145873.077)
+	};
+	\addlegendentry{Solution 1}
+	\addplot[color=PastelOrange, dashed, thick, mark=*, mark options={solid, scale=0.7}] 
+	coordinates {
+		(1,  0.263)            
+		(2,  0.248)       	           
+		(3,  0.289)                   
+		(4,  0.568)                   
+		(5,  1.442)
+		(6,  4.304)
+		(7,  13.045)
+		(8,  31.119)
+		(9,  78.555)
+		(10, 177.190)
+		(11, 312.025)
+		(12, 605.392)
+		(13, 1261.161)
+		(14, 2298.902)
+		(15, 3334.035)
+		(16, 6307.638)
+		(17, 11984.512)
+		(18, 23154.078)
+		(19, 45949.267)
+		(20, 91610.018)
+	};
+	\addlegendentry{Solution 2}
+	\addplot[color=PastelGreen,dotted,thick,mark=*, mark options={solid,scale=0.7}]
+	coordinates {
+		(1,  0.299)            
+		(2,  0.260)       	           
+		(3,  0.292)                   
+		(4,  0.301)                   
+		(5,  0.348)
+		(6,  0.376)
+		(7,  0.576)
+		(8,  1.104)
+		(9,  2.354)
+		(10, 3.651)
+	};
+	\addlegendentry{Solution 3}
+	\addplot[color=Honeydew,dotted,thick,mark=*, mark options={solid,scale=0.7}]
+	coordinates {
+		(1,  0.269)            
+		(2,  0.301)       	           
+		(3,  0.496)                   
+		(4,  1.023)                   
+		(5,  2.715)
+		(6,  6.010)
+		(7,  12.959)
+		(8,  26.737)
+		(9,  49.314)
+		(10, 90.213)
+		(11, 156.424)
+		(12, 240.175)
+		(13, 359.595)
+		(14, 542.404)
+		(15, 868.195)
+		(16, 1389.112)
+		(17, 2361.490)
+		(18, 3778.385)
+		(19, 6234.335)
+		(20, 10473.682)
+	};
+	\addlegendentry{Solution 4}
+	\addplot[color=PastelBlue,dotted,thick,mark=*, mark options={solid,scale=0.7}]
+	coordinates {
+		(1,  0.922)            
+		(2,  0.872)       	           
+		(3,  0.865)                   
+		(4,  0.927)                   
+		(5,  0.865)
+		(6,  0.860)
+		(7,  0.945)
+		(8,  0.974)
+		(9,  1.044)
+		(10, 1.162)
+		(11, 1.496)
+		(12, 2.020)
+		(13, 3.177)
+		(14, 4.296)
+		(15, 6.496)
+		(16, 9.881)
+		(17, 15.299)
+		(18, 22.761)
+		(19, 33.912)
+		(20, 48.441)
+	};
+	\addlegendentry{Solution 5}
+	\end{axis}
+\end{tikzpicture}
+\end{document}
