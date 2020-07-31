@@ -8,7 +8,7 @@ title: About
 # MIT License
 ---
 
-I am currently a research fellow (EPSRC funded, EP/R011265/1) at the University of Sussex working in collaboration with Bristol university studying fundamental effects of electron correlation in many-particle systems. This covers a wide range of topics from quantum mechanics, mathematical, theoretical and computational physics and quantum chemistry. I have specialised knowledge in computationally efficient, high accuracy calculations going beyond standard double precision; using techniques including DoubleDouble/QuadDouble data types and ball arithmetic. I also expertise in using parallel and GPU programming techniques which I frequently use.
+I am currently a research fellow (EPSRC funded, EP/R011265/1) at the University of Sussex working in collaboration with Bristol university studying fundamental effects of electron correlation in many-particle systems. This covers a wide range of topics from quantum mechanics, mathematical, theoretical and computational physics and quantum chemistry. I have specialised knowledge in computationally efficient, high accuracy calculations going beyond standard double precision; using techniques including DoubleDouble/QuadDouble data types and ball arithmetic. I also have expertise in using parallel and GPU programming techniques which I frequently use.
 
 ## Education
 
