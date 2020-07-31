@@ -13,9 +13,9 @@ title: Dr Adam Luke Baskerville                          # the main title
 tagline: Quantum Physicist  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
-  A minimal, portfolio, sidebar,
-  bootstrap Jekyll theme with responsive web design
-  and focuses on text presentation.
+  The personal website of Adam Luke Baskerville
+  Contains information and T>T blog containing
+  mathematics and science content
 
 # Replace with the website url, e.g. 'https://username.github.io'
 url: 'https://adambaskerville.github.io'
