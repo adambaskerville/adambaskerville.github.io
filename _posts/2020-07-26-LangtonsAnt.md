@@ -76,6 +76,7 @@ If you have not used or are unaware of rotation matrices, let's analyse how the 
 As we move the point around the circumference of the circle, the \\(x\\) and \\(y\\) coordinates of the point change inline with \\(\cos(\theta)\\) and \\(\sin(\theta)\\). Consider a point in the \\(x,y\\) plane, with coordinates (1,1).  We can rotate this point by 90° anti-clockwise using the transformation matrix as follows
 
 \\[
+    \begin{aligned}
     \begin{bmatrix}
         \cos(90) & -\sin(90) \\\\\\
         \sin(90) & \cos(90) 
@@ -84,7 +85,7 @@ As we move the point around the circumference of the circle, the \\(x\\) and \\(
         1 \\\\\\
         1
     \end{bmatrix}
-    =
+    &=
     \begin{bmatrix}
         0 & -1 \\\\\\
         1 & 0 
@@ -92,8 +93,8 @@ As we move the point around the circumference of the circle, the \\(x\\) and \\(
     \begin{bmatrix}
         1 \\\\\\
         1
-    \end{bmatrix}
-    =
+    \end{bmatrix} \\
+    &=
     \begin{bmatrix}
         (0 \times 1) + (-1 \times 1) \\\\\\
         (1 \times 1) + (0 \times 1) 
@@ -103,6 +104,7 @@ As we move the point around the circumference of the circle, the \\(x\\) and \\(
         -1 \\\\\\
         1
     \end{bmatrix}
+    \end{aligned}
 \\]
 We have successfully transformed the point (1,1) to (-1,1) which represents a 90° anti-clockwise rotation around the origin.
 
