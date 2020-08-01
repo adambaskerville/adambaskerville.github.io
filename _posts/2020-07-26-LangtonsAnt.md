@@ -139,7 +139,7 @@ def move_ant(grid, ant_pos, direction):
     ant_pos[:] = ant_pos + direction
 
     # if the ant hits the side of the grid, exit the program
-    if any(i >= dim for i in ant_pos):
+    if any(i == dim or i == 0 for i in ant_pos):
         print("Hit the edge of the board!")
         exit()
     elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 0: # If the ant lands on a white square
@@ -149,11 +149,11 @@ def move_ant(grid, ant_pos, direction):
         grid[ant_pos[0, 0], ant_pos[1, 0]] = 0 # Change the square from black (1) to white (0)
         direction[:] = anticlockwise_rot * direction # As it landed on a black square, update the direction with a anti-clockwise rotation
 ```
-The first thing we do is check that the ant has not hit the side of the grid. There are different ways to handle this exception, but in this instance we are going to initialise the program with a sizeable starting grid and if our ant does hit the side then the program will exit as the ant has escaped! We use the `any` function in Python which analyses the position indices and checks if any are equal or greater than the dimensions of the grid.
+The first thing we do is check that the ant has not hit the side of the grid. There are different ways to handle this exception, but in this instance we are going to initialise the program with a sizeable starting grid and if our ant does hit the side then the program will exit as the ant has escaped! We use the `any` function in Python which analyses the position indices and checks if any are equal to the lower and upper dimensions of the grid.
 
 ```python
 # if the ant hits the side of the grid, exit the program
-if any(i >= dim for i in ant_pos):
+if any(i == dim or i == 0 for i in ant_pos):
     print("Hit the edge of the board!")
     exit()
 ```
@@ -248,7 +248,7 @@ def move_ant(grid, ant_pos, direction):
     '''
     ant_pos[:] = ant_pos + direction
 
-    if any(i >= dim for i in ant_pos):
+    if any(i == dim or i == 0 for i in ant_pos):
         print("Hit the edge of the board!")
         exit()
     elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 0:  # landed on white
