@@ -93,13 +93,13 @@ As we move the point around the circumference of the circle, the \\(x\\) and \\(
     \begin{bmatrix}
         1 \\\\\\
         1
-    \end{bmatrix} \\
+    \end{bmatrix} \\\\\\
     &=
     \begin{bmatrix}
         (0 \times 1) + (-1 \times 1) \\\\\\
         (1 \times 1) + (0 \times 1) 
-    \end{bmatrix}
-    = 
+    \end{bmatrix} \\\\\\
+    &= 
     \begin{bmatrix}
         -1 \\\\\\
         1
