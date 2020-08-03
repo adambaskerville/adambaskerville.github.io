@@ -19,7 +19,6 @@ title: Presentations
 
 * <p>“Magnetic monopoles in spin ice” - Physical Sciences Research Symposium, University of Kent, UK, 2017<br>
 
-
 ## Posters
 
 * <p>"Electron Correlation in the Real World" - STEM for Britain, Houses of Parliament, London, UK 2020<br>
