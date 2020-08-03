@@ -17,7 +17,7 @@ title: Presentations
 
 * <p>“Excited S states of two electron atoms” - Quantum Physics and Quantum Technology, Berlin, Germany, 2017<br>
 
-* <p>“Magnetic monopoles in spin ice” - Physical Sciences Research Symposium, University of Kent, UK, 20174br>
+* <p>“Magnetic monopoles in spin ice” - Physical Sciences Research Symposium, University of Kent, UK, 2017<br>
 
 
 ## Posters

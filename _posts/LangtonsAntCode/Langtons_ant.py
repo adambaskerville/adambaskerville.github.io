@@ -3,7 +3,7 @@ from matplotlib import pyplot as plt
 from matplotlib import animation
 
 # Set the dimensions of the grid
-dim = 50
+dim = 10
 # Set the number of steps the ant should take
 ant_steps = 2000
 # Build a corresponding numpy array of dimensions (dim,dim)
@@ -24,16 +24,16 @@ def move_ant(grid, ant_pos, direction):
     This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
 
     Parameters:
-    grid (np.array)     : This is the grid of dimension, dim, that the ant moves around on
-    ant_pos (np.array)  : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
+    grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
+    ant_pos (np.array)   : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
     direction(np.matrix) : This represents the direction that the ant will move in on this step. 
 
     Returns:
     None: No explicit return 
     '''
     ant_pos[:] = ant_pos + direction
-
-    if any(i >= dim for i in ant_pos):
+    print(ant_pos)
+    if any(i == dim or i ==0 for i in ant_pos):
         print("Hit the edge of the board!")
         exit()
     elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 0:  # landed on white
@@ -46,6 +46,8 @@ def move_ant(grid, ant_pos, direction):
 fig = plt.figure()
 ax = fig.add_subplot(111)
 im = plt.imshow(grid, interpolation='none', cmap='Greys', vmin=0, vmax=1)
+
+time_text = ax.text(0.05, 0.8, '', transform=ax.transAxes)
 
 def animate_ant(x):
     '''
@@ -62,7 +64,10 @@ def animate_ant(x):
     # Update the grid information for the next frame used in the animation
     im.set_data(grid)
     # Return the information required to print the next frame
-    return [im]
+
+    time_text.set_text("Frame no. = %d".format(Test))
+
+    return timetext, [im]
 
 anim = animation.FuncAnimation(fig, animate_ant,
                                frames=ant_steps, interval=20, blit=True,
@@ -73,4 +78,5 @@ ax.axes.xaxis.set_visible(False)
 # Hide the y axis ticks and labels
 ax.axes.yaxis.set_visible(False)
 
-anim.save('Langtons_ant.mp4', writer='ffmpeg')
+#anim.save('Langtons_ant.mp4', writer='ffmpeg')
+plt.show()
