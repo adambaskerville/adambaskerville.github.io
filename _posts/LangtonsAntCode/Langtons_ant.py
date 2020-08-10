@@ -33,7 +33,7 @@ def move_ant(grid, ant_pos, direction):
     '''
     ant_pos[:] = ant_pos + direction
     print(ant_pos)
-    if any(i == dim or i ==0 for i in ant_pos):
+    if any(i == dim or i == 0 for i in ant_pos):
         print("Hit the edge of the board!")
         exit()
     elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 0:  # landed on white

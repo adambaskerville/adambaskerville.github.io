@@ -1,11 +1,17 @@
 import numpy as np
+import itertools
 from matplotlib import pyplot as plt
 from matplotlib import animation, colors
 
+square_colours = ['white', 
+                  'black', 
+                  'indianred', 
+                  'dodgerblue'
+]
 # Set the dimensions of the grid
-dim = 500
+dim = 20
 # Set the number of steps the ant should take
-ant_steps = 1000000
+ant_steps = 1000
 # Build a corresponding numpy array of dimensions (dim,dim)
 grid = np.array(np.zeros((dim, dim)))
 # Define a variable to represent the current ant_position of the ant on the board
@@ -17,6 +23,7 @@ direction = np.matrix([[1], [0]])
 clockwise_rot     = np.array([[0, 1], [-1, 0]])
 # Anti-clockwise rotation matrix
 anticlockwise_rot = np.array([[0, -1], [1, 0]])
+
 def move_ant(grid, ant_pos, direction):
     '''
     Controls the movement of the ant by a single square
@@ -31,38 +38,45 @@ def move_ant(grid, ant_pos, direction):
     Returns:
     None: No explicit return 
     '''
+    # Note ant_pos[0, 0], ant_pos[1, 0] is the x and y coordinate of the ant on the grid
     ant_pos[:] = ant_pos + direction
+    x_ant_pos = ant_pos[0, 0]
+    y_ant_pos = ant_pos[1, 0]
 
-    if any(i == dim or i ==0 for i in ant_pos):
+    # LLRR instance
+    if any(i == dim or i == 0 for i in ant_pos):
         print("Hit the edge of the board!")
         exit()
-    elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 0:    # landed on white
-        direction[:] = anticlockwise_rot * direction # Ant turns left
-        grid[ant_pos[0, 0], ant_pos[1, 0]] = 1       # As landed on white square, change to black square
-    elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 1:    # landed on black
-        direction[:] = anticlockwise_rot * direction # Ant turns left
-        grid[ant_pos[0, 0], ant_pos[1, 0]] = 2       # As landed on black square, change to red square
-    elif grid[ant_pos[0, 0], ant_pos[1, 0]] == 2:    # landed on red
-        direction[:] = clockwise_rot * direction     # Ant turns right   
-        grid[ant_pos[0, 0], ant_pos[1, 0]] = 3       # As landed on red square, change to blue square
-    else:
-        direction[:] = clockwise_rot * direction # Turn right  
-        grid[ant_pos[0, 0], ant_pos[1, 0]] = 0 # Set back to 0
-
+    elif grid[x_ant_pos, y_ant_pos] == 0:            # Landed on white
+        direction[:] = anticlockwise_rot * direction # Ant turns left and moves forward
+        grid[x_ant_pos, y_ant_pos] = 1               # As landed on white square, change to black square
+    elif grid[x_ant_pos, y_ant_pos] == 1:            # Landed on black
+        direction[:] = anticlockwise_rot * direction # Ant turns left and moves forward
+        grid[x_ant_pos, y_ant_pos] = 2               # As landed on black square, change to red square
+    elif grid[x_ant_pos, y_ant_pos] == 2:            # Landed on red
+        direction[:] = clockwise_rot * direction     # Ant turns right and moves forward  
+        grid[x_ant_pos, y_ant_pos] = 3               # As landed on red square, change to blue square
+    else:                                            # Landed on blue 
+        direction[:] = clockwise_rot * direction     # Ant turns right and moves forward  
+        grid[x_ant_pos, y_ant_pos] = 0               # As landed on blue square, change to white square
+    '''
+    if landed on colour 1:
+        direction 1
+        change color to color 2
+    '''
 fig = plt.figure()
 ax = fig.add_subplot(111)
 # Define custom ternary colour map
-cmap = colors.ListedColormap(['white', 'black', 'red', 'blue'])
+cmap = colors.ListedColormap(square_colours)
 # The boundaries are the range that each colour is valid on. It has the form: [min_col1, max_col1, min_col2, max_col2] etc...
-boundaries = [0, 0.1, 0.11, 1, 1.01, 2, 2.01, 3]
-             #  w         bl         r       bl
+
+boundaries = [0, 0, 1, 1, 2, 2, 3, 3]
+            # |w |  |bl|  |r |  |b |
 norm = colors.BoundaryNorm(boundaries, cmap.N, clip=True)
 # Define this custom colour map in the animation
 im = plt.imshow(grid, cmap=cmap, norm=norm)
-# Define a frame number variable which counts the number of steps (frames) the ants take.
-frame_no = ax.text(0.05, 0.9, '', transform=ax.transAxes)
 
-def animate_ant(x):
+def control_ant(x):
     '''
     This function allows for animation of the move_ant function
 
@@ -76,20 +90,17 @@ def animate_ant(x):
     move_ant(grid, ant_pos, direction) 
     # Update the grid information for the next frame used in the animation
     im.set_data(grid)
-    # Update the frame number counter on the animation
-    frame_no.set_text("Step no. = {:d}".format(x))
 
-    # Return the information required to print the next frame
-    return im, frame_no
+    return im
 
-anim = animation.FuncAnimation(fig, animate_ant,
-                               frames=ant_steps, interval=20, blit=True,
-                               repeat=False)
+for step in range(0, ant_steps):
+    control_ant(step) 
 
 # Hide the x axis ticks and labels
 ax.axes.xaxis.set_visible(False)
 # Hide the y axis ticks and labels
 ax.axes.yaxis.set_visible(False)
-
-anim.save('Langtons_ant.mp4', writer='ffmpeg')
-#plt.show()
+# Report the number of ant steps taken in the title of the image
+plt.suptitle("No Steps Taken = {:d}".format(ant_steps), fontsize=13)
+# Show the image
+plt.show()
