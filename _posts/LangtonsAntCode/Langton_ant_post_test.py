@@ -9,9 +9,9 @@ square_colours = ['white',
                   'dodgerblue'
                  ]
 # Set the dimensions of the grid
-dim = 50
+dim = 200
 # Set the number of steps the ant should take
-ant_steps = 10000
+ant_steps = 1000000
 # Build a corresponding numpy array of dimensions (dim,dim)
 grid = np.array(np.zeros((dim, dim)))
 # Define a variable to represent the current ant_position of the ant on the board
