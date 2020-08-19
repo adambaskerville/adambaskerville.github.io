@@ -53,12 +53,29 @@ rot_matrices = [anticlockwise_rot if i == 'L' else clockwise_rot for i in unique
 colour_indices = [i for i in range(len(ant_move_list))]
 
 def move_ant(grid, ant_pos, direction):
+    '''
+    Controls the movement of the ant by a single square
+
+    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+
+    Parameters:
+    grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
+    ant_pos (np.array)   : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
+    direction(np.matrix) : This represents the direction that the ant will move in on this step. 
+
+    Returns:
+    None: No explicit return 
+    '''
+    # Create the next ant position
     ant_pos[:] = ant_pos + direction
+    # Extract the x coordinate of this new position
+    x_ant_pos = ant_pos[0, 0]
+    # Extract the y coordinate of this new position
+    y_ant_pos = ant_pos[1, 0]
+
     if any(i == dim or i == 0 for i in ant_pos):
         print("Hit the edge of the board!")
         exit()
-    x_ant_pos = ant_pos[0, 0]
-    y_ant_pos = ant_pos[1, 0]
     if grid[x_ant_pos, y_ant_pos] in colour_indices:
         index = grid[x_ant_pos, y_ant_pos]
         direction[:] = rot_matrices[int(index)] * direction

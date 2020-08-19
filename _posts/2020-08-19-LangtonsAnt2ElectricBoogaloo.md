@@ -198,5 +198,198 @@ This is a python implementation of the `LRRL` movement scheme for our ant. Here 
 6. This is then looped over for the number of ant steps specified by the user.
 7. The final numpy array of integers is printed to screen with each integer value set to its designated colour. The total number of steps is printed above it for reference. 
 
-Now lets run the program to see if it works, and more importantly to see what path our ant takes!
+Let's run the program to see if it works, and more importantly to see what path our ant takes!
 
+```shell
+python Langton_ant_v2.py
+```
+Running this in the terminal produces the following image.
+
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRL_10000.png)
+
+This is certainly different from the original Langton's ant which only used two colours! It shows that our new `LRRL` movement pattern is working as expected. Let us see what happens as we increase the number of steps taken by our ant:
+
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRL_1000000.png)
+
+Check out this pattern! There is clear symmetry and no evidence of the ant forming a "highway" like our original ant did. In fact you can increase the number of steps and no highways will ever be produced.
+
+Something I find fascinating with this problem is how such a simple movement pattern can produce such a complex structure. This now poses the question, what other pathways can our ant follow. What about `RRLL`? or `LRRRRRLLR`? the possibilities are endless. 
+
+# General Langtons' Ant Program
+
+We will now program a general Langtons' ant program which will be valid for **any** step pattern input as a string:
+
+```python
+# Tell the program what moveset to give the ant
+ant_move_list = 'LLRR'
+```
+As the user will input a string of `L` and `R` characters, we will need to know the length of the string so we can count the number of `L` and `R`. This is done using the `len` function in Python:
+
+```python
+# Calculate the length of the ant_move_list
+len_ant_move_list = len(ant_move_list)
+```
+We want to extract out each step into a list, e.g. `"LLRRR" -> ["L", "L", "R", "R", "R"]`. We will do this using list comprehension:
+
+```python
+# Extract the unique 'L' and 'R' moves in order
+unique_moves = [i for i in ant_move_list]
+```
+We have now separated the `L` and `R` movements so can assign a rotation matrix to each one so the ant knows what to do for each `L` and `R`. We will store the rotation matrices in a separate list corresponding to the positions of the `L` and `R` in their list. This means that when we iterate over one list, we can iterate over the other list using the same index without the matrices getting muddled with the respective `L` or `R`. We use a conditional statement through list comprehension to achieve this. If the letter is `L` then assign a anticlockwise rotation matrix and if the letter is `R` assign a clockwise rotation matrix:
+
+```python
+# Assign the correct rotation matrix to each 'L' and 'R' choice and store in a list
+rot_matrices = [anticlockwise_rot if i == 'L' else clockwise_rot for i in unique_moves]
+```
+We do not know ahead of time thew movement pattern the user will input so we need a generalised way of assigning \\(N\\) colours where N is the length of `ant_move_list`. Once again we use list comprehension with a `for` loop, building a list of ascending integers that span the length `ant_move_list`:
+```python
+# Assign each of these unique 'L' and 'R' letters to a discrete integer which will later represent a colour 
+colour_indices = [i for i in range(len_ant_move_list)]
+```
+To make this transparent, the following is the output of movement pattern `LLRR` for the `rot_matrices` and `colour_indices` variables:
+
+```python
+rot_matrices = [array([[ 0, -1],
+       [ 1,  0]]), array([[ 0, -1],
+       [ 1,  0]]), array([[ 0,  1],
+       [-1,  0]]), array([[ 0,  1],
+       [-1,  0]])]
+
+colour_indices = [0, 1, 2, 3]
+```
+We have 4 rotation matrices, 2 anti-clockwise corresponding to `LL`, 2 clockwise corresponding to `RR`, and each step has been assigned a unique integer in `colour_indices`. 
+
+We now come to the function that will control each step the ant takes, `move_ant()`. We need to think carefully about how to generalise this function as it has to work for any string the user inputs. The function will take three arguments:
+
+1. `grid`: The current `numpy` array of integer values detailing where the ant has been.
+2. `ant_pos`: The current ant position on the grid.
+3. `direction`: The next direction the ant has to take.
+
+Let us define this function:
+
+```python
+def move_ant(grid, ant_pos, direction):
+    '''
+    Controls the movement of the ant by a single square
+
+    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+
+    Parameters:
+    grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
+    ant_pos (np.array)   : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
+    direction(np.matrix) : This represents the direction that the ant will move in on this step. 
+
+    Returns:
+    None: No explicit return 
+    '''
+```
+We first create the new position for the ant to move to by combining the previous `ant_pos` with the next `direction` value. We also want to extract the \\(x\\) and \\(y\\) coordinates of this position as we need these to access the entire two dimensional `grid` to decide the state of a square the ant is standing on and how to proceed:
+
+```python
+# Create the next ant position
+ant_pos[:] = ant_pos + direction
+# Extract the x coordinate of this new position
+x_ant_pos = ant_pos[0, 0]
+# Extract the y coordinate of this new position
+y_ant_pos = ant_pos[1, 0]
+```
+We then want to check that this updated position has not moved the ant outside of the grid boundaries and allowed them to escape! We do this by checking if `ant_pos` is equal to 0 (left hand side and bottom of grid) or 1 (right hand side and top of grid):
+
+```python
+if any(i == dim or i == 0 for i in ant_pos):
+    print("Hit the edge of the board!")
+    exit()
+```
+This can be handled more elegantly, but for now we will just exit the program. Next we use `x_ant_pos` and `y_ant_pos` to extract the integer value (colour) of the square the ant has just moved to:
+
+```python
+index = grid[x_ant_pos, y_ant_pos]
+```
+We then want to change this value which in turn changes the colour of the square. We use the integer value as an `index` to access the `colour_indices` list which adds one to the index value in turn changing the colour to the next one in our list. Care must be taken here as what happens when the index reaches the end of the list? It will throw an error as the index will then exceed the length of the list. If the end of the list is reached we want to move back to the start of the list and iterate over it again. This is equivalent to changing the colour of the square back to the first colour in our list of colours. We do this using the `modulus` operator `%` which checks for the remainder between the division of the index and the length of the list:
+```python
+grid[x_ant_pos, y_ant_pos] = colour_indices[int(index+1) % len(colour_indices)]
+```
+This might sound confusing so let's look at a simple example. Consider a list of 4 items:
+```python
+lst = [0, 1, 2, 3] 
+lst[4]
+```
+Let's say we accessed the element residing at index 4 (remember, Python indices start at 0 so this is equivalent to accessing the 5th item in the list, which does not exist):
+
+```python
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+IndexError: list index out of range
+```
+We can move back to the start of the list by realising that the number of items in the list, 4, is equal to the index value of the item just outside of the list, 4. Dividing these together, 4/4 = 1 with no remainder, so using the `modulus` operator produces a value of 0 which we can then use to access the first item in the list again!
+
+```python
+lst = [0, 1, 2, 3] 
+index = 4
+lst[index % len(lst)]
+
+# Output
+0
+```
+The program now knows to move to the start of the colour list if the index exceeds the number of colours in the list. We now update the direction of the ant for the next step using the relevent rotation matrix which luckily are stored in our `rot_matrices` list which we access using the same index:
+```python
+direction[:] = rot_matrices[int(index)] * direction
+```
+That is the function finished! Here it is in its completed form where we have also added a catch statement if for some reason the position of the ant on the grid is not in the `colour_indices` list, but this should not occur:
+
+```python
+def move_ant(grid, ant_pos, direction):
+    '''
+    Controls the movement of the ant by a single square
+
+    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+
+    Parameters:
+    grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
+    ant_pos (np.array)   : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
+    direction(np.matrix) : This represents the direction that the ant will move in on this step. 
+
+    Returns:
+    None: No explicit return 
+    '''
+    # Create the next ant position
+    ant_pos[:] = ant_pos + direction
+    # Extract the x coordinate of this new position
+    x_ant_pos = ant_pos[0, 0]
+    # Extract the y coordinate of this new position
+    y_ant_pos = ant_pos[1, 0]
+
+    if any(i == dim or i == 0 for i in ant_pos):
+        print("Hit the edge of the board!")
+        exit()
+    if grid[x_ant_pos, y_ant_pos] in colour_indices:
+        index = grid[x_ant_pos, y_ant_pos]
+        grid[x_ant_pos, y_ant_pos] = colour_indices[int(index+1) % len(colour_indices)]
+        direction[:] = rot_matrices[int(index)] * direction
+    else:
+        print("Index not in colour indices. Exiting")
+        exit()
+```
+We discussed about the need to set the boundaries of each discrete colour in the previous section and we now need to automate this process for \\(N\\) colours
+
+```python
+# Define the boundaries for each discrete colour
+# The form is [0, 0, 1, 1, 2, 2, 3, 3]
+#               c1    c2    c3    c4
+# where cX represents a unique colour 
+boundaries = list(itertools.chain.from_iterable(itertools.repeat(x, 2) for x in colour_indices))
+```
+Next we setup the figure, `fig`, the colour map, `cmap` and the image, `im` using the same
+
+```python
+# Define figure object
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+# Define custom discrete colour map
+cmap = colors.ListedColormap(square_colours[0:len_ant_move_list])
+
+norm = colors.BoundaryNorm(boundaries, cmap.N, clip=True)
+# Define the 'image' to be created using imshow. Specify the custom colour map and the boundaries of each colour
+im = plt.imshow(grid, cmap=cmap, norm=norm)
+```
