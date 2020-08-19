@@ -25,7 +25,7 @@ dim = 1000
 # Set the number of steps the ant should take
 ant_steps = 500000000
 # Tell the program what moveset to give the ant
-ant_move_list = 'LLRR'
+ant_move_list = 'RRLLLRLRL'
 
 '''
 End User Changeable Input
@@ -78,8 +78,8 @@ def move_ant(grid, ant_pos, direction):
         exit()
     if grid[x_ant_pos, y_ant_pos] in colour_indices:
         index = grid[x_ant_pos, y_ant_pos]
-        direction[:] = rot_matrices[int(index)] * direction
         grid[x_ant_pos, y_ant_pos] = colour_indices[int(index+1) % len(colour_indices)]
+        direction[:] = rot_matrices[int(index)] * direction
     else:
         print("Index not in colour indices. Exiting")
         exit()

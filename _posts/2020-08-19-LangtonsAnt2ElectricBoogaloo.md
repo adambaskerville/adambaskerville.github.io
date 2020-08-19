@@ -3,7 +3,7 @@ layout: post
 title: "T>T: Langton's Ant 2: Electric Boogaloo"
 date: 2020-07-26
 excerpt: "Further investigation into the complex emergent behaviour of langton's ant."
-tags: [science, mathematics, programming, matplotlib, script, langtons, ant, python]
+tags: [science, mathematics, programming, matplotlib, langtons, ant, python, fractal]
 comments: false
 math: true
 ---
@@ -188,7 +188,7 @@ plt.suptitle("No Steps Taken = {:d}".format(ant_steps), fontsize=13)
 # Show the image
 plt.show()
 ```
-This is a python implementation of the `LRRL` movement scheme for our ant. Here is a summary of what the program does:
+This is a python implementation of the `LRRL` movement scheme for our ant. Here is a summary of what we did:
 
 1. We specified our square colours in the list `square_colours`.
 2. The user specifies the number of steps the ant is to take along with the dimensions of the grid.
@@ -213,7 +213,7 @@ This is certainly different from the original Langton's ant which only used two 
 
 Check out this pattern! There is clear symmetry and no evidence of the ant forming a "highway" like our original ant did. In fact you can increase the number of steps and no highways will ever be produced.
 
-Something I find fascinating with this problem is how such a simple movement pattern can produce such a complex structure. This now poses the question, what other pathways can our ant follow. What about `RRLL`? or `LRRRRRLLR`? the possibilities are endless. 
+Something I find fascinating with this problem is how such a simple movement pattern can produce such a complex structure. This now poses the question, what other pathways can our ant follow, what about `RRLL`? or `LRRRRRLLR`? the possibilities are endless. We want to write a general program where we can enter any step combination without having to explicitly program a different conditional statement for each step as this will take considerable effort and time.
 
 # General Langtons' Ant Program
 
@@ -370,7 +370,7 @@ def move_ant(grid, ant_pos, direction):
         print("Index not in colour indices. Exiting")
         exit()
 ```
-We discussed about the need to set the boundaries of each discrete colour in the previous section and we now need to automate this process for \\(N\\) colours
+We discussed the need to set the boundaries of each discrete colour in the previous section and we now need to automate this process for \\(N\\) colours which we do using the `itertools` package, in particular the `itertools.repeat()` function. We want to repeat integer values from 0 to \\(N\\):
 
 ```python
 # Define the boundaries for each discrete colour
@@ -379,7 +379,7 @@ We discussed about the need to set the boundaries of each discrete colour in the
 # where cX represents a unique colour 
 boundaries = list(itertools.chain.from_iterable(itertools.repeat(x, 2) for x in colour_indices))
 ```
-Next we setup the figure, `fig`, the colour map, `cmap` and the image, `im` using the same
+Next we setup the figure, `fig`, the colour map, `cmap` and the image, `im` which we did previously:
 
 ```python
 # Define figure object
@@ -393,3 +393,163 @@ norm = colors.BoundaryNorm(boundaries, cmap.N, clip=True)
 # Define the 'image' to be created using imshow. Specify the custom colour map and the boundaries of each colour
 im = plt.imshow(grid, cmap=cmap, norm=norm)
 ```
+We now loop over the `move_ant` function for as many `ant_steps` as were specified:
+
+```python
+for i in range(ant_steps):
+    move_ant(grid, ant_pos, direction) 
+```
+Next we need to set the data for the final iamge to be printed. This is the finalk state of the grid after the ant has completed all the steps:
+
+```python
+im.set_data(grid)
+```
+For aesthetics we hide the axes and add two labels above the image, the movement pattern used and the number of steps taken by our ant.
+```python 
+# Hide the axes
+ax.axis('off')
+# Report the movement pattern number of ant steps taken in the title of the image
+plt.suptitle("{}, No. Steps Taken = {:d}".format(ant_move_list, ant_steps), fontsize=13)
+# Save the image
+```
+We then save the image and print to screen:
+```python
+plt.savefig("{}_{}.eps".format(ant_move_list, ant_steps), format='eps')
+# Show the image
+plt.show()
+```
+# The Complete Program
+
+Putting all of this together we now have a geenralised Langton's ant program for any moveset. I also put in some custom colour schemes for you to play around with or you can add your own!:
+
+```python
+import numpy as np
+import itertools
+from matplotlib import pyplot as plt
+from matplotlib import animation, colors
+import seaborn as sb
+
+# Define the colour palette to be used
+colours = "custom1"
+
+if colours is "seaborn":
+    square_colours = sb.color_palette(palette='deep') # Options: 'deep', 'muted', 'pastel', 'bright', 'dark', and 'colorblind'
+elif colours is "custom1":
+    square_colours = ['white', 'black', 'indianred', 'dodgerblue', 'gold', "steelblue", "tomato", "slategray", "plum", "seagreen", "gray"]
+elif colours is "custom2":
+    square_colours = ["#000000", "#FF0000", "#444444", "#FFFF00", "#00FF00", "#00FFFF",  "#0000FF", "#9900FF"]
+else:
+    print("Colour palette not recognised. Exiting")
+    exit()
+
+'''
+User Changeable Input
+'''
+# Set the dimensions of the grid
+dim = 1000
+# Set the number of steps the ant should take
+ant_steps = 500000000
+# Tell the program what moveset to give the ant
+ant_move_list = 'LLRR'
+
+'''
+End User Changeable Input
+'''
+
+# Build a corresponding numpy array of dimensions (dim,dim)
+grid = np.array(np.zeros((dim, dim)))
+# Define a variable to represent the current ant_position of the ant on the board
+ant_pos = np.array([[int(dim/2)], [int(dim/2)]])
+# Define a variable to represent the direction ant is currently moving
+direction = np.matrix([[1], [0]])
+
+# Clockwise rotation matrix
+clockwise_rot     = np.array([[0, 1], [-1, 0]])
+# Anti-clockwise rotation matrix
+anticlockwise_rot = np.array([[0, -1], [1, 0]])
+
+# Calculate the length of the ant_move_list
+len_ant_move_list = len(ant_move_list)
+# Extract the unique 'L' and 'R' moves in order
+unique_moves = [i for i in ant_move_list]
+# Assign the correct rotation matrix to each 'L' and 'R' choice and store in a list
+rot_matrices = [anticlockwise_rot if i == 'L' else clockwise_rot for i in unique_moves]
+# Assign each of these unique 'L' and 'R' letters to a discrete integer which will later represent a colour 
+colour_indices = [i for i in range(len(ant_move_list))]
+
+def move_ant(grid, ant_pos, direction):
+    '''
+    Controls the movement of the ant by a single square
+
+    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+
+    Parameters:
+    grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
+    ant_pos (np.array)   : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
+    direction(np.matrix) : This represents the direction that the ant will move in on this step. 
+
+    Returns:
+    None: No explicit return 
+    '''
+    # Create the next ant position
+    ant_pos[:] = ant_pos + direction
+    # Extract the x coordinate of this new position
+    x_ant_pos = ant_pos[0, 0]
+    # Extract the y coordinate of this new position
+    y_ant_pos = ant_pos[1, 0]
+
+    if any(i == dim or i == 0 for i in ant_pos):
+        print("Hit the edge of the board!")
+        exit()
+    if grid[x_ant_pos, y_ant_pos] in colour_indices:
+        index = grid[x_ant_pos, y_ant_pos]
+        grid[x_ant_pos, y_ant_pos] = colour_indices[int(index+1) % len(colour_indices)]
+        direction[:] = rot_matrices[int(index)] * direction
+    else:
+        print("Index not in colour indices. Exiting")
+        exit()
+
+# Define the boundaries for each discrete colour
+# The form is [0, 0, 1, 1, 2, 2, 3, 3]
+#               c1    c2    c3    c4
+# where cX represents a unique colour 
+boundaries = list(itertools.chain.from_iterable(itertools.repeat(x, 2) for x in colour_indices))
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+
+# Define custom discrete colour map
+cmap = colors.ListedColormap(square_colours[0:len_ant_move_list])
+
+norm = colors.BoundaryNorm(boundaries, cmap.N, clip=True)
+# Define the 'image' to be created using imshow. Specify the custom colour map
+im = plt.imshow(grid, cmap=cmap, norm=norm)
+
+for i in range(ant_steps):
+    move_ant(grid, ant_pos, direction) 
+
+im.set_data(grid)
+# Hide the axes
+ax.axis('off')
+# Report the movement pattern number of ant steps taken in the title of the image
+plt.suptitle("{}, No. Steps Taken = {:d}".format(ant_move_list, ant_steps), fontsize=13)
+
+# Save the image
+plt.savefig("{}_{}.eps".format(ant_move_list, ant_steps), format='eps')
+# Show the image
+plt.show()
+```
+
+# Results
+
+Here are the outputs of running a variety of different movesets for our ant.
+
+## LLRR
+
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LLRR_100000000.png)
+
+## LRRRRRLLR
+
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRRRRLLR_1000000.png)
+
+## 
