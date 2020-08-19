@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Langton's Ant 2: Electric Boogaloo"
-date: 2020-07-26
+date: 2020-08-19
 excerpt: "Further investigation into the complex emergent behaviour of langton's ant."
 tags: [science, mathematics, programming, matplotlib, langtons, ant, python, fractal]
 comments: false
@@ -544,11 +544,11 @@ plt.show()
 
 Here are the outputs of running a variety of different movesets for our ant.
 
-## LLRR
+## **LLRR**
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LLRR_100000000.png)
 
-## LRRRRRLLR
+## **LRRRRRLLR**
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRRRRLLR_1000000.png)
 
