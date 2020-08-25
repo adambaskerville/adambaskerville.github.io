@@ -16,7 +16,7 @@ In a [previous post](https://adambaskerville.github.io/posts/LangtonsAnt/) we pr
 
 This movement pattern is classed as the `RL` scheme, as the first step involves turning right, whilst the second step involves turning left, alternating the colour each time. There are an infinity of possible extensions to this idea; and in this post we will explore the instance of multiple colours from different step patterns. 
 
-By the end we will have a generalised program for any movement pattern, e.g. `LRRL`
+By the end we will have a generalised program for any movement pattern, e.g.  `RRLLRLRLLLRLR` 
 
 # `LRRL` Langton's Ant
 
@@ -211,7 +211,7 @@ This is certainly different from the original Langton's ant which only used two 
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRL_1000000.png)
 
-Check out this pattern! There is clear symmetry and no evidence of the ant forming a "highway" like our original ant did. In fact you can increase the number of steps and no highways will ever be produced.
+Check out this pattern, or should i say [fractal](https://mathworld.wolfram.com/Fractal.html)! Fractals are objects that need not exhibit **exactly** the same structure at all scales, but the same "type" of structures must appear on all scales which is what happens here. There is clear symmetry and no evidence of the ant forming a "highway" like our original ant did. In fact you can increase the number of steps and no highways will ever be produced.
 
 Something I find fascinating with this problem is how such a simple movement pattern can produce such a complex structure. This now poses the question, what other pathways can our ant follow, what about `RRLL`? or `LRRRRRLLR`? the possibilities are endless. We want to write a general program where we can enter any step combination without having to explicitly program a different conditional statement for each step as this will take considerable effort and time.
 
@@ -420,7 +420,7 @@ plt.show()
 ```
 # The Complete Program
 
-Putting all of this together we now have a geenralised Langton's ant program for any moveset. I also put in some custom colour schemes for you to play around with or you can add your own!:
+Putting all of this together we now have a generalised Langton's ant program for any moveset. In the complete program below I put in some custom colour schemes for you to play around with or you can add your own!
 
 ```python
 import numpy as np
@@ -542,20 +542,33 @@ plt.show()
 
 # Results
 
-Here are the outputs of running a variety of different movesets for our ant.
+Here are the outputs of running the above program for different movesets.
 
 ## **LLRR**
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LLRR_100000000.png)
 
+This move pattern forms a [cardioid shape](https://mathworld.wolfram.com/Cardioid.html)
+which you may recognise as the 'bean' part of the [Mandebrot set](https://mathworld.wolfram.com/MandelbrotSet.html).
+
 ## **LRRRRRLLR**
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRRRRLLR_1000000.png)
+
+The move pattern builds diagonal highways which are contained inside an ever-growing square.
 
 ## **RRLLLRLRL**
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/RRLLLRLRL_5000000.png)
 
+This move pattern forms a random 'blob' structure with almost crystalline edges.
+
 ## **RLLLLRRRLLLR**
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/RLLLLRRRLLLR_1000000.png)
+
+Is the fact Langton's ant can form fractals surprising? I would say **no**. Fractals are the repetition of a simple process over and over in an ongoing feedback loop, which sounds very much like our ant. It may not be surprising but there is an inherent beauty associated with such complex structures emerging from such simple rules. What happens if we include more than one ant? How about allowing the ant to move forward, backwards or diagonally? Our ant will reluctantly return in a future post to address these considerations.
+
+# Conclusions
+
+We developed a "general" Langton's ant program valid for any combination of left, `L`, and right, `R` movements. We explored sevaral combinations resulting in complex structures and fractals emerging from arguably simple movement patterns.
