@@ -30,7 +30,7 @@ A good tip before attempting to create a completely generalised program is to pr
 
 4. If you are on a <span style="color:blue">blue</span> square, turn 90° anti-clockwise, flip the colour of the square to white, then move forward one square. (`L`)
 
-This looks complicated but the ant is still just turning left and right, only this time it has two more colours to paint the squares. Consider the pseudo-code of the `LRRL` scheme:
+This looks complicated but the ant is still just turning left and right, only this time it has two more colours to paint the squares with. Consider the pseudo-code of the `LRRL` scheme:
 
 ```
 if ant on white square:
@@ -42,7 +42,7 @@ elif ant on red square:
 elif ant on blue square:
     turn left, change square to white, move forward one step 
 ```
-In the previous post we used `0` to represent white and `1` to represent black so we will add more colours by just incrementing this index; red becomes `2` and blue becomes `3`. We can store these colours in a list for easy access later on:
+In the previous post we used `0` to represent white and `1` to represent black in our integer array so we will add more colours by just incrementing this index; red becomes `2` and blue becomes `3`. We can store these colours in a list for easy access later on:
 
 ```python
 square_colours = ['white', 
@@ -75,7 +75,7 @@ We now have our colours and movement pattern, so the next step is to define the 
 ```python
 cmap = colors.ListedColormap(square_colours)
 ```
-Next we need to program the boundaries for each colour which correspond to the index of the colour in the list. We want the following
+Next we need to program the boundaries for each colour which correspond to the index of the colour in the `square_colours` list. We want the following
 
 * White if grid value is 0
 * <span style="color:black">Black</span> if grid value is 1
@@ -91,12 +91,12 @@ We can do this by setting a list of boundary values for each colour as follows:
 boundaries = [0, 0, 1, 1, 2, 2, 3, 3]
             # |w |  |bl|  |r |  |b |
 ```
-Each colour is now discrete, described by a single numerical value, so we can now set these boundaries using `BoundaryNorm` which will map the colour map indices to integer values.
+Each colour is now discrete, described by a single numerical value, so we can now set these boundaries using `BoundaryNorm` which will map the colour map indices to integer values:
 
 ```python
 norm = colors.BoundaryNorm(boundaries, cmap.N, clip=True)
 ```
-We will copy over some of the code from the first post to start building our `LRRL` program, inserting our new set of rules inside the `move_ant` function. We are not going to copy over the `animate_ant` function as the animations can take a long time to generate and their file sizes can grow quickly. Instead we will just print the end result:
+We will copy over some of the code from the first post to start building our `LRRL` program, inserting our new set of rules inside the `move_ant` function. We are **not** going to copy over the `animate_ant` function as the animations can take a long time to generate and their file sizes can grow quickly. Instead we will just print the end result:
 
 ```python
 import numpy as np
@@ -129,12 +129,12 @@ def move_ant(grid, ant_pos, direction):
     '''
     Controls the movement of the ant by a single square
 
-    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+    This function takes the current position and the direction of the ant and updates it via the 4 rules specified above as it takes its next step. It then updates the new position, direction and square colour for the next step.
 
     Parameters:
-    grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
-    ant_pos (np.array)   : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
-    direction(np.matrix) : This represents the direction that the ant will move in on this step. 
+    grid (np.array)       : This is the grid of dimension, dim, that the ant moves around on
+    ant_pos (np.array)    : This represents the ants' position defined as a numpy array of its x,y coordinate on the grid
+    direction (np.matrix) : This represents the direction that the ant will move in on this step. 
 
     Returns:
     None: No explicit return 
@@ -203,21 +203,21 @@ Let's run the program to see if it works, and more importantly to see what path 
 ```shell
 python Langton_ant_v2.py
 ```
-Running this in the terminal produces the following image.
+Running this in the terminal produces the following image:
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRL_10000.png)
 
-This is certainly different from the original Langton's ant which only used two colours! It shows that our new `LRRL` movement pattern is working as expected. Let us see what happens as we increase the number of steps taken by our ant:
+This is certainly different from the original Langton's ant which only used two colours! It shows that our new `LRRL` movement pattern is working as expected. Let us see what happens as we increase the number of steps taken by our ant from 10,000 to 1,000,000:
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRL_1000000.png)
 
-Check out this pattern, or should i say [fractal](https://mathworld.wolfram.com/Fractal.html)! Fractals are objects that need not exhibit **exactly** the same structure at all scales, but the same "type" of structures must appear on all scales which is what happens here. There is clear symmetry and no evidence of the ant forming a "highway" like our original ant did. In fact you can increase the number of steps and no highways will ever be produced.
+Check out this pattern, or should I say [fractal](https://mathworld.wolfram.com/Fractal.html)! Fractals are objects that need not exhibit **exactly** the same structure at all scales, but the same "type" of structures must appear on all scales, which is very evident here. There is clear symmetry and no evidence of the ant forming a "highway" like our original ant did. In fact you can increase the number of steps and no highways will ever be produced.
 
 Something I find fascinating with this problem is how such a simple movement pattern can produce such a complex structure. This now poses the question, what other pathways can our ant follow, what about `RRLL`? or `LRRRRRLLR`? the possibilities are endless. We want to write a general program where we can enter any step combination without having to explicitly program a different conditional statement for each step as this will take considerable effort and time.
 
 # General Langtons' Ant Program
 
-We will now program a general Langtons' ant program which will be valid for **any** step pattern input as a string:
+We will now program a general Langtons' ant program which will be valid for **any** step pattern of `L` and `R`, input as a string:
 
 ```python
 # Tell the program what moveset to give the ant
@@ -241,12 +241,12 @@ We have now separated the `L` and `R` movements so can assign a rotation matrix 
 # Assign the correct rotation matrix to each 'L' and 'R' choice and store in a list
 rot_matrices = [anticlockwise_rot if i == 'L' else clockwise_rot for i in unique_moves]
 ```
-We do not know ahead of time thew movement pattern the user will input so we need a generalised way of assigning \\(N\\) colours where N is the length of `ant_move_list`. Once again we use list comprehension with a `for` loop, building a list of ascending integers that span the length `ant_move_list`:
+We do not know ahead of time the movement pattern the user will input so we need a generalised way of assigning \\(N\\) colours where \\(N\\) is the length of `ant_move_list`. Once again we use list comprehension with a `for` loop, building a list of ascending integers that span the length `ant_move_list`:
 ```python
 # Assign each of these unique 'L' and 'R' letters to a discrete integer which will later represent a colour 
 colour_indices = [i for i in range(len_ant_move_list)]
 ```
-To make this transparent, the following is the output of movement pattern `LLRR` for the `rot_matrices` and `colour_indices` variables:
+To make this more transparent, the following is the output of movement pattern `LLRR` for the `rot_matrices` and `colour_indices` variables:
 
 ```python
 rot_matrices = [array([[ 0, -1],
@@ -272,7 +272,7 @@ def move_ant(grid, ant_pos, direction):
     '''
     Controls the movement of the ant by a single square
 
-    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+    This function takes the current position and the direction of the ant and updates it via the N rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
 
     Parameters:
     grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
@@ -309,7 +309,7 @@ We then want to change this value which in turn changes the colour of the square
 ```python
 grid[x_ant_pos, y_ant_pos] = colour_indices[int(index+1) % len(colour_indices)]
 ```
-This might sound confusing so let's look at a simple example. Consider a list of 4 items:
+This sounds confusing so let's look at a simple example. Consider a list of 4 items:
 ```python
 lst = [0, 1, 2, 3] 
 lst[4]
@@ -331,7 +331,7 @@ lst[index % len(lst)]
 # Output
 0
 ```
-The program now knows to move to the start of the colour list if the index exceeds the number of colours in the list. We now update the direction of the ant for the next step using the relevent rotation matrix which luckily are stored in our `rot_matrices` list which we access using the same index:
+The program now knows to move to the start of the colour list if the index exceeds the number of colours in the list. We now update the direction of the ant for the next step using the relevent rotation matrix which luckily is stored in the `rot_matrices` list which we access using the same index:
 ```python
 direction[:] = rot_matrices[int(index)] * direction
 ```
@@ -342,7 +342,7 @@ def move_ant(grid, ant_pos, direction):
     '''
     Controls the movement of the ant by a single square
 
-    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+    This function takes the current position and the direction of the ant and updates it via the N rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
 
     Parameters:
     grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
@@ -379,7 +379,7 @@ We discussed the need to set the boundaries of each discrete colour in the previ
 # where cX represents a unique colour 
 boundaries = list(itertools.chain.from_iterable(itertools.repeat(x, 2) for x in colour_indices))
 ```
-Next we setup the figure, `fig`, the colour map, `cmap` and the image, `im` which we did previously:
+Next we setup the figure, `fig`, the colour map, `cmap` and the image, `im` which we did in the previous post:
 
 ```python
 # Define figure object
@@ -399,7 +399,7 @@ We now loop over the `move_ant` function for as many `ant_steps` as were specifi
 for i in range(ant_steps):
     move_ant(grid, ant_pos, direction) 
 ```
-Next we need to set the data for the final iamge to be printed. This is the finalk state of the grid after the ant has completed all the steps:
+Next we need to set the data for the final iamge to be printed, which is the final state of the grid after the ant has completed all the steps:
 
 ```python
 im.set_data(grid)
@@ -481,7 +481,7 @@ def move_ant(grid, ant_pos, direction):
     '''
     Controls the movement of the ant by a single square
 
-    This function takes the current position and the direction of the ant and updates it via the 2 rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
+    This function takes the current position and the direction of the ant and updates it via the N rules specified above as it takes its next stdep. It then updates the new position, direction and square colour for the next step.
 
     Parameters:
     grid (np.array)      : This is the grid of dimension, dim, that the ant moves around on
@@ -571,4 +571,4 @@ Is the fact Langton's ant can form fractals surprising? I would say **no**. Frac
 
 # Conclusions
 
-We developed a "general" Langton's ant program valid for any combination of left, `L`, and right, `R` movements. We explored sevaral combinations resulting in complex structures and fractals emerging from arguably simple movement patterns.
+We developed a "general" Langton's ant Python program valid for any combination of left, `L`, and right, `R` movements. This resulted in complex structures and fractals emerging from arguably simple movement patterns.
