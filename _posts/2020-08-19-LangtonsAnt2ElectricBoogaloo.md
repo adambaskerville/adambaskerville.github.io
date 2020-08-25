@@ -549,7 +549,7 @@ Here are the outputs of running the above program for different movesets.
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LLRR_100000000.png)
 
 This move pattern forms a [cardioid shape](https://mathworld.wolfram.com/Cardioid.html)
-which you may recognise as the 'bean' part of the [Mandebrot set](https://mathworld.wolfram.com/MandelbrotSet.html).
+which you may recognise as the 'bean' part of the [Mandelbrot set](https://mathworld.wolfram.com/MandelbrotSet.html).
 
 ## **LRRRRRLLR**
 
