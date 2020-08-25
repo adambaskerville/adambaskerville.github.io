@@ -5,7 +5,7 @@ from matplotlib import animation, colors
 import seaborn as sb
 
 # Define the colour palette to be used
-colours = "custom1"
+colours = "custom2"
 
 if colours is "seaborn":
     square_colours = sb.color_palette(palette='deep') # Options: 'deep', 'muted', 'pastel', 'bright', 'dark', and 'colorblind'
@@ -21,9 +21,9 @@ else:
 User Changeable Input
 '''
 # Set the dimensions of the grid
-dim = 1000
+dim = 100
 # Set the number of steps the ant should take
-ant_steps = 5000000
+ant_steps = 100000
 # Tell the program what moveset to give the ant
 ant_move_list = 'LLRR'
 
