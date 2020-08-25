@@ -552,4 +552,10 @@ Here are the outputs of running a variety of different movesets for our ant.
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRRRRLLR_1000000.png)
 
-## 
+## **RRLLLRLRL**
+
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/RRLLLRLRL_5000000.eps)
+
+## **RLLLLRRRLLLR**
+
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/RLLLLRRRLLLR_1000000.eps)
