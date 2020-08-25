@@ -563,11 +563,11 @@ The move pattern builds diagonal highways which are contained inside an ever-gro
 
 This move pattern forms a random 'blob' structure with almost crystalline edges.
 
-## **RLLLLRRRLLLR**
+## **LRRRRLLLRRR**
 
-![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/RLLLLRRRLLLR_1000000_V1.png)
+![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRRRLLLRRR_1000000.png)
 
-This move pattern forms a [logarithmic spiral](https://mathworld.wolfram.com/LogarithmicSpiral.html)
+This move pattern forms a [Archimedes spiral](https://mathworld.wolfram.com/ArchimedesSpiral.html)
 
 
 Is the fact Langton's ant can form fractals surprising? I would say **no**. Fractals are the repetition of a simple process over and over in an ongoing feedback loop, which sounds very much like our ant. It may not be surprising but there is an inherent beauty associated with such complex structures emerging from such simple rules. What happens if we include more than one ant? How about allowing the ant to move forward, backwards or diagonally? Our ant will reluctantly return in a future post to address these considerations.

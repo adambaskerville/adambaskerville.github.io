@@ -19,13 +19,13 @@ else:
 
 '''
 User Changeable Input
-'''
+''' 
 # Set the dimensions of the grid
-dim = 2000
+dim = 700
 # Set the number of steps the ant should take
-ant_steps = 5000000
+ant_steps = 1000000
 # Tell the program what moveset to give the ant
-ant_move_list = 'RLLLLRRRLLLR'
+ant_move_list = 'LRRRRLLLRRR'
 
 '''
 End User Changeable Input
