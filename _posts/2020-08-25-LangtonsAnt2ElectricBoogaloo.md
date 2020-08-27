@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Langton's Ant 2: Electric Boogaloo"
-date: 2020-08-19
+date: 2020-08-25
 excerpt: "Further investigation into the complex emergent behaviour of langton's ant."
 tags: [science, mathematics, programming, matplotlib, numpy, langtons, ant, python, fractal]
 comments: false
@@ -567,7 +567,7 @@ This move pattern forms a random 'blob' structure with almost crystalline edges.
 
 ![Desktop View](https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/LangtonsAntCode/LRRRRLLLRRR_1000000.png)
 
-This move pattern forms a [Archimedes spiral](https://mathworld.wolfram.com/ArchimedesSpiral.html)
+This move pattern forms a [Archimedes spiral](https://mathworld.wolfram.com/ArchimedesSpiral.html).
 
 
 Is the fact Langton's ant can form fractals surprising? I would say **no**. Fractals are the repetition of a simple process over and over in an ongoing feedback loop, which sounds very much like our ant. It may not be surprising but there is an inherent beauty associated with such complex structures emerging from such simple rules. What happens if we include more than one ant? How about allowing the ant to move forward, backwards or diagonally? Our ant will reluctantly return in a future post to address these considerations.
