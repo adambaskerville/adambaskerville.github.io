@@ -8,6 +8,8 @@ comments: false
 math: true
 ---
 
+**Update 26-Oct-2020: This post uses `Matplotlib` v3.1.0. Using v3.3.0 produces errors with the discrete color map as they have changed the functionality.**
+
 In a [previous post](https://adambaskerville.github.io/posts/LangtonsAnt/) we programmed a simple implementation of Langton's ant and before reading ahead, it is recommended to first read this initial post. Our ant obeyed the following movement pattern:
 
 1) If you are on a white square, turn 90° clockwise, flip the colour of the square, then move forward one square.
