@@ -33,8 +33,8 @@ researchgate:
 github:
   username: adambaskerville  # change to your github username
 
-#linkedin:
-#  username: adam-baskerville-6710811b2 # Change to your linkedin username
+linkedin:
+  username: adam-baskerville-6710811b2 # Change to your linkedin username
 
 social:
   name: Adam Luke Baskerville           # it will shows as the copyright owner in Footer

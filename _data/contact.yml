@@ -18,10 +18,10 @@
   icon: 'fas fa-envelope'
   noblank: true            # open link in current tab
 -
-  type: linkedin
-  icon: 'fab fa-linkedin'
-  noblank: true
--
+#  type: linkedin
+#  icon: 'fab fa-linkedin'
+#  noblank: true
+#-
 
 # Uncomment and complete the url below to enable more contact options
 # -
