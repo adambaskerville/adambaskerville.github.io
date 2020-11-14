@@ -8,7 +8,7 @@
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 #--------------------------
 
-title: Dr Adam Luke Baskerville                          # the main title
+title: Dr Adam Luke Baskerville  # the main title
 
 tagline: Quantum Physicist  # it will display as the sub-title
 
@@ -30,6 +30,9 @@ twitter:
 researchgate:
   username: Adam_Baskerville # Change to your researchgate username
 
+github:
+  username: adambaskerville             # change to your github username
+
 linkedin:
   username: adam-baskerville-6710811b2 # Change to your linkedin username
 
@@ -41,7 +44,6 @@ social:
     - https://twitter.com/AdamBask                           # change to your twitter homepage
     # Uncomment below to add more social links
     - https://www.researchgate.net/profile/Adam_Baskerville
-    - https://github.com/adambaskerville 
     - https://www.linkedin.com/in/adam-baskerville-6710811b2
 
 google_site_verification: google_meta_tag_verification # change to your verification string

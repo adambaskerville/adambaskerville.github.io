@@ -23,7 +23,7 @@
   path: tabs
   url: presentations
 -
-  name: "Programming for Chemists"
+  name: "Programming Course"
   icon: "fas fa-newspaper"
   path: tabs
   url: progchem
