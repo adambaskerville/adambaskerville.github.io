@@ -44,7 +44,7 @@ social:
     - https://twitter.com/AdamBask                           # change to your twitter homepage
     # Uncomment below to add more social links
     - https://www.researchgate.net/profile/Adam_Baskerville
-    - https://www.linkedin.com/in/adam-baskerville-6710811b2
+    #- https://www.linkedin.com/in/adam-baskerville-6710811b2
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
