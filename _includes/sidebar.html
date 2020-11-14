@@ -70,6 +70,8 @@
       https://twitter.com/{{ site.twitter.username }}
       {%- elsif entry.type == 'researchgate' -%}
       https://www.researchgate.net/profile/{{ site.researchgate.username }}
+      {%- elsif entry.type == 'github' -%}
+      https://github.com/{{ site.github.username }}
       {%- elsif entry.type == 'linkedin' -%}
       https://www.linkedin.com/in/{{ site.linkedin.username }}
       {%- elsif entry.type == 'email' -%}
