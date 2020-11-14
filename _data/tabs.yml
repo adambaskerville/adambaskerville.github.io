@@ -18,15 +18,21 @@
   url: archives
   icon: "fas fa-archive"
 -
-  name: "Publications"
-  icon: "fas fa-newspaper"
-  path: tabs
-  url: publications
--
   name: "Presentations"
   icon: "fas fa-newspaper"
   path: tabs
   url: presentations
+-
+  name: "Programming for Chemists"
+  icon: "fas fa-newspaper"
+  path: tabs
+  url: progchem
+-
+  name: "Publications"
+  icon: "fas fa-newspaper"
+  path: tabs
+  url: publications
+
 #- 
 #  name: Categories
 #  icon: "fas fa-stream"
