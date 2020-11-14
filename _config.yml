@@ -25,19 +25,19 @@ author: Adam Luke Baskerville                  # change to your full name
 avatar: /assets/img/Baskerville_Bletchley_Crop.jpg   # support internet resources
 
 twitter:
-  username: AdamBask            # change to your twitter username
+  username: AdamBask         # change to your twitter username
 
 researchgate:
   username: Adam_Baskerville # Change to your researchgate username
 
 github:
-  username: adambaskerville             # change to your github username
+  username: adambaskerville  # change to your github username
 
-linkedin:
-  username: adam-baskerville-6710811b2 # Change to your linkedin username
+#linkedin:
+#  username: adam-baskerville-6710811b2 # Change to your linkedin username
 
 social:
-  name: Adam Luke Baskerville                  # it will shows as the copyright owner in Footer
+  name: Adam Luke Baskerville           # it will shows as the copyright owner in Footer
   email: ab695@sussex.ac.uk             # change to your email address
   links:
     # The first element serves as the copyright owner's link
