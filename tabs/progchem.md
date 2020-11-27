@@ -1,12 +1,10 @@
 ---
 layout: page
-title: Programming for Chemists
+title: Programming for Chemists (Still under development)
 tags: [programming, chemistry, python, me, adam, baskerville]
 date: 2020-11-14
 comments: false
 ---
-
-# Programming for Chemists  (Still under development)
 
 This course is designed to be an introduction to the Python programming language and how it can be applied to solve real world scientific problems. If you have wanted to learn how to program or how to apply it to your own work then hopefully this course can be of assistance. The sessions are as follows:
 
