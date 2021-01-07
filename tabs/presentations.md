@@ -9,6 +9,8 @@ title: Presentations
 
 ## Talks
 
+* <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Sussex, UK, 2020<br> 
+  
 * <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Kent, UK, 2019<br> 
 
 * <p>“Going beyond standard approximations in quantum chemistry” - School of Life Sciences Research Symposium, University of Sussex, Brighton, UK, 2017<br>
