@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Programming for Chemists (Still under development)
+title: Programming for Chemists
 tags: [programming, chemistry, python, me, adam, baskerville]
 date: 2020-11-14
 comments: false
