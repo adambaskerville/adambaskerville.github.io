@@ -13,8 +13,8 @@ This course is designed to be an introduction to the Python programming language
 3. Control Flow Statements.
 4. Basic NumPy and arrays. 
 5. File input/output using pandas and plotting using matplotlib.
-6. Physical chemistry using NumPy, SciPy and Sympy.
-7. How machine learning is changing science.
+6. Physical chemistry in Python.
+7. Practical machine learning for chemists.
 
 If you have any feedback from taking the course then feel free to contact me so I can continually improve it.
 
@@ -22,6 +22,6 @@ Click the link below to begin:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/ProgrammingForChemists/HEAD)
 
-There is also a message board for people to discuss the course together:
+There is also a message board for people to discuss the course together and to provide feedback:
 
 [![Gitter](https://badges.gitter.im/ProgrammingForChemists/community.svg)](https://gitter.im/ProgrammingForChemists/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
