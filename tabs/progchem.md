@@ -18,9 +18,11 @@ This course is designed to be an introduction to the Python programming language
 
 If you have any feedback from taking the course then feel free to contact me so I can continually improve it.
 
-Click the link below to begin:
+To start the course click the link below to begin:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/ProgrammingForChemists/HEAD)
+
+**Firefox** or **Chrome** web browsers are recommended.
 
 There is also a message board for people to discuss the course together and to provide feedback:
 
