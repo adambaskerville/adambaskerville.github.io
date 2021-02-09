@@ -13,8 +13,8 @@ math: true
 Brownian motion named after its discoverer, botanist Robert Brown, is the motion exhibited by a small particle totally immersed in a liquid or gas. It is an example of a **stochastic process**, referring to a family of random variables indexed against some other variable or set of variables. Stochastic processes are used as mathematical models of systems appearing to vary in a random manner such as:
 
 * Growth of a bacterial population, 
-* Decay of radioactive elements 
-* Movement of a gas molecule; 
+* Decay of radioactive elements, 
+* Movement of a gas molecule,
 
 With Brownian motion being one of the most useful stochastic processes in applied probability theory. **We are going to simulate a gas molecule moving around a 3-dimensional box** using NumPy and matplotlib. First lets cover the maths required to model the random motion of our gas molecule, it ends up being much simpler than it looks!
 
