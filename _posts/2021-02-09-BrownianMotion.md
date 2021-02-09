@@ -140,8 +140,6 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from IPython.display import HTML
 import mpl_toolkits.mplot3d.axes3d as p3
-import numpy as np
-import matplotlib.pyplot as plt
 
 fig = plt.figure()
 ax = p3.Axes3D(fig)
@@ -187,6 +185,16 @@ HTML(anim.to_html5_video()) # This is just for the Jupyter notebook which will n
 # if running locally, uncomment these two lines and remove the HTML command above.
 #plt.show()
 ```
+This produces the following output:
+
+<center><img src='https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/BrownianMotionCode/BrownianMotion.gif'></center>
+
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook with this code:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/adambaskerville.github.io/master?filepath=%2F_posts%2FBrownianMotionCode%2FBrownianMotion.ipynb)
+
 
 # References
 
