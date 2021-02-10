@@ -22,6 +22,10 @@ To start the course click the link below to begin:
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/ProgrammingForChemists/HEAD)
 
+If Binder is not stable enough, try Google Colab:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/ProgrammingForChemists/blob/master/)
+
 **Firefox** or **Chrome** web browsers are recommended.
 
 There is also a message board for people to discuss the course together and to provide feedback:
