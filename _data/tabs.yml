@@ -32,7 +32,11 @@
   icon: "fas fa-newspaper"
   path: tabs
   url: publications
-
+-
+  name: "Painting"
+  icon: "fas fa-newspaper"
+  path: tabs
+  url: painting
 #- 
 #  name: Categories
 #  icon: "fas fa-stream"
