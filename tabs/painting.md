@@ -6,7 +6,9 @@ date: 2021-02-17
 comments: false
 ---
 
-During lockdown I began watching the Joy of painting by Bob Ross on BBC4 and I decided that I wanted to learn to paint and create happy little worlds. This page will hopefully show my improvement over time! 
+# Painting
+
+During lockdown I began watching [the joy of painting by Bob Ross](https://www.youtube.com/user/BobRossInc) on BBC4 and I decided that I wanted to learn to paint and create happy little worlds. This page will hopefully show my improvement over time! 
 
 Newest painting first working backwards.
 
