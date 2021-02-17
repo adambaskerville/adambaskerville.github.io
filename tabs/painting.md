@@ -12,8 +12,8 @@ During lockdown I began watching [the joy of painting by Bob Ross](https://www.y
 
 Newest painting first working backwards.
 
-<center><img src="https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/3.jpeg" /></center>
+<center><img src="https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/3.jpeg" width="500" height="500"/></center>
 
-<center><img src="https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/2.jpeg" /></center>
+<center><img src="https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/2.jpeg" width="500" height="500"/></center>
 
-<center><img src="https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/1.jpeg" /></center>
+<center><img src="https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/1.jpeg" width="500" height="500"/></center>
