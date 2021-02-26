@@ -193,7 +193,7 @@ This produces the following output:
 
 Click the following button to launch an ipython notebook on Google Colab:
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/adambaskerville/adambaskerville.github.io/blob/master/_posts/BrownianMotionCode/BrownianMotion.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/BrownianMotionCode/BrownianMotion.ipynb)
 
 
 # References
