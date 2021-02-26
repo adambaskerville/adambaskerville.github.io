@@ -1,8 +1,6 @@
-name: BrownianMotion
+name: HartreeFock
 channels:
         - conda-forge
         
 dependencies:
         - numpy==1.16.4
-        - seaborn
-        - matplotlib==3.1.0
