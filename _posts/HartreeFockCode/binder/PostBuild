@@ -1,0 +1,4 @@
+#!/bin/bash
+conda install -c conda-forge jupyterthemes -y
+##jt -t grade3
+jt -t grade3 -fs 95 -altp -tfs 11 -nfs 115 -cellw 88%
