@@ -854,11 +854,9 @@ We have given a simple overview of Hartree Fock theory and then expanded upon th
 
 # Try the code yourself!
 
-Click the following button to launch an ipython notebook with this code:
+Click the following button to launch an ipython notebook on Google Colab:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/HartreeFockCode/HartreeFock.ipynb)
-
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/adambaskerville.github.io/master?filepath=%2F_posts%2FHartreeFockCode%2FHartreeFock.ipynb)
 
 # Further Reading
 
