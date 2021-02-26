@@ -191,7 +191,7 @@ This produces the following output:
 
 # Try the code yourself!
 
-Click the following button to launch an ipython notebook with this code:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://github.com/adambaskerville/adambaskerville.github.io/blob/master/_posts/BrownianMotionCode/BrownianMotion.ipynb)
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/adambaskerville.github.io/master?filepath=%2F_posts%2FBrownianMotionCode%2FBrownianMotion.ipynb)
 
