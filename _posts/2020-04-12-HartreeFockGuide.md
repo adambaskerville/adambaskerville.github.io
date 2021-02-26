@@ -852,6 +852,12 @@ This agrees very well with the textbook value of `-2.4438 hartrees`\\(^{[2]}\\) 
 
 We have given a simple overview of Hartree Fock theory and then expanded upon the key components in order to create our own 100 line Hartree Fock program. We used protonated helium as our test case and obtained a ground state energy of `-2.44414 hartrees` which matches very well to literature. If there are still parts of the process which are not clear, you can `print()` out as much information as needed from this program to follow each step in greater detail.
 
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook with this code:
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/adambaskerville.github.io/master?filepath=%2F_posts%2FHartreeFockCode%2FHartreeFock.ipynb)
+
 # Further Reading
 
 If you want to explore Hartree Fock theory in even greater detail then I highly recommend the book by **Szabo and Ostlund**. It is very technical but is the best book on Hartree Fock theory:
