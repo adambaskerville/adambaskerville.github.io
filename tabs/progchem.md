@@ -24,7 +24,9 @@ To start the course click the link below to begin:
 
 If Binder is not stable enough, try Google Colab:
 
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/ProgrammingForChemists/blob/master/)
+
 
 **Firefox** or **Chrome** web browsers are recommended.
 
