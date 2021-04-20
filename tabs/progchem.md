@@ -18,7 +18,7 @@ This course is designed to be an introduction to the Python programming language
 
 If you have any feedback from taking the course then feel free to contact me so I can continually improve it.
 
-To start the course click the link below to begin:
+To start the course click the link below to begin. Open the non-checkpoint versions of the ipynb files:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/ProgrammingForChemists/blob/master/)
 
