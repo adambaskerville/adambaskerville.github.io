@@ -20,12 +20,11 @@ If you have any feedback from taking the course then feel free to contact me so 
 
 To start the course click the link below to begin:
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/ProgrammingForChemists/HEAD)
-
-If Binder is not stable enough, try Google Colab:
-
-
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/ProgrammingForChemists/blob/master/)
+
+If Google Colab does not work, try Binder (will take longer to load):
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/adambaskerville/ProgrammingForChemists/HEAD)
 
 
 **Firefox** or **Chrome** web browsers are recommended.
