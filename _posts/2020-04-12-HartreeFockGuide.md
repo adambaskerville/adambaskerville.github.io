@@ -63,7 +63,7 @@ The sign of the wavefunction has not changed, thus it is an incorrect wavefuncti
 \\[
 \psi(\mathbf{x}_1, \mathbf{x}_2) = \frac{1}{\sqrt{2!}}
 \begin{vmatrix}
-\chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) \\\
+\chi_1(\mathbf{x}_1) & \chi_2(\mathbf{x}_1) \\\\\\
 \chi_1(\mathbf{x}_2) & \chi_2(\mathbf{x}_2)
 \end{vmatrix}. \tag{6}
 \\]
