@@ -90,7 +90,7 @@ colors = itertools.cycle(["dodgerblue", "indianred", "gold", "steelblue", "tomat
 for i in range(0, len(ListOfDataSets)):
     # Read in data set into a pandas dataframe. Note [cols_to_use[i]] at the end maintains column index order 
     # The sep command tries to capture all the main column separators that it may encounter. If you have a unique one, you can add it here! 
-    df = pd.read_csv(listOfDataSets[i], usecols=cols_to_use[i], sep="\s+|\t+|\s+\t+|\t+\s+|,\s+|\s+,", header=None, engine='python')[cols_to_use[i]]
+    df = pd.read_csv(ListOfDataSets[i], usecols=cols_to_use[i], sep="\s+|\t+|\s+\t+|\t+\s+|,\s+|\s+,", header=None, engine='python')[cols_to_use[i]]
     # Plot the data set using Seaborn and set legend labels from user specified ones above
     if plot_type[i] == 'point':
         ax.scatter(df[xcols[i]], df[ycols[i]], color=next(colors), s=10, label=r'{}'.format(LegendLabels[i]))
@@ -112,8 +112,8 @@ for i in range(0, len(ListOfDataSets)):
     plt.ylim(ymin, None)
 
     # Set the x and y axis labels from the user specified ones above
-    plt.xlabel(r'{}'.format(xAxisLabel))
-    plt.ylabel(r'{}'.format(yAxisLabel))
+    plt.xlabel(r'{}'.format("xAxisLabel"))
+    plt.ylabel(r'{}'.format("yAxisLabel"))
 
     # Show the legend
     plt.legend()
