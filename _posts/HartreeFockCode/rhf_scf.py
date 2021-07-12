@@ -86,7 +86,7 @@ P            = np.zeros((dim, dim)) # P represents the density matrix, Initially
 DELTA        = 1 # Set placeholder value for delta
 count        = 0 # Count how many SCF cycles are done
 
-while DELTA > 0.00001:
+while DELTA > 0.00000000001:
     count     += 1                             # Add one to number of SCF cycles counter
     F         = makefock(Hcore, P, dim)        # Calculate Fock matrix, F
     Fprime    = fprime(S_minhalf, F)           # Calculate transformed Fock matrix, F'
