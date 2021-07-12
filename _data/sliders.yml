@@ -1,0 +1,19 @@
+- selector: slider1
+  bullets: false
+  captions: true
+  images:
+    - src: "https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/13.jpeg"
+      alt: Minimum required attributes
+    - src: "https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/12.jpeg"
+    - src: "https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/assets/img/paintings/11.jpeg"
+  settings:
+    height: 400
+    initialHeight:
+    maxHeight:
+    interval:
+    transitionDuration:
+    effect:
+    disableNav:
+    keyboardNav:
+    previousNavSelector:
+    nextNavSelector:
