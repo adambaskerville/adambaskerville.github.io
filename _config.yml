@@ -166,9 +166,6 @@ defaults:
           label: Home
           url: /
 
-#plugins:
-#  - jekyll-google-photos
-
 sass:
   sass_dir: /assets/css
   style: compressed
