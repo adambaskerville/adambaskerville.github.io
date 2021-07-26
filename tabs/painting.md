@@ -11,9 +11,10 @@ Newest painting first working backwards.
 
 <script src="https://cdn.jsdelivr.net/npm/publicalbum@latest/embed-ui.min.js" async></script>
 <div class="pa-gallery-player-widget" style="width:100%; height:480px; display:none;"
-  data-link="https://photos.app.goo.gl/JctC3coDd4HUy89LA"
+  data-link="https://photos.google.com/share/AF1QipOXhJDkI9wcTqvnqstJ_oyXZR0FrtafXGBSn6bQ5ApCLz4QH6vsZb0-Eed7Q03eRw?key=LUw3ekdhMVpCRldBZi03ZEl6d3dhbFBqTVhQZlV3"
   data-title="Painting"
-  data-description="14 new photos added to shared album">
+  data-description="15 new photos added to shared album">
+  <object data="https://lh3.googleusercontent.com/o19E3ORIGSNN5aT-kWISRBBzpCohp8kekhL-TPybj_JebF9m8EZ2z190pw2VLnbTXRgeUFQ4JldaoMuvJrOAtW7t20kfD3UpGZ5s_wUCYgpD7Jp01kdNBwIK3Ft6qb3dymGICLRRCA=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/Dbaf-Tz44LfmFZ5HjFFCMcTqaAnPZu_p-yR5YampbDtDpW_7_o5vFvFdtBQjYCz9wgkro1bLWq3QQcOveBnTMDUNnQdbwe1b6B1sGj9BQDVz-vQJez18jkLir1M8-DB4K6sIhARXmQ=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/UehusWSSLhoC6LLgLIWAa35Q7pmnT_JUR-ksM1cX3iFYE0DeLTp1NMo8KYNrCaIKO8UElgXZqu0m9PPdhkHnbYAHmb1KQ4huJY03dRkp8HlMKOHdQmc4OkqiTQpsqNUmdIcZ-wR-sg=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/9ndPc1ukf3jRvq3OWiV-S_P33UXg5ChWes_ppugC3Pk3kMTF-s-b7ljfJMmqmzMig9xS2WcSt2q33MVqUTEd7n0kdjdf188E4GnE10whm6d_m8lpgND8am4Mple7iLAxW6RUDxDwFg=w1920-h1080"></object>
@@ -29,4 +30,5 @@ Newest painting first working backwards.
   <object data="https://lh3.googleusercontent.com/fuQIQeJfe8I5iX0luHP8WOUDD060Iaz_g_RiO0D8sR2PPe5wchgEoKnUg2WUDBoJOlVvvzz7XbMEEK0VV9o13NCxR3X3KhgJecczTkA78cmUlyKvdCEg4Kxk1ROLccIv17UMU5_k7w=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/JDFJ4FFsS89sJ3aEnRqgKzNUexGapnXFtFUx07gXDVpqZ4ba-STxYP_YN1xQVSrRd3KfU26hlSOCFHPA1DRQvqmyIioBkvy-LIu7Anqpcobz9sBBzoXKjXt2ORYLZMsuXfeS-t_dQg=w1920-h1080"></object>
 </div>
+
 
