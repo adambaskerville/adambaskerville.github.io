@@ -59,10 +59,10 @@ def currentenergy(D, Hcore, F, dim): # Calculate energy at iteration
     return EN
 
 Nelec = 2 # The number of electrons in our system 
-ENUC = np.genfromtxt('./enuc.dat',dtype=float, delimiter=',') # ENUC = nuclear repulsion, 
-Sraw = np.genfromtxt('./s.dat',dtype=None)                    # Sraw is overlap matrix, 
-Traw = np.genfromtxt('./t.dat',dtype=None)                    # Traw is kinetic energy matrix,
-Vraw = np.genfromtxt('./v.dat',dtype=None)                    # Vraw is potential energy matrix
+ENUC = np.genfromtxt('https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/HartreeFockCode/enuc.dat',dtype=float, delimiter=',') # ENUC = nuclear repulsion, 
+Sraw = np.genfromtxt('https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/HartreeFockCode/s.dat',dtype=None)                    # Sraw is overlap matrix, 
+Traw = np.genfromtxt('https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/HartreeFockCode/t.dat',dtype=None)                    # Traw is kinetic energy matrix,
+Vraw = np.genfromtxt('https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/HartreeFockCode/v.dat',dtype=None)                    # Vraw is potential energy matrix
 
 dim = 2 # dim is the number of basis functions 
 S = np.zeros((dim, dim)) # Initialize integrals, and put them in a Numpy array
@@ -76,7 +76,7 @@ for i in Vraw: V[i[0]-1, i[1]-1] = i[2] # Put the integrals into a matrix
 S            = symmetrise(S) # Flip the triangular matrix in the diagonal 
 V            = symmetrise(V) # Flip the triangular matrix in the diagonal
 T            = symmetrise(T) # Flip the triangular matrix in the diagonal
-TEI          = np.genfromtxt('./two_elec_int.dat') # Load two electron integrals
+TEI          = np.genfromtxt('https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/HartreeFockCode/two_elec_int.dat') # Load two electron integrals
 twoe         = {eint(row[0], row[1], row[2], row[3]) : row[4] for row in TEI} # Put in python dictionary
 Hcore        = T + V # Form core Hamiltonian matrix as sum of one electron kinetic energy, T and potential energy, V matrices
 SVAL, SVEC   = np.linalg.eigh(S) # Diagonalize basis using symmetric orthogonalization 
@@ -86,7 +86,7 @@ P            = np.zeros((dim, dim)) # P represents the density matrix, Initially
 DELTA        = 1 # Set placeholder value for delta
 count        = 0 # Count how many SCF cycles are done
 
-while DELTA > 0.00000000001:
+while DELTA > 0.0001:
     count     += 1                             # Add one to number of SCF cycles counter
     F         = makefock(Hcore, P, dim)        # Calculate Fock matrix, F
     Fprime    = fprime(S_minhalf, F)           # Calculate transformed Fock matrix, F'
