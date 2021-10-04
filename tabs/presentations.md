@@ -9,7 +9,7 @@ title: Presentations
 
 ## Talks
 
-* <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Sussex, UK, 2020<br> 
+* <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Sussex, UK, 2021<br> 
   
 * <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Kent, UK, 2019<br> 
 
@@ -22,6 +22,8 @@ title: Presentations
 * <p>“Magnetic monopoles in spin ice” - Physical Sciences Research Symposium, University of Kent, UK, 2017<br>
 
 ## Posters
+
+* <p>"Calculating High Precision Two-Electron Correlation Data" - Faraday Joint Interest Group Conference, Virtual, UK 2021<br>
 
 * <p>"Electron Correlation in the Real World" - STEM for Britain, Houses of Parliament, London, UK 2020<br>
 
