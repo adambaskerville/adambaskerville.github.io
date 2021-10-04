@@ -11,9 +11,8 @@ comments: false
 <br />
 <p align="center">
   <a href="https://github.com/adambaskerville/AstroPitography">
-    <img src="AstroPitographyLogoSmall.png" alt="Logo" width="80" height="80">
+    <img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/AstroPitographyLogoSmall.png" alt="Logo" width="80" height="80">
   </a>
-
   <h3 align="center">AstroPitography</h3>
 
   <p align="center">
@@ -35,7 +34,7 @@ comments: false
 <!-- ABOUT THE PROJECT -->
 ## About AstroPitography
 
-![AstroPitography](https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/AstroPitography_GUI.png)
+<img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/AstroPitography_GUI.png" width="700">
 
 Astrophotography is an expensive pastime, scopes, driven mounts, cameras, eyepieces, etc... I have always enjoyed squeezing as much performance out of more limited hardware to see what the end results can be; so when the **£50** Raspberry Pi High Quality camera was released I wanted to see how it handles astrophotography. It will certainly not beat a top of the line DSLR or a ZWO camera which are several orders of magnitude more expensive and refined, but I wanted to see what can be achieved. I wrote this simple Python program to act as a basic GUI for when I am out with my telescope. The Raspberry Pi 3B+ and HQ camera were mounted together and using a 1.25 inch to C adapter sits in the telescope eyepiece position. I set up the Raspberry Pi to act as a wireless access point and connect to its network via VNC on my phone to conveniently interface with the GUI. A small Raspberry Pi screen will also work great or just hooking it up to a regular monitor.
 
