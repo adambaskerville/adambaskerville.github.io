@@ -64,6 +64,7 @@ I had originally used stellarmate with kstars etc... but wanted a simpler way to
 ### Uses 
 
 #### (Not endorsements or sponsors, just where I purchased them from)
+
 * [Raspberry Pi 3B+](https://thepihut.com/products/raspberry-pi-3-model-b-plus)
 * [Raspberry Pi HQ Camera](https://thepihut.com/products/raspberry-pi-high-quality-camera-module)
 
