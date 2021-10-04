@@ -33,6 +33,11 @@
   path: tabs
   url: publications
 -
+  name: "AstroPitography"
+  icon: "fas fa-newspaper"
+  path: tabs
+  url: astro
+-
   name: "Painting"
   icon: "fas fa-newspaper"
   path: tabs
