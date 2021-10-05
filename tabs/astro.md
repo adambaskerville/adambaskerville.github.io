@@ -38,7 +38,7 @@ comments: false
 
 Astrophotography is an expensive pastime, scopes, driven mounts, cameras, eyepieces, etc... I have always enjoyed squeezing as much performance out of more limited hardware to see what the end results can be; so when the **£50** Raspberry Pi High Quality camera was released I wanted to see how it handles astrophotography. It will certainly not beat a top of the line DSLR or a ZWO camera which are several orders of magnitude more expensive and refined, but I wanted to see what can be achieved. I wrote this simple Python program to act as a basic GUI for when I am out with my telescope. The Raspberry Pi 3B+ and HQ camera were mounted together and using a 1.25 inch to C adapter sits in the telescope eyepiece position. I set up the Raspberry Pi to act as a wireless access point and connect to its network via VNC on my phone to conveniently interface with the GUI. A small Raspberry Pi screen will also work great or just hooking it up to a regular monitor.
 
-I had originally used stellarmate with kstars etc... but wanted a simpler way to interface with the HQ camera. This is only the first iteration of the program which currently has the following features:
+I had originally used stellarmate with kstars etc... but wanted a simpler way to interface with the HQ camera. This is still in early development which currently has the following features:
 
 * Control important settings of the camera:
   * Brightness
@@ -53,7 +53,7 @@ I had originally used stellarmate with kstars etc... but wanted a simpler way to
 * When a picture is taken it will be visible next to the live preview. If it is a poor image it can be deleted from within the program.
 * The default save location can be selected from within the program window; handy for saving to USB stick etc... especially for large RAW files.
 * Timed video capturing.
-* The image save format is `RAW`, preferred over `png` which processes the image. `png` is used when showing the most recent image taken. The RAW image information is extracted from the jpg file and saved as a dng file using pydng.
+* The image save format is `RAW`, preferred over `png` which processes the image. `png` is used when showing the most recent image taken. An option is provided to extract the RAW image information from the .jpg file and saved as a dng file using PiDNG.
 
 ### Built With
 
@@ -77,7 +77,7 @@ It is a self contained Python program. Type:
 
 `python3 AstroPitography.py`
 
-into a terminal on your raspberry pi to run the program and start taking pictures and videos. Editing your `.bashrc` can allow for the program to begin on startup.
+into a terminal on your raspberry pi to run the program and start taking pictures and videos. Editing your `.bashrc` can allow for the program to begin on startup. You can specify the image save location from the menu button at the top of the window.
 
 <!-- ROADMAP -->
 ## Roadmap
