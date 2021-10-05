@@ -10,6 +10,13 @@ math: true
 
 **Update 26-Oct-2020: This post uses `Matplotlib` v3.1.0. Using v3.3.0 produces errors with the discrete color map as they have changed the functionality.**
 
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post: 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/LangtonsAntCode/LangtonsAnt2.ipynb)
+
+
 In a [previous post](https://adambaskerville.github.io/posts/LangtonsAnt/) we programmed a simple implementation of Langton's ant and before reading ahead, it is recommended to first read this initial post. Our ant obeyed the following movement pattern:
 
 1) If you are on a white square, turn 90° clockwise, flip the colour of the square, then move forward one square.
