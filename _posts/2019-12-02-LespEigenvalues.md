@@ -8,6 +8,12 @@ comments: false
 math: true
 ---
 
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post: 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/EigenvaluesCode/Eigenvalues.ipynb)
+
 # The Problem:
 
 We want to solve the following standard eigenvalue problem
