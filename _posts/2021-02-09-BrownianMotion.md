@@ -8,6 +8,12 @@ comments: false
 math: true
 ---
 
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post: 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/BrownianMotionCode/BrownianMotion.ipynb)
+
 # What is Brownian Motion?
 
 Brownian motion named after its discoverer, botanist Robert Brown, is the motion exhibited by a small particle totally immersed in a liquid or gas. It is an example of a **stochastic process**, referring to a family of random variables indexed against some other variable or set of variables. Stochastic processes are used as mathematical models of systems appearing to vary in a random manner such as:
@@ -188,13 +194,6 @@ HTML(anim.to_html5_video()) # This is just for the Jupyter notebook which will n
 This produces the following output:
 
 <center><img src='https://raw.githubusercontent.com/adambaskerville/adambaskerville.github.io/master/_posts/BrownianMotionCode/BrownianMotion.gif'></center>
-
-# Try the code yourself!
-
-Click the following button to launch an ipython notebook on Google Colab:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/BrownianMotionCode/BrownianMotion.ipynb)
-
 
 # References
 

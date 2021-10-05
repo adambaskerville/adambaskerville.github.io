@@ -8,6 +8,12 @@ comments: false
 math: true
 ---
 
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post: 
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/LangtonsAntCode/LangtonsAnt.ipynb)
+
 # Langton's Ant
 
 The inspiration for this post came from [Numberphile](https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A) who made a [very informative](https://www.youtube.com/watch?v=NWBToaXK5T0) video on a mathematical simulation called Langton's ant, first described by Chris Langton in 1986. I found this problem fascinating and wanted to program it using Python. First lets discuss the problem.

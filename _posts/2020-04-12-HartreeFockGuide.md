@@ -8,6 +8,14 @@ comments: false
 math: true
 ---
 
+# Try the code yourself!
+
+Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post:
+
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/HartreeFockCode/HartreeFock.ipynb)
+
+
+
 In a previous post we looked at the [hydrogen atom](https://adambaskerville.github.io/Variational-Method-Hydrogen/) which is an exactly solvable two-particle quantum system. If we consider a system with a nucleus and two-electrons, a three-particle system, such as the helium atom, the quantum mechanical equations can **no longer be solved exactly**. This poses a towering hurdle to overcome as looking at the [periodic table](https://www.rsc.org/periodic-table) shows that every chemical element other than hydrogen contains more than 1 electron; some of them containing hundreds of electrons. If the equations of quantum mechanics cannot exactly solve any system with more than one electron then do we just throw in the towel and go solve something else? No...
 
 We need to relax the demand for an **exact** solution, and instead settle for an **approximate** solution. Quantum physics and chemistry has been developing methods to calculate these approximate solutions for almost a century, and there are now a wide variety of sophisticated methods. If we trace back their origins we arrive at a method called **Hartree Fock theory** or HF for short. Hartree Fock theory provides a means of approximating the wave function and energy of a many-electron system in it's ground state. The theory was developed in the late 1920's but still underpins most modern many-electron electronic structure methods.
@@ -851,13 +859,6 @@ This agrees very well with the textbook value of `-2.4438 hartrees`\\(^{[2]}\\) 
 # Conclusions
 
 We have given a simple overview of Hartree Fock theory and then expanded upon the key components in order to create our own 100 line Hartree Fock program. We used protonated helium as our test case and obtained a ground state energy of `-2.44414 hartrees` which matches very well to literature. If there are still parts of the process which are not clear, you can `print()` out as much information as needed from this program to follow each step in greater detail.
-
-# Try the code yourself!
-
-Click the following button to launch an ipython notebook on Google Colab:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/HartreeFockCode/HartreeFock.ipynb)
-
 # Further Reading
 
 If you want to explore Hartree Fock theory in even greater detail then I highly recommend the book by **Szabo and Ostlund**. It is very technical but is the best book on Hartree Fock theory:
