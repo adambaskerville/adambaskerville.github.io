@@ -7,8 +7,9 @@ comments: false
 ---
 
 <ol>
-<li><a> Reparametrization of the Colle-Salvetti Formula</a>: Adam L. Baskerville, Msugh Targema and Hazel Cox R. Soc. Open. Sci., Accepted</li>
+Reparametrization of the Colle-Salvetti Formula: Adam L. Baskerville, Msugh Targema and Hazel Cox R. Soc. Open. Sci., Accepted</li>
 
+<br/><br/>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S006532762030006X?via%3Dihub" target="_blank">The bound state stability of the hydride ion in Hartree-Fock theory</a>:
 Adam L. Baskerville and Hazel Cox and Ville J.J.Syrjanen and Michael Melgaard Adv. Quant. Chem. Phys. <b>77</b>, 201-240, 2020</li>
 
