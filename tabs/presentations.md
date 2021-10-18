@@ -9,6 +9,8 @@ title: Presentations
 
 ## Talks
 
+* <p>"Deep Learning in Quantum Chemistry" - University of Sussex, UK, 2021<br> 
+
 * <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Sussex, UK, 2021<br> 
   
 * <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Kent, UK, 2019<br> 
