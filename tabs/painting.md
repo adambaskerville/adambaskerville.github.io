@@ -13,7 +13,8 @@ Newest painting first working backwards.
 <div class="pa-gallery-player-widget" style="width:100%; height:480px; display:none;"
   data-link="https://photos.google.com/share/AF1QipOXhJDkI9wcTqvnqstJ_oyXZR0FrtafXGBSn6bQ5ApCLz4QH6vsZb0-Eed7Q03eRw?key=LUw3ekdhMVpCRldBZi03ZEl6d3dhbFBqTVhQZlV3"
   data-title="Painting"
-  data-description="18 new photos added to shared album">
+  data-description="19 new photos added to shared album">
+  <object data="https://lh3.googleusercontent.com/uVoTrYjJl3GBMe86PC_Rq6tosVd3yvqvx5V_pUSx1fzL_d1LiPqA8KpPfKBvaUnbtP2S5YRiMzhBXwBjxUk_CHq1gGo67PYULng_ANKi_KdKsdGWXc06_bMoSnVkg_Fh_jR3cS46qw=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/WNWso4sHZHTwHKJYBh-BR_FdPsj6dj4M9NL5yE65x4u7Ie3J9oLR3mtakBgERp69O803yL4Um8V1mw0RslxYo1bzxMTulu-F00uaszK5rvxD0TrN7wk907IrPigvem-FE0N9ZgEHug=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/zmsEg_IoR2A1RWsvd2U9J50lNQdyXdqaPRV7Ci348Vpyh8Ek077_GUXpGTHfXhm3nrdOfEZxnNQN3Kh0l-89EHh4NlL0NL2TFNuKAtG1rtETRWT9qrXngo1D3wrS16UMUNauhLaGpQ=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/i4yl5PMHkwtov_1j6xeQM3KcrWtITUymRVGiJQr_-2EFeP9ONWxenLD0s4b3X_ye7bDoCfqxyrQrN2lhJbjU30Y3Nw2lMiL901jiK3c8cHh2kBslLVd4sT99AB91_dEScm8CeUdsDQ=w1920-h1080"></object>
@@ -33,7 +34,6 @@ Newest painting first working backwards.
   <object data="https://lh3.googleusercontent.com/fuQIQeJfe8I5iX0luHP8WOUDD060Iaz_g_RiO0D8sR2PPe5wchgEoKnUg2WUDBoJOlVvvzz7XbMEEK0VV9o13NCxR3X3KhgJecczTkA78cmUlyKvdCEg4Kxk1ROLccIv17UMU5_k7w=w1920-h1080"></object>
   <object data="https://lh3.googleusercontent.com/JDFJ4FFsS89sJ3aEnRqgKzNUexGapnXFtFUx07gXDVpqZ4ba-STxYP_YN1xQVSrRd3KfU26hlSOCFHPA1DRQvqmyIioBkvy-LIu7Anqpcobz9sBBzoXKjXt2ORYLZMsuXfeS-t_dQg=w1920-h1080"></object>
 </div>
-
 
 
 
