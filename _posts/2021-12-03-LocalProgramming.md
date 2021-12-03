@@ -10,7 +10,7 @@ math: true
 
 # Purpose
 
-This post is designed as a supplement to my Python [programming course](https://adambaskerville.github.io/tabs/progchem/). For new programmers it is not obvious how to go from writing a program to running it, and in this post we discuss a simple means to achieve this.
+This post is designed as a supplement to my [Python programming course](https://adambaskerville.github.io/tabs/progchem/). For new programmers it is not obvious how to go from writing a program to running it, and in this post we discuss a simple means to achieve this.
 
 # Running Python Locally
 
@@ -46,7 +46,7 @@ This post is designed as a supplement to my Python [programming course](https://
 
 3. Install the Python extension by doing the following:
 
-<center><img src="https://raw.githubusercontent.com/adambaskerville/ProgrammingForChemists/master/images/PythonInstall.gif" width="1000" height="1000" /></center>
+<center><img src="https://raw.githubusercontent.com/adambaskerville/ProgrammingForChemists/master/images/PythonInstall.gif" width="640" height="480" /></center>
 
 ## Running Python in vscode
 
@@ -54,7 +54,7 @@ This post is designed as a supplement to my Python [programming course](https://
 2. Type your Python code and save the file.
 3. Press the play button near the top right of the VS Code screen.
 
-<center><img src="https://raw.githubusercontent.com/adambaskerville/ProgrammingForChemists/master/images/RunningPython.gif" width="900" height="900" /></center>
+<center><img src="https://raw.githubusercontent.com/adambaskerville/ProgrammingForChemists/master/images/RunningPython.gif" width="640" height="480" /></center>
 
 # Conclusions
 
