@@ -32,3 +32,6 @@ If Google Colab does not work, try Binder (will take longer to load):
 There is also a message board for people to discuss the course together and to provide feedback:
 
 [![Gitter](https://badges.gitter.im/ProgrammingForChemists/community.svg)](https://gitter.im/ProgrammingForChemists/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+
+If you want a tutorial on how to setup a solution for programming on your local computer using Visual Studio Code, follow [this link](https://adambaskerville.github.io/posts/LocalProgramming/)
