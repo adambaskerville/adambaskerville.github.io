@@ -48,7 +48,7 @@ This post is designed as a supplement to my [Python programming course](https://
 
 <center><img src="https://raw.githubusercontent.com/adambaskerville/ProgrammingForChemists/master/images/PythonInstall.gif" width=auto height=auto /></center>
 
-## Running Python in vscode
+## Running Python in VS Code
 
 1. Create file with extension `.py` symbolising a Python file.
 2. Type your Python code and save the file.
