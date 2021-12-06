@@ -58,7 +58,7 @@ baseurl: ''
 timezone: Europe/London
 
 google_analytics:
-  id: 'G-HSJTH65R55'          # Fill with your Google Analytics ID
+  id: 'G-B55SXFHVL9'          # Fill with your Google Analytics ID
   pv:
     proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
     cache_path:       # the local PV cache data, friendly to visitors from GFW region
