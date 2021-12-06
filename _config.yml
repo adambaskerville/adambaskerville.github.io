@@ -50,7 +50,6 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 
 #--------------------------
 
-
 # Only if your site type is GitHub Project sites and doesn't have a custom domain,
 # change below value to '/projectname'.
 baseurl: ''
@@ -59,7 +58,7 @@ baseurl: ''
 timezone: Europe/London
 
 google_analytics:
-  id: ''          # Fill with your Google Analytics ID
+  id: 'G-HSJTH65R55'          # Fill with your Google Analytics ID
   pv:
     # The Google Analytics pageviews switch.
     # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.

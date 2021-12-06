@@ -112,7 +112,25 @@ In order to run all this on a computer, one needed a convenient way to order lin
 We now construct our Python program to implement the Pekeris series solution method.
 # Implementation
 
-Pekeris originally derived the 33-term recursion relation by hand, but here I pre-calculated it using Maple and saved it to a text file so our Python program can refer to it.
+Pekeris originally derived the 33-term recursion relation by hand, but here I pre-calculated it using Maple and saved it to a text file called `RR.txt` which our Python program will call.
+
+## Loading 33-term Recursion Relation
+
+There are a number of ways to read external data files into python, but here we use `NumPy`, specifically the [`genfromtxt`](https://numpy.org/doc/stable/reference/generated/numpy.genfromtxt.html) command.
+
+```python
+from numpy import genfromtxt
+
+RR = genfromtxt("RR.txt")
+```
+
+
+## Building Matrices
+
+## Solving Generalized Eigenvalue Problem
+
+## Complete Program
+
 
 # Conclusions
 
