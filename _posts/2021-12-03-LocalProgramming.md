@@ -44,7 +44,7 @@ This post is designed as a supplement to my [Python programming course](https://
 
 2. Check out the [introductory video series](https://code.visualstudio.com/docs/getstarted/introvideos) on the basics of using VS Code.
 
-3. Install the Python extension by doing the following (**note, make sure you use the one which starts with capital P and has been downloaded 46 million + times**):
+3. Install the Python extension by doing the following:
 
 <center><img src="https://raw.githubusercontent.com/adambaskerville/ProgrammingForChemists/master/images/PythonInstall.gif" width=auto height=auto /></center>
 
