@@ -5,7 +5,7 @@ tags: [painting, bob ross, oil paints]
 date: 2021-02-17
 comments: false
 ---
-During lockdown I began watching ["The Joy of Painting"](https://www.youtube.com/user/BobRossInc) hosted by Bob Ross on BBC4, and I was inspired to learn to paint. This page will track my paintings and hopefully show my improvement over time. 
+During lockdown I started watching ["The Joy of Painting"](https://www.youtube.com/user/BobRossInc) hosted by Bob Ross on BBC4, and I was inspired to learn to paint. This page will track my paintings and hopefully show my improvement over time. 
 
 Newest painting first working backwards.
 
