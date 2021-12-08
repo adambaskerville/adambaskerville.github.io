@@ -153,7 +153,7 @@ def cumulative_sum_grid_two_sums(a, b, c, d, e, f):
 ## Solution 5: JIT + Vectorisation
 [JIT](https://en.wikipedia.org/wiki/Just-in-time_compilation) stands for Just In Time compilation, which is a way of executing computer code involving compilation during execution of a program - at run time - rather than prior to execution. This is implemented via the `Numba` library. 
 
-[Vectorisation]((https://www.oreilly.com/library/view/python-for-data/9781449323592/ch04.html)) is a very powerful programmatic technique well described by Wes McKinney:
+[Vectorisation](https://www.oreilly.com/library/view/python-for-data/9781449323592/ch04.html) is a very powerful programmatic technique well described by Wes McKinney:
 
 *"Arrays are important because they enable you to express batch operations on data without writing any for loops. This is usually called vectorization. Any arithmetic operations between equal-size arrays applies the operation elementwise."* - **Wes McKinney**
 
