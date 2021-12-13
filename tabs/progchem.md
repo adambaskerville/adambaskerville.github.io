@@ -16,6 +16,8 @@ This course is designed to be an introduction to the Python programming language
 6. Physical chemistry in Python.
 7. Practical machine learning for chemists.
 
+There is also a worksheet with numerous practice problems (with answer code) for you to put your new Python knowledge to the test! Remember, if your code produces the correct answer but was programmed differently from the answer snippets of code it does not matter, there are numerous ways to approach a problem.
+
 If you have any feedback from taking the course then feel free to contact me so I can continually improve it.
 
 To start the course click the link below to begin. Open the non-checkpoint versions of the ipynb files:
