@@ -38,7 +38,7 @@ comments: false
     <img src="AstroPitographyLogoSmall.png" alt="Logo" width="80" height="80">
   </a>
 
-<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/AstroPitography_GUI.png" width="auto" height="auto" /></center>
+<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/AstroPitography_GUI.png" width="700" height="auto" /></center>
 
 Astrophotography is an expensive pastime, scopes, driven mounts, cameras, eyepieces, etc... I have always enjoyed squeezing as much performance out of more limited hardware to see what the end results can be; so when the **£50** Raspberry Pi High Quality camera was released I wanted to see how it handles astrophotography. It will certainly not beat a top of the line DSLR or a ZWO camera which are several orders of magnitude more expensive and refined, but I wanted to see what can be achieved. I wrote this simple Python program to act as a basic GUI for when I am out with my telescope. The Raspberry Pi 3B+ and HQ camera were mounted together and using a 1.25 inch to C adapter sits in the telescope eyepiece position. I set up the Raspberry Pi to act as a wireless access point and connect to its network via VNC on my phone to conveniently interface with the GUI. A small Raspberry Pi screen will also work great or just hooking it up to a regular monitor.
 
@@ -119,21 +119,21 @@ The following, lovely images were taken by Herbert Fu:
 
 **M45 galaxy:**
 
-![M45](https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/M45.jpg)
+<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/M45.jpg" width="700" height="auto" /></center>
 
 **M31 galaxy:**
 
-![M31](https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/M31.jpg)
+<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/M31.jpg" width="700" height="auto" /></center>
 
 **M42 galaxy:**
 
-![M42](https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/M42.jpg)
+<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/M42.jpg" width="700" height="auto" /></center>
 
 **Jupiter:**
 
-![Jupiter](https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/Jupiter.jpg)
+<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/Jupiter.jpg" width="700" height="auto" /></center>
 
 
 This is an image of the moon I captured:
 
-![Moon](https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/Moon_stitch.png)
+<center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/images/Moon_stitch.png" width="700" height="auto" /></center>
