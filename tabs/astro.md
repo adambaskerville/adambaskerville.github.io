@@ -9,9 +9,7 @@ comments: false
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/adambaskerville/AstroPitography">
-    <img src="AstroPitographyLogoSmall.png" alt="Logo" width="80" height="80">
-  </a>
+  <center><img src="https://raw.githubusercontent.com/adambaskerville/AstroPitography/main/AstroPitographyLogoSmall.png" width="80" height="80" /></center>
 
   <h3 align="center">AstroPitography</h3>
 
