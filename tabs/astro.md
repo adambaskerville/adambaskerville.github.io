@@ -27,7 +27,9 @@ comments: false
   * [Built With](#built-with)
   * [Uses](#uses)
 * [Getting Started](#getting-started)
+* [Dependencies](#dependencies)
 * [Roadmap](#roadmap)
+* [Examples](#examples)
 
 <!-- ABOUT THE PROJECT -->
 ## About AstroPitography
@@ -51,18 +53,21 @@ I had originally used stellarmate with kstars etc... but wanted a simpler way to
   * Time delay between images
 * Show a live preview of the camera view in the main window; useful for making sure something is in frame.
 * Ability to enlarge and shrink the live preview using GUI buttons.
+* Ability to overlay a crosshair on the live preview, useful for alignment.
 * Toggle greyscale imaging (useful if using colour filters) and auto white balance correction.
 * Allows for capturing of single images, multiple images with time delay and long exposure imaging.
-* When a picture is taken it will be visible next to the live preview. If it is a poor image it can be deleted from within the program.
+* When a picture is taken it is visible from the top menu. 
+  * If it is a poor image it can be deleted from within the program.
 * The default save location can be selected from within the program window; handy for saving to USB stick etc... especially for large RAW files.
 * Timed video capturing.
-* The image save format is `RAW`, preferred over `png` which processes the image. `png` is used when showing the most recent image taken. An option is provided to extract the RAW image information from the .jpg file and saved as a dng file using PiDNG.
+* The image save format is `RAW`, preferred over `png` which processes the image. `png` is used when showing the most recent image taken. 
+  * An option is provided to extract the RAW image information from the .jpg file and saved as a dng file using PiDNG.
 
 ### Built With
 
 * [PySimpleGUI](https://pysimplegui.readthedocs.io/en/latest/)
-* [OpenCV](https://opencv.org/)
-* [Raspistill](https://www.raspberrypi.org/documentation/usage/camera/raspicam/raspistill.md)
+* [Pillow](https://pillow.readthedocs.io/en/stable/)
+* [Picamera](https://picamera.readthedocs.io/en/release-1.13/)
 
 ### Uses (Not endorsements or sponsors, just where I purchased them from)
 * [Raspberry Pi 3B+](https://thepihut.com/products/raspberry-pi-3-model-b-plus)
