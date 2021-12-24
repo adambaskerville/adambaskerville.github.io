@@ -11,13 +11,13 @@ comments: false
 <li>Correlated Energy from Radial Density-Energy Relations: Adam L. Baskerville and Hazel Cox, Nature., <b>Submitted</b>, 2021</li>
 
 <br/><br/>
-<li>Reparametrization of the Colle-Salvetti Formula: Adam L. Baskerville, Msugh Targema and Hazel Cox, R. Soc. Open. Sci., <b>Accepted</b>, 2021</li>
-
-<br/><br/>
 <li>Behaviour Near Electron Detachment and Excited States for Two-Electron Atoms: Adam L. Baskerville, Rob Ziolek and Hazel Nature., <b>In preparation</b>, 2021</li>
 
 <br/><br/>
 <li>Positive Electron Correlation: Adam L. Baskerville and Hazel Nature., <b>In preparation</b>, 2021</li>
+
+<br/><br/>
+<li>Reparametrization of the Colle-Salvetti Formula: Adam L. Baskerville, Msugh Targema and Hazel Cox, R. Soc. Open. Sci., <b>9</b>, 211333, 2022</li>
 
 <br/><br/>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S006532762030006X?via%3Dihub" target="_blank">The bound state stability of the hydride ion in Hartree-Fock theory</a>:
