@@ -2,7 +2,7 @@
 layout: page
 title: Publications
 tags: [publications, me, adam, baskerville]
-date: 2016-07-29
+date: 2022-01-05
 comments: false
 ---
 
@@ -17,7 +17,7 @@ comments: false
 <li>Positive Electron Correlation: Adam L. Baskerville and Hazel Nature., <b>In preparation</b>, 2021</li>
 
 <br/><br/>
-<li>Reparametrization of the Colle-Salvetti Formula: Adam L. Baskerville, Msugh Targema and Hazel Cox, R. Soc. Open. Sci., <b>9</b>, 211333, 2022</li>
+<li><a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211333" target="_blank">Reparametrization of the Colle-Salvetti Formula</a>: Adam L. Baskerville, Msugh Targema and Hazel Cox, R. Soc. Open. Sci., <b>9</b>, 211333, 2022</li>
 
 <br/><br/>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S006532762030006X?via%3Dihub" target="_blank">The bound state stability of the hydride ion in Hartree-Fock theory</a>:
