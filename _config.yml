@@ -10,7 +10,7 @@
 
 title: Dr Adam Luke Baskerville  # the main title
 
-tagline: Research Scientist in Quantum Mechanics "[@ExscientiaAI](https://twitter.com/ExscientiaAI)"  # it will display as the sub-title
+tagline: Research Scientist in Quantum Mechanics <a href=https://twitter.com/ExscientiaAI>@ExscientiaAI</a>"  # it will display as the sub-title
 
 description: >-                        # used by seo meta and the atom feed
   The personal website of Adam Luke Baskerville
