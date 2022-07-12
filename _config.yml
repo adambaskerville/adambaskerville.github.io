@@ -38,13 +38,13 @@ linkedin:
 
 social:
   name: Adam Luke Baskerville           # it will shows as the copyright owner in Footer
-  email: ab695@sussex.ac.uk             # change to your email address
+  email: adamlukebaskerville@gmail.com             # change to your email address
   links:
     # The first element serves as the copyright owner's link
     - https://twitter.com/AdamBask                           # change to your twitter homepage
     # Uncomment below to add more social links
     - https://www.researchgate.net/profile/Adam_Baskerville
-    #- https://www.linkedin.com/in/adam-baskerville-6710811b2
+    - https://www.linkedin.com/in/adam-baskerville-6710811b2
 
 google_site_verification: google_meta_tag_verification # change to your verification string
 
