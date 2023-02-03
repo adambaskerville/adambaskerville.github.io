@@ -11,10 +11,7 @@ comments: false
 <li>Correlated Energy from Radial Density-Energy Relations: Adam L. Baskerville and Hazel Cox, Nature., <b>Submitted</b>, 2021</li>
 
 <br/><br/>
-<li>Behaviour Near Electron Detachment and Excited States for Two-Electron Atoms: Adam L. Baskerville, Rob Ziolek and Hazel Nature., <b>In preparation</b>, 2021</li>
-
-<br/><br/>
-<li>Positive Electron Correlation: Adam L. Baskerville and Hazel Nature., <b>In preparation</b>, 2021</li>
+<li><a href="https://www.tandfonline.com/doi/full/10.1080/00268976.2022.2146540?src=" target="_blank">Consequences of approximating electron correlation effects</a>: Adam L. Baskerville and Hazel Cox, Mol. Phys., <b>0</b>, e2146540, 2022</li>
 
 <br/><br/>
 <li><a href="https://royalsocietypublishing.org/doi/10.1098/rsos.211333" target="_blank">Reparametrization of the Colle-Salvetti Formula</a>: Adam L. Baskerville, Msugh Targema and Hazel Cox, R. Soc. Open. Sci., <b>9</b>, 211333, 2022</li>
