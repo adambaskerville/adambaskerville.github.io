@@ -8,7 +8,8 @@ comments: false
 
 <ol>
 
-<li>Correlated Energy from Radial Density-Energy Relations: Adam L. Baskerville and Hazel Cox, Nature., <b>Submitted</b>, 2021</li>
+<br/><br/>
+<li><a href="https://royalsocietypublishing.org/doi/10.1098/rsos.221402" target="_blank">Correlated energy from radial density-energy relations</a>: Adam L. Baskerville, Conor Gray and Hazel Cox, R. Soc. Open. Sci., <b>10</b>, 221402, 2023</li>
 
 <br/><br/>
 <li><a href="https://www.tandfonline.com/doi/full/10.1080/00268976.2022.2146540?src=" target="_blank">Consequences of approximating electron correlation effects</a>: Adam L. Baskerville and Hazel Cox, Mol. Phys., <b>0</b>, e2146540, 2022</li>
