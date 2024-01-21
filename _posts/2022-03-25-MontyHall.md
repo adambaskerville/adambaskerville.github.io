@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "T>T: Behind the Doors: Navigating the Monty Hall Puzzle"
+title: "T>T: Behind the Doors of the Monty Hall Puzzle"
 date: 2022-03-25
 excerpt: "We explore the counterintuitive outcomes of the Month Hall problem."
 tags: [science, mathematics, programming, chemistry, physics, length, Monty, Hall]
