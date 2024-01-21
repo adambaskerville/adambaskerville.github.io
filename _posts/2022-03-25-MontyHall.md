@@ -86,7 +86,7 @@ stick_wins, switch_wins = monty_hall_simulation(num_simulations)
 print(f"Sticking with the initial choice wins {stick_wins} out of {num_simulations} times.")
 print(f"Switching doors wins {switch_wins} out of {num_simulations} times.")
 ```
-Running the above code for 1000 simulations produces the following output. Note that if you runthe code the numbers will not be identical to these as the output is stochastic.
+Running the above code for 1000 simulations produces the following output. Note that if you run the code the numbers will not be identical to these as the output is stochastic.
 
 ```shell
 Sticking with the initial choice wins 340 out of 1000 times.
@@ -181,11 +181,9 @@ We can now run the simulation for different numbers of doors. The barplot below 
 
 ![Desktop View]({{ "/assets/img/monty_hall_n_doors.png" | relative_url }})
 
-These results show that it is **always** the best option to switch regardless of the number of doors, but the probability of winning when switching **decreases** as the number of doors increases.
+These results show that it is **always** the best option to switch regardless of the number of doors, but the probability of winning when switching **decreases** as the number of doors increases, which is intuitive as there are more doors with goats behind them.
 
-As the number of doors increases, the advantage that switching offers decreases which is intuitive as there are more doors with goats behind them.
-
-We can see that the probability of winning when sticking converges to \\(1/n\\) and the probability of winning when switching converges to \\(2 / (n-1)\\) where \\(n\\) is the number of doors. This is in agreement with the exact mathematical result.
+We can see that the probability of winning when sticking converges to \\(1/n\\) and the probability of winning when switching converges to \\((n-1)/(n(n-2))\\) where \\(n\\) is the number of doors. This is in agreement with the exact mathematical result.
 
 **Conclusion:**
 
