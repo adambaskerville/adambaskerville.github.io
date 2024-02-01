@@ -1,0 +1,52 @@
+\documentclass{standalone}
+\usepackage{pgfplots,pgfplotstable}
+\usepgflibrary{plotmarks}
+\usetikzlibrary{calc}
+
+\pgfplotstableread[col sep=comma]{data.csv}\datatable
+
+\begin{document}
+	\begin{tikzpicture}[x=1cm, y=0.2mm]
+		\begin{axis}[
+			every axis plot post/.style={mark=-,thick,mark size=2mm},
+			ylabel=Energy / kJmol$^{-1}$, 
+			xtick=\empty, 
+			legend pos=outer north east,
+			xmin=-1,
+			ymin=-100,
+			axis lines=left,  
+			xtick=\empty,
+			hide x axis,
+			legend entries={\small Pathway 1, \small Pathway 2,\small Pathway 3},
+			legend style={draw=none},
+			title=Energy Transition Diagram,
+			anchor=origin,
+			disabledatascaling,
+			only marks,
+			x=1cm, y=0.2mm,]
+			\pgfplotstablegetcolsof{\datatable}
+			\pgfmathsetmacro\numberofycols{\pgfplotsretval-1}
+			\pgfplotsinvokeforeach {0,...,\numberofycols}{  
+				\addplot table[x expr=\coordindex, y index=#1] {\datatable};
+			}
+		\end{axis}
+		
+		\pgfplotstablegetcolsof{\datatable}
+		\pgfmathsetmacro\numberofcols{int(\pgfplotsretval)-1} % Subtract 1 to exclude the label column
+		
+		\foreach \case in {0,...,\numberofcols} {
+			\pgfplotstablegetcolumnnamebyindex{\case}\of\datatable\to\colname
+			\xdef\previndex{0}
+			\xdef\prevlevel{0}
+			\pgfplotstableforeachcolumnelement{\colname}\of\datatable\as\level{%
+				\pgfmathfloatparsenumber{\level}
+				\pgfmathfloatgetflagstomacro\pgfmathresult\flags
+				\ifnum\flags=3\relax\else
+				\draw[densely dotted] ($(\previndex,\prevlevel)+(0.2,0)$) -- ($(\pgfplotstablerow,\level)+(-0.2,0)$);
+				\xdef\previndex{\pgfplotstablerow}
+				\xdef\prevlevel{\level}
+				\fi
+			}
+		}
+	\end{tikzpicture}
+\end{document}
