@@ -54,13 +54,13 @@ First we look at the entire code and then discuss in detail how it works. Feel f
 		\end{axis}
 		
 		\pgfplotstablegetcolsof{\datatable}
-		\pgfmathsetmacro\numberofcols{int(\pgfplotsretval)-1} % Subtract 1 to exclude the label column
+		\pgfmathsetmacro\numberofcols{int(\pgfplotsretval)-1}
 		
 		\foreach \case in {0,...,\numberofcols} {
 			\pgfplotstablegetcolumnnamebyindex{\case}\of\datatable\to\colname
 			\xdef\previndex{0}
 			\xdef\prevlevel{0}
-			\pgfplotstableforeachcolumnelement{\colname}\of\datatable\as\level{%
+			\pgfplotstableforeachcolumnelement{\colname}\of\datatable\as\level{
 				\pgfmathfloatparsenumber{\level}
 				\pgfmathfloatgetflagstomacro\pgfmathresult\flags
 				\ifnum\flags=3\relax\else
@@ -151,7 +151,7 @@ The main idea of this script is to use `pgfplots` to draw the levels and use `ti
     * `\xdef\previndex{0}` and `\xdef\prevlevel{0}` initialize variables to keep track of the previous row index and energy level.
 
     ```latex
-    \pgfplotstableforeachcolumnelement{\colname}\of\datatable\as\level{%
+    \pgfplotstableforeachcolumnelement{\colname}\of\datatable\as\level{
         \pgfmathfloatparsenumber{\level}
         \pgfmathfloatgetflagstomacro\pgfmathresult\flags
         \ifnum\flags=3\relax\else
