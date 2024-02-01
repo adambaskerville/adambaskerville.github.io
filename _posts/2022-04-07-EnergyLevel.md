@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: LaTeX for Energy Level Transition Diagrams"
-date: 2022-03-25
+date: 2022-04-07
 excerpt: "We build a tool to automatically plot energy level transition diagrams used by chemists to visualise the energy barriers for chemical reactions."
 tags: [science, mathematics, programming, chemistry, physics, latex, length, energy, level, diagrams]
 comments: false
