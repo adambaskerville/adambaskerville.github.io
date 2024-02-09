@@ -318,7 +318,7 @@ This is a really nice way to visualise how the  particle density changes with in
 
 * At the end of the animation it looks like the plots dissapear but they do not. At \\(Z=1.24\\) there is a dramatic change in the particle density as the system becomes unbound into a hydrogen atom and a lone electron which means the density becomes massively diffuse over all space. The scales change by orders of magnitude and so it collapses to the axis in the above animation which is just visible.
 
-# Conlusions
+# Conclusions
 
 We have shown that the bond length in H\\(_2^+\\) temporarily decreases as the charge of the nuclei increases which is exactly what J. D. Dunitz and T. K. Ha showed in their paper for the hydrogen molecule, \\(H_2\\). It took a bit of work getting there but it is really nice to verify their result for the hydrogen molecular ion and to discover some really interesting quantum physics along the way.
 
