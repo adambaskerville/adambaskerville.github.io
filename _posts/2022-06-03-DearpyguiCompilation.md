@@ -10,7 +10,7 @@ math: true
 
 # The Problem
 
-DearPyGui, available at https://github.com/hoffstadt/DearPyGui, is a robust and speedy Graphical User Interface (GUI) toolkit designed for Python, boasting minimal dependencies. I've been keen to integrate it as the primary library for my AstroPitography GUI. However, a hurdle emerged - it lacks compatibility with the 32-bit Buster Raspberry Pi operating system running on my RPi 3B+.
+DearPyGui, available at [https://github.com/hoffstadt/DearPyGui](https://github.com/hoffstadt/DearPyGui), is a robust and speedy Graphical User Interface (GUI) toolkit designed for Python, boasting minimal dependencies. I've been keen to integrate it as the primary library for my AstroPitography GUI. However, a hurdle emerged - it lacks compatibility with the 32-bit Buster Raspberry Pi operating system running on my RPi 3B+.
 
 This blog post serves as a comprehensive guide detailing the steps necessary to compile the DearPyGui library on the 32-bit architecture of a Raspberry Pi, specifically the 3B+. While its primary purpose is to serve as a personal reference for potential future endeavors, I also hope it proves beneficial for others who have found themselves scouring the internet for hours in search of a solution.
 
