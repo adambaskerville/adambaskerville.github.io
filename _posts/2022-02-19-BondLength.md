@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Surprising Behaviour in the Bond Length of the Hydrogen Molecular Ion"
-date: 2022-06-03
+date: 2022-02-19
 excerpt: "We explore the effect of nuclear charge on the bond length in the hydrogen molecular ion."
 tags: [science, mathematics, programming, hydrogen, molecular, ion, molecules, chemistry, physics, bond, length, H2+]
 comments: false
