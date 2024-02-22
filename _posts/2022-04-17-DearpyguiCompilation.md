@@ -35,26 +35,27 @@ Initially I did not worry about swap memory but I ran into `OOM` errors when try
 
 3. Enable the swap file for paging and swapping.
 
-	```shell
-	sudo swapon swapfile
-	```
+    ```shell
+    sudo swapon swapfile
+    ```
 
 4. Add the swap file into the `fstab` file to make it persistent on the next system boot, if required.
 
-	```shell
-	echo "/var/cache/swap/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
-	```
+    ```shell
+    echo "/var/cache/swap/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab
+    ```
 
 5. Restart the Raspberry Pi and the new swap file will be ready to use. This can be checked using.
 
-	```shell
-	top -bn1 | grep -i swap
-	```
+    ```shell
+    top -bn1 | grep -i swap
+    ```
 	and you should see the line.
 
-	```shell
-	KiB Swap:  4194300 total
-	```
+    ```shell
+    KiB Swap:  4194300 total
+    ```
+
 # Locally Compile DearPyGui
 
 1. The first step is to set the Raspberry Pi into "Legacy" mode in raspi-config.
