@@ -84,7 +84,7 @@ Initially I did not worry about swap memory but I ran into `OOM` errors when try
 	```
 	If this is successful a wheel file will be found in `../dist`. **Note** that the platform name, `linux_armv7l` is very important. `pip` considers the name of the resultant wheel file when checking if it can be compiled on the currently available architecture. It will check for `linux_arm7l` when installing.
 
-# Install DearpyGui
+# Install DearPyGui
 
 We now install the wheel file using pip.
 
