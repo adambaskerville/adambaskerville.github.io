@@ -9,6 +9,10 @@ title: Presentations
 
 ## Talks
 
+* <p>"PhysicsML: A Python Ecosystem for​ Molecular Machine Learning​" - University of Nottingham, UK, 2024<br> 
+
+* <p>"Designing Drugs Using Quantum Mechanics" - University of Sussex, UK, 2023<br> 
+
 * <p>"Deep Learning in Quantum Chemistry" - University of Sussex, UK, 2021<br> 
 
 * <p>"The Quantum Mechanical three-body problem: Where Physics meets Chemistry" - University of Sussex, UK, 2021<br> 
