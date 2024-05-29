@@ -9,7 +9,7 @@ comments: false
 <ol>
 
 <br/><br/>
-<li><a href="https://chemrxiv.org/engage/chemrxiv/article-details/65e19adee9ebbb4db9a3c6a5" target="_blank">Insights and Challenges in Correcting Force Field Based Solvation Free Energies Using A Neural Network Potential</a>: J. Karwounopoulos, Z. Wu, S. Tkaczyk, S. Wang, A. Baskerville, K. Ranasinghe, T. Langer, G. Wood, M. Wieder, and S. Boresch, R. Soc. Open. Sci., <b></b>, 2024</li>
+<li><a href="https://chemrxiv.org/engage/chemrxiv/article-details/65e19adee9ebbb4db9a3c6a5" target="_blank">Insights and Challenges in Correcting Force Field Based Solvation Free Energies Using A Neural Network Potential</a>: J. Karwounopoulos, Z. Wu, S. Tkaczyk, S. Wang, A. Baskerville, K. Ranasinghe, T. Langer, G. Wood, M. Wieder, and S. Boresch, <b></b>, 2024</li>
 
 <br/><br/>
 <li><a href="https://royalsocietypublishing.org/doi/10.1098/rsos.221402" target="_blank">Correlated energy from radial density-energy relations</a>: Adam L. Baskerville, Conor Gray and Hazel Cox, R. Soc. Open. Sci., <b>10</b>, 221402, 2023</li>
