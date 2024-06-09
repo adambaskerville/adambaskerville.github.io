@@ -26,7 +26,7 @@ where \\(\mathbf{H}\\) represents our Hamiltonian matrix, \\(\mathbf{S}\\) the o
 
 One of the key issues making GEPs difficult to solve is their numerical stability which can be thought of as how errors introduced during the execution of an algorithm affect the end result. There is a large variety of manipulations and tricks you can use to pre-process the input matrices or to reformulate the problem to reduce these errors but sometimes these are not enough. For anyone who has tried to calculated the eigenvalues for an excited state problem will be fully aware of these numerical difficulties...
 
-One "last resort" solution involves increasing the computational precision from double precision (~16 digits) to quadruple precision (~32 digits). This approach is not preferred, as it significantly slows down computation time. Quadruple precision is a non-native data type, which lacks support in nearly all programming languages where the `double` (or `long double`) data type offers the highest native precision.
+One "last resort" solution involves increasing the computational precision from double precision (~16 digits) to quadruple precision (~32 digits). This approach is not preferred, as it is significantly slows down computation time. Quadruple precision is a non-native data type, which lacks support in nearly all programming languages where the `double` (or `long double`) data type offers the highest native precision.
 
 How significant is the time penalty going from 16 to 32 or even 64 digit precision? This depends on the problem you are solving but can easily be 100x slower.
 
