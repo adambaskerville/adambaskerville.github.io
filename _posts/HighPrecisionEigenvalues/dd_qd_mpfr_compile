@@ -1,0 +1,5 @@
+#!/bin/bash
+
+g++-14 -c "dd_qd_mpfr_eigenvalues.cpp" -g -O3 -fopenmp -std=c++20 -o dd_qd_mpfr_eigenvalues.cpp.o -I/Users/abaskerville/Documents/eigen-3.4.0/ -I/Users/abaskerville/Documents/adambaskerville.github.io/_posts/HighPrecisionEigenvalues -I/opt/homebrew/include/ -I/Users/abaskerville/Documents/qdpp/include/ -L/opt/homebrew/lib/ -DEIGEN_DEFAULT_DENSE_INDEX_TYPE=int
+
+g++-14 dd_qd_mpfr_eigenvalues.cpp.o -o dd_qd_mpfr_eigenvalues -L/opt/homebrew/lib/ -lmpfr -lgmp -lm -Wl, -DEIGEN_DEFAULT_DENSE_INDEX_TYPE=int -fopenmp
