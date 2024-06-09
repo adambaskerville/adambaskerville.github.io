@@ -38,6 +38,11 @@
   path: tabs
   url: astro
 -
+  name: "Astrophotography"
+  icon: "fas fa-newspaper"
+  path: tabs
+  url: astrophotography
+-
   name: "Painting"
   icon: "fas fa-newspaper"
   path: tabs
