@@ -63,8 +63,8 @@ Next we import the libraries we need and setup the namespace for Eigen.
 #include <mpreal.h> // header for GNU MPFR
 #include <algorithm>
 #include <complex>
-#include <qd/qd_real.h> // header for double-double (dd_real) 
-#include <qd/dd_math.h> // header for quad-double (qd_real)
+#include <qd/qd_real.h> // header for quad-double (qd_real) 
+#include <qd/dd_math.h> // header for double-double (dd_real)
 
 using namespace Eigen;
 using namespace std;
