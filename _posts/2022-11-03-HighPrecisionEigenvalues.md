@@ -169,7 +169,7 @@ g++-14 -c "dd_qd_mpfr_eigenvalues.cpp" -g -O3 -fopenmp -std=c++20 -o dd_qd_mpfr_
 g++-14 dd_qd_mpfr_eigenvalues.cpp.o -o dd_qd_mpfr_eigenvalues -L/opt/homebrew/lib/ -lmpfr -lgmp -lm -Wl, -DEIGEN_DEFAULT_DENSE_INDEX_TYPE=int -fopenmp
 ```
 
-We are done! This shows how easy it is to use these optimised, higher precision types as drop-in replacements for standard `float` or `double` when usingthe Eigen C++ library. You can run this code by calling the binary name and providing a matrix dimension.
+We are done! This shows how easy it is to use these optimised, higher precision types as drop-in replacements for standard `float` or `double` when using the Eigen C++ library. You can run this code by calling the binary name and providing a matrix dimension.
 
 ```shell
 dd_qd_mpfr_eigenvalues 10
