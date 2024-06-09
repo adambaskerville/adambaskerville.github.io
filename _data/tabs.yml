@@ -33,20 +33,20 @@
   path: tabs
   url: publications
 -
-  name: "AstroPitography"
+  name: "Painting"
   icon: "fas fa-newspaper"
   path: tabs
-  url: astro
+  url: painting
 -
   name: "Astrophotography"
   icon: "fas fa-newspaper"
   path: tabs
   url: astrophotography
 -
-  name: "Painting"
+  name: "AstroPitography"
   icon: "fas fa-newspaper"
   path: tabs
-  url: painting
+  url: astro
 #- 
 #  name: Categories
 #  icon: "fas fa-stream"
