@@ -108,7 +108,7 @@ Below are some key dependencies and library versions to run AstroPitography:
 <!-- CONTACT -->
 ## Contact
 
-Adam Baskerville - [@AdamBask](https://twitter.com/AdamBask) - ab695@sussex.ac.uk
+Adam Baskerville - [@@SciBaskerville](https://twitter.com/@SciBaskerville) - adamlukebaskerville@gmail.com
 
 Project Link: [https://github.com/adambaskerville/AstroPitography](https://github.com/adambaskerville/AstroPitography)
 
