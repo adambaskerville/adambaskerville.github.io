@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 
+title: Astrophotography
 tags: [astrophotography, space]
 date: 2024-06-09
 comments: false
