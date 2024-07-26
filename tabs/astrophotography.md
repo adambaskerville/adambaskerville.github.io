@@ -15,4 +15,5 @@ Newest image first working backwards.
   data-title="Astrophotography"
   data-description="New item added to shared album">
   <object data="https://lh3.googleusercontent.com/pw/AP1GczMBooIoL9OIDv5hq6CEdLqSPqA_ayNBEdFwPlxbqDelRxCYtqdD7maHjq5MmvYSbsuuq5GzJKUh7TNzTjIlTXSxkrQaWBDOQVsNIJHBazjTYAgST5sN=w1920-h1080"></object>
+  <object data="https://lh3.googleusercontent.com/pw/AP1GczMIlDDDGrzfeS3yE882oVV54-V2-pwP5oW2hezB-kcHnKprN-g2YklnDUxNzALA_2CZjnLgfTswkerZbop9BiDlzyAuPTda0blXDcgJfdPtxzFXnuv__SVJhPqr13DlJT5U8rMfj14nscL1O6joov-rJw=w531-h788-s-no?authuser=0"></object>
 </div>
