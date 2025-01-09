@@ -9,7 +9,10 @@ comments: false
 <ol>
 
 <br/><br/>
-<li><a href="https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c01427" target="_blank">Evaluation of Machine Learning/Molecular Mechanics End-State Corrections with Mechanical Embedding to Calculate Relative Protein–Ligand Binding Free Energies</a>: J. Karwounopoulos, M. Bieniek, Z. Wu, A. L. Baskerville, G. Koenig, B. P. Cossins, G. P. F. Wood, 2024</li>
+<li><a href="https://arxiv.org/abs/2501.04406v1" target="_blank">Classically Bound and Quantum Quasi-Bound States of an Electron on a Plane Adjacent to a Magnetic Monopole</a>: J. Martin, A. Baskerville, V. L. Campo, J. Minns, J. Pooley, S. T. Carr, C. A. Hooley, G. Möller and J. Quintanilla, 2024</li>
+
+<br/><br/>
+<li><a href="https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c01427" target="_blank">Evaluation of Machine Learning/Molecular Mechanics End-State Corrections with Mechanical Embedding to Calculate Relative Protein–Ligand Binding Free Energies</a>: J. Karwounopoulos, M. Bieniek, Z. Wu, A. L. Baskerville, G. Koenig, B. P. Cossins and G. P. F. Wood, 2024</li>
 
 <br/><br/>
 <li><a href="https://pubs.acs.org/doi/10.1021/acs.jpcb.4c01417" target="_blank">Insights and Challenges in Correcting Force Field Based Solvation Free Energies Using A Neural Network Potential</a>: J. Karwounopoulos, Z. Wu, S. Tkaczyk, S. Wang, A. Baskerville, K. Ranasinghe, T. Langer, G. Wood, M. Wieder, and S. Boresch, J. Phys. Chem. B., 2024</li>
