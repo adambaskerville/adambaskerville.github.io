@@ -5,7 +5,7 @@ title: About
 # MIT License
 ---
 
-I am currently a quantum physicist at kvantify. More broadly I am a quantum chemical physicist and scientific programmer who enjoys solving complex scientific and mathematical problems using computers.
+I am currently a quantum physicist at Kvantify. More broadly I am a quantum chemical physicist and scientific programmer who enjoys solving complex scientific and mathematical problems using computers.
 
 In my spare time I enjoy powerlifting and strongman training, astrophotography, oil painting and tinkering with Raspberry Pi's.
 
