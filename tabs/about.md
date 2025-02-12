@@ -5,9 +5,14 @@ title: About
 # MIT License
 ---
 
-I am currently a quantum mechanics research scientist at Exscientia AI. More broadly I am a quantum chemical physicist and scientific programmer who enjoys solving complex scientific and mathematical problems using computers.
+I am currently a quantum physicist at kvantify. More broadly I am a quantum chemical physicist and scientific programmer who enjoys solving complex scientific and mathematical problems using computers.
 
 In my spare time I enjoy powerlifting and strongman training, astrophotography, oil painting and tinkering with Raspberry Pi's.
+
+## Work
+2025-present: Quantum physicist, Kvantify, UK. 
+2022-2025: Quantum mechanics research scientist, ExscientiaAI, UK. Applying quantum mechanics and machine learning to drug discovery, with a focus on predicting drug-like properties using neural network potentials (NNPs).
+2018-2022: Postdoctoral research fellow, The University of Sussex, UK. Fundamental Studies of Electron Correlation with Applications to DFT.
 
 ## Education
 
