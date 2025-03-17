@@ -9,6 +9,9 @@ comments: false
 <ol>
 
 <br/><br/>
+<li><a href="https://arxiv.org/html/2503.11537v1" target="_blank">Basic Stability Tests of Machine Learning Potentials for Molecular Simulations in Computational Drug Discovery</a>: K. Ranasinghe, A. L. Baskerville, G. P. F. Wood and G. Koenig, 2025</li>
+
+<br/><br/>
 <li><a href="https://arxiv.org/abs/2501.04406v1" target="_blank">Classically Bound and Quantum Quasi-Bound States of an Electron on a Plane Adjacent to a Magnetic Monopole</a>: J. Martin, A. Baskerville, V. L. Campo, J. Minns, J. Pooley, S. T. Carr, C. A. Hooley, G. Möller and J. Quintanilla, 2024</li>
 
 <br/><br/>
