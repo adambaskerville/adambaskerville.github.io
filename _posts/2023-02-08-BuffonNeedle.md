@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "T>T: Buffon's Needle: Estimating Pi using Toothpicks"
+title: "T>T: Buffon's Needle: Estimating π using Toothpicks"
 date: 2023-02-08
 excerpt: ""
 tags: [science, mathematics, buffons, pi]
@@ -827,7 +827,7 @@ Just for fun here is an animation showing the convergence of the value of \\(\pi
 
 ## Conclusion
 
-Buffon's toothpick problem reminds us that mathematics isn't just about formulas written on chalkboards—it's about observing patterns in the world around us. The fact that \\(\pi\\)—this transcendental number that appears throughout mathematics—can be approximated by simply dropping sticks on the floor is nothing short of magical.
+I found this particular problem interesting owing to the overlap of probability and geometry. The fact that \\(\pi\\), this transcendental number that appears throughout mathematics, can be approximated by simply dropping sticks on the floor is fascinating. I hope you enjoyed this breakdown of the problem and our implementation.
 
 The next time you spill toothpicks on your kitchen floor, don't just sweep them up. Count how many cross the tiles, and see how close you can approximate the value of \\(\pi\\).
 
