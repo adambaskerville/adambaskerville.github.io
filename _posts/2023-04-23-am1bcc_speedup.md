@@ -56,113 +56,107 @@ Most AM1BCC bottlenecks come from unnecessary geometry optimisation. AmberTools 
 
 3. For the purposes of this post we will create a simple function to read in a SMILES string, create a 3D structure and run a cheap MMFF optimisation on the structure.
 
-```python
-def _prepare_molecule(self, smiles: str):
-    """convert SMILES to 3D structure"""
-    from rdkit import Chem
-    from rdkit.Chem import AllChem
-    
-    # parse SMILES
-    mol = Chem.MolFromSmiles(smiles)
-    if mol is None:
-        raise ValueError(f"Invalid SMILES: {smiles}")
-    
-    # add hydrogens; essential for proper charges
-    mol = Chem.AddHs(mol)
-    
-    # generate 3D conformer
-    result = AllChem.EmbedMolecule(mol, randomSeed=42)
-    if result != 0:
-        raise RuntimeError("Failed to generate 3D conformer")
-    
-    # quick MMFF optimisation; gives an ok starting point
-    AllChem.MMFFOptimizeMolecule(mol, maxIters=500)
-    
-    return mol
-```
+    ```python
+    def _prepare_molecule(self, smiles: str):
+        """convert SMILES to 3D structure"""
+        from rdkit import Chem
+        from rdkit.Chem import AllChem
+        
+        # parse SMILES
+        mol = Chem.MolFromSmiles(smiles)
+        if mol is None:
+            raise ValueError(f"Invalid SMILES: {smiles}")
+        
+        # add hydrogens; essential for proper charges
+        mol = Chem.AddHs(mol)
+        
+        # generate 3D conformer
+        result = AllChem.EmbedMolecule(mol, randomSeed=42)
+        if result != 0:
+            raise RuntimeError("Failed to generate 3D conformer")
+        
+        # quick MMFF optimisation; gives an ok starting point
+        AllChem.MMFFOptimizeMolecule(mol, maxIters=500)
+        
+        return mol
+    ```
 
 4. We need to save our 3D molecule as a `.sdf` file as AmberTools reliably handles `.sdf` files.
 
-```python
-def _write_sdf(self, mol: Chem.Mol, filename: str):
-    """Write molecule to SDF format for antechamber."""
-    from rdkit import Chem
-    
-    writer = Chem.SDWriter(str(filename))
-    writer.write(mol)
-    writer.close()
-```
+    ```python
+    def _write_sdf(self, mol: Chem.Mol, filename: str):
+        """Write molecule to SDF format for antechamber."""
+        from rdkit import Chem
+        
+        writer = Chem.SDWriter(str(filename))
+        writer.write(mol)
+        writer.close()
+    ```
 
 5. We now need to run the AM1BCC calculation which we will do by invoking the antechamber program using a subprocess call. We use the `-ek` parameter to pass our SQM settings to the calculation. Note, we parse the output in the `.mol2` format as it allows for charges to be natively stored in column 9 of the atom records.
 
-```python
-def _run_antechamber(self, input_file: str, work_dir: str, sqm_settings:str, net_charge: int):
-    """Execute antechamber with our optimised settings."""
-    
-    cmd = ["antechamber" if not self.ambertools_path else 
-            os.path.join(self.ambertools_path, "bin", "antechamber")]
-    
-    output_mol2 = work_dir / "output.mol2"
-    
-    # build the command with our optimised settings
-    cmd.extend([
-        "-i", str(input_file), "-fi", "sdf",        # Input: SDF format
-        "-o", str(output_mol2), "-fo", "mol2",      # Output: MOL2 format  
-        "-c", "bcc",                                # AM1BCC charges
-        "-nc", str(net_charge),                     # Net charge
-        "-pf", "yes",                               # Clean up temp files
-        "-ek", sqm_settings                         # Our faster sqm settings!
-    ])
-    
-    # execute with timeout protection
-    result = subprocess.run(cmd, cwd=work_dir, capture_output=True, 
-                            text=True, timeout=300)
-    
-    if result.returncode != 0:
-        raise RuntimeError(f"Antechamber failed: {result.stderr}")
-    
-    return output_mol2
-```
+    ```python
+    def _run_antechamber(self, input_file: str, work_dir: str, sqm_settings:str, net_charge: int):
+        """Execute antechamber with our optimised settings."""
+        
+        cmd = ["antechamber" if not self.ambertools_path else 
+                os.path.join(self.ambertools_path, "bin", "antechamber")]
+        
+        output_mol2 = work_dir / "output.mol2"
+        
+        # build the command with our optimised settings
+        cmd.extend([
+            "-i", str(input_file), "-fi", "sdf",        # Input: SDF format
+            "-o", str(output_mol2), "-fo", "mol2",      # Output: MOL2 format  
+            "-c", "bcc",                                # AM1BCC charges
+            "-nc", str(net_charge),                     # Net charge
+            "-pf", "yes",                               # Clean up temp files
+            "-ek", sqm_settings                         # Our faster sqm settings!
+        ])
+        
+        # execute with timeout protection
+        result = subprocess.run(cmd, cwd=work_dir, capture_output=True, 
+                                text=True, timeout=300)
+        
+        if result.returncode != 0:
+            raise RuntimeError(f"Antechamber failed: {result.stderr}")
+        
+        return output_mol2
+    ```
 
 6. We now create a function to run the calculation given an input SMILES string.
 
-```python
-def calculate_charges(self, smiles: str, fast_mode:bool = True, net_charge:int = 0):
-    """Calculate AM1BCC charges with speed optimisation."""
-    
-    # get optimised settings based on mode
-    sqm_settings = self._get_sqm_settings(fast_mode)
-    
-    # prepare the molecule
-    mol = self._prepare_molecule(smiles)
-    
-    # use temporary directory for clean execution
-    with tempfile.TemporaryDirectory() as temp_dir:
-        temp_path = Path(temp_dir)
+    ```python
+    def calculate_charges(self, smiles: str, fast_mode:bool = True, net_charge:int = 0):
+        """Calculate AM1BCC charges with speed optimisation."""
         
-        # write input file
-        input_sdf = temp_path / "input.sdf"
-        self._write_sdf(mol, input_sdf)
+        # get optimised settings based on mode
+        sqm_settings = self._get_sqm_settings(fast_mode)
         
-        # run antechamber
-        output_mol2 = self._run_antechamber(
-            input_sdf, temp_path, sqm_settings, net_charge
-        )
+        # prepare the molecule
+        mol = self._prepare_molecule(smiles)
         
-        # extract and return charges
-        charges = self._parse_charges(output_mol2)
-        
-        mode_desc = "fast (no optimisation)" if fast_mode else "slow (full optimisation)"
-        print(f"Calculated {len(charges)} charges using {mode_desc}")
-        
-        return charges
-```
-
-
-
-
-
-
+        # use temporary directory for clean execution
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = Path(temp_dir)
+            
+            # write input file
+            input_sdf = temp_path / "input.sdf"
+            self._write_sdf(mol, input_sdf)
+            
+            # run antechamber
+            output_mol2 = self._run_antechamber(
+                input_sdf, temp_path, sqm_settings, net_charge
+            )
+            
+            # extract and return charges
+            charges = self._parse_charges(output_mol2)
+            
+            mode_desc = "fast (no optimisation)" if fast_mode else "slow (full optimisation)"
+            print(f"Calculated {len(charges)} charges using {mode_desc}")
+            
+            return charges
+    ```
 
 ## Speed Test
 
