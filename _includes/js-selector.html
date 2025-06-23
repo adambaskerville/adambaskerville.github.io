@@ -1,41 +1,86 @@
-<!--
-  JS selector for site.
-  Chirpy v2.3
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2020 Cotes Chung
-  MIT Licensed
--->
+<!-- JS selector for site. -->
 
-{% if page.layout == 'home' %}
+<!-- commons -->
 
-  <script src="{{ '/assets/js/home.min.js' | relative_url }}" async></script>
+{% assign urls = site.data.origin[type].search.js %}
 
-{% elsif page.layout == 'post' %}
+<!-- layout specified -->
 
-  <script src="{{ '/assets/js/post.min.js' | relative_url }}" async></script>
+{% if page.layout == 'post' or page.layout == 'page' or page.layout == 'home' %}
+  {% assign urls = urls | append: ',' | append: site.data.origin[type]['lazy-polyfill'].js %}
 
-  {% if page.math %}
-    <!-- MathJax -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-  {% endif %}
-
-{% elsif page.layout == 'page' %}
-
-  {% if page.type == 'categories' %}
-    <script src="{{ '/assets/js/categories.min.js' | relative_url }}" async></script>
-  {% else %}
-    <script src="{{ '/assets/js/page.min.js' | relative_url }}" async></script>
-  {% endif %}
-
-{% else %}
-
-  <script src="{{ '/assets/js/page.min.js' | relative_url }}" async></script>
-
+  {% unless page.layout == 'home' %}
+    <!-- image lazy-loading & popup & clipboard -->
+    {% assign urls = urls
+      | append: ','
+      | append: site.data.origin[type].glightbox.js
+      | append: ','
+      | append: site.data.origin[type].clipboard.js
+    %}
+  {% endunless %}
 {% endif %}
 
+{% if page.layout == 'home'
+  or page.layout == 'post'
+  or page.layout == 'archives'
+  or page.layout == 'category'
+  or page.layout == 'tag'
+%}
+  {% assign locale = include.lang | split: '-' | first %}
 
-<!-- PWA -->
-{% if jekyll.environment == 'production' %}
-  <script src="{{ '/app.js' | relative_url }}" defer></script>
+  {% assign urls = urls
+    | append: ','
+    | append: site.data.origin[type].dayjs.js.common
+    | append: ','
+    | append: site.data.origin[type].dayjs.js.locale
+    | replace: ':LOCALE', locale
+    | append: ','
+    | append: site.data.origin[type].dayjs.js.relativeTime
+    | append: ','
+    | append: site.data.origin[type].dayjs.js.localizedFormat
+  %}
+{% endif %}
+
+{% if page.content contains '<h2' or page.content contains '<h3' and site.toc and page.toc %}
+  {% assign urls = urls | append: ',' | append: site.data.origin[type].toc.js %}
+{% endif %}
+
+{% if page.mermaid %}
+  {% assign urls = urls | append: ',' | append: site.data.origin[type].mermaid.js %}
+{% endif %}
+
+{% include jsdelivr-combine.html urls=urls %}
+
+{% case page.layout %}
+  {% when 'home', 'categories', 'post', 'page' %}
+    {% assign js = page.layout %}
+  {% when 'archives', 'category', 'tag' %}
+    {% assign js = 'misc' %}
+  {% else %}
+    {% assign js = 'commons' %}
+{% endcase %}
+
+{% capture script %}/assets/js/dist/{{ js }}.min.js{% endcapture %}
+
+<script defer src="{{ script | relative_url }}"></script>
+
+{% if page.math %}
+  <!-- MathJax -->
+  <script src="{{ '/assets/js/data/mathjax.js' | relative_url }}"></script>
+  <script async src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="{{ site.data.origin[type].mathjax.js | relative_url }}"></script>
+{% endif %}
+
+<!-- Pageviews -->
+{% if page.layout == 'post' %}
+  {% assign provider = site.pageviews.provider %}
+
+  {% if provider and provider != empty %}
+    {% case provider %}
+      {% when 'goatcounter' %}
+        {% if site.analytics[provider].id != empty and site.analytics[provider].id %}
+          {% include pageviews/{{ provider }}.html %}
+        {% endif %}
+    {% endcase %}
+  {% endif %}
 {% endif %}

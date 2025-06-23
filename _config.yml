@@ -57,19 +57,27 @@ baseurl: ''
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
 timezone: Europe/London
 
-google_analytics:
-  id: 'G-B55SXFHVL9'          # Fill with your Google Analytics ID
-  pv:
-    proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
-    cache_path:       # the local PV cache data, friendly to visitors from GFW region
+# Web Analytics Settings
+analytics:
+  google:
+    id: # fill in your Google Analytics ID
+  goatcounter:
+    id: albaskerville
+  umami:
+    id: # fill in your Umami ID
+    domain: # fill in your Umami domain
+  matomo:
+    id: # fill in your Matomo ID
+    domain: # fill in your Matomo domain
+  cloudflare:
+    id: # fill in your Cloudflare Web Analytics token
+  fathom:
+    id: # fill in your Fathom Site ID
 
-    # The Google Analytics pageviews switch.
-    # DO NOT enable it unless you know how to deploy the Google Analytics superProxy.
-    enabled: false
-    # the next options only valid when `google_analytics.pv` is enabled.
-    #proxy_url: ''
-    #proxy_endpoint: ''
-    #cache: false  # pv data local cache, good for the users from GFW area.
+# Page views settings
+pageviews:
+  provider: # now only supports 'goatcounter'
+
 
 disqus:
   comments: false  # boolean type, the global switch for posts comments.
