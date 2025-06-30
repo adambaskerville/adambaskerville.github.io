@@ -1,6 +1,5 @@
 # Import the theme
-remote_theme: cotes2020/jekyll-theme-chirpy@v6.7.0
-
+theme: jekyll-theme-chirpy
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
@@ -152,7 +151,7 @@ plugins:
   - jekyll-feed
   - jekyll-include-cache # Add this line
   - jekyll-remote-theme
-
+  
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
