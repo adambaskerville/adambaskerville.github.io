@@ -1,50 +1,77 @@
-<!--
-  The Top Bar
-  v2.0
-  https://github.com/cotes2020/jekyll-theme-chirpy
-  © 2017-2019 Cotes Chung
-  MIT License
--->
-<div id="topbar-wrapper" class="row justify-content-center topbar-down">
-  <div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between">
-    <span id="breadcrumb">
-      {% for item in page.breadcrumb %}
-        {% if item.url %}
-        <span>
-          <a href="{{ site.baseurl }}{{ item.url | remove: '.html'}}">
-            {{ item.label }}
-          </a>
-        </span>
-        {% else %}
-          <span>{{ item.label }}</span>
-        {% endif %}
-      {% endfor %}
+<!-- The Top Bar -->
 
-      {% unless page.layout == "home" %}
-        <span>{{ page.title }}</span>
-      {% endunless %}
+<header id="topbar-wrapper" class="flex-shrink-0" aria-label="Top Bar">
+  <div
+    id="topbar"
+    class="d-flex align-items-center justify-content-between px-lg-3 h-100"
+  >
+    <nav id="breadcrumb" aria-label="Breadcrumb">
+      {% assign paths = page.url | split: '/' %}
 
-    </span><!-- endof #breadcrumb -->
+      {% if paths.size == 0 or page.layout == 'home' %}
+        <!-- index page -->
+        <span>{{ site.data.locales[include.lang].tabs.home | capitalize }}</span>
 
-    <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i>
+      {% else %}
+        {% for item in paths %}
+          {% if forloop.first %}
+            <span>
+              <a href="{{ '/' | relative_url }}">
+                {{- site.data.locales[include.lang].tabs.home | capitalize -}}
+              </a>
+            </span>
+
+          {% elsif forloop.last %}
+            {% if page.collection == 'tabs' %}
+              <span>{{ site.data.locales[include.lang].tabs[item] | default: page.title }}</span>
+            {% else %}
+              <span>{{ page.title }}</span>
+            {% endif %}
+
+          {% elsif page.layout == 'category' or page.layout == 'tag' %}
+            <span>
+              <a href="{{ item | append: '/' | relative_url }}">
+                {{- site.data.locales[include.lang].tabs[item] | default: page.title -}}
+              </a>
+            </span>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </nav>
+    <!-- endof #breadcrumb -->
+
+    <button type="button" id="sidebar-trigger" class="btn btn-link" aria-label="Sidebar">
+      <i class="fas fa-bars fa-fw"></i>
+    </button>
 
     <div id="topbar-title">
-    {% if page.location %}
-      {{- page.location -}}
-    {% elsif page.layout == "home" %}
-      {{- site.title -}}
-    {% else %}
-      {{- page.title -}}
-    {% endif %}
+      {% if page.layout == 'home' %}
+        {{- site.data.locales[include.lang].title | default: site.title -}}
+      {% elsif page.collection == 'tabs' or page.layout == 'page' %}
+        {%- capture tab_key -%}{{ page.url | split: '/' }}{%- endcapture -%}
+        {{- site.data.locales[include.lang].tabs[tab_key] | default: page.title -}}
+      {% else %}
+        {{- site.data.locales[include.lang].layout[page.layout] | default: page.layout | capitalize -}}
+      {% endif %}
     </div>
 
-    <i id="search-trigger" class="fas fa-search fa-fw"></i>
-    <span id="search-wrapper" class="align-items-center">
+    <button type="button" id="search-trigger" class="btn btn-link" aria-label="Search">
       <i class="fas fa-search fa-fw"></i>
-      <input class="form-control" id="search-input" type="search" placeholder="{{ site.data.label.search_hint }}...">
-      <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i>
-    </span>
-    <span id="search-cancel" >Cancel</span>
-  </div>
+    </button>
 
-</div>
+    <search id="search" class="align-items-center ms-3 ms-lg-0">
+      <i class="fas fa-search fa-fw"></i>
+      <input
+        class="form-control"
+        id="search-input"
+        type="search"
+        aria-label="search"
+        autocomplete="off"
+        placeholder="{{ site.data.locales[include.lang].search.hint | capitalize }}..."
+      >
+    </search>
+    <button type="button" class="btn btn-link text-decoration-none" id="search-cancel">
+      {{- site.data.locales[include.lang].search.cancel -}}
+    </button>
+  </div>
+</header>
