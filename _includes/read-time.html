@@ -1,6 +1,6 @@
 <!-- Calculate the post's reading time, and display the word count in tooltip -->
 
-{% assign words = include.content | strip_html | number_of_words: 'auto' %}
+{% assign words = include.content | strip_html | number_of_words %}
 
 <!-- words per minute -->
 
