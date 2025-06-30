@@ -144,6 +144,14 @@ paginate: 10
 # The base URL of your site
 baseurl: ''
 
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache # Add this line
+  - jekyll-remote-theme
+  
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:
