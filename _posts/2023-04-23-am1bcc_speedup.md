@@ -321,7 +321,7 @@ Below are the similarity plots of the charges for each molecule. As we have show
 
 ## Conclusion
 
-Setting `maxcyc=0` in the SQM settings for antechamber results in a significant speed improvement with little effect on accuracy (on average)
+Setting `maxcyc=0` in the SQM settings for `antechamber` results in a significant speed improvement with little effect on accuracy (on average)
 
 For most drug discovery workflows with pre-optimised structures, geometry optimisation is unnecessary overhead. Use fast mode when:
 
