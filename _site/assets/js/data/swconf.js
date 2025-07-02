@@ -1,0 +1,1 @@
+const swconf = { cacheName: 'chirpy-1751461643',resources: [ '/assets/css/jekyll-theme-chirpy.css', '/', '/about/', '/archives/', '/presentations/', '/progchem/', '/publications/', '/painting/', '/astrophotography/', '/astro/', ], interceptor: {paths: [ ],urlPrefixes: [ 'https://albaskerville.goatcounter.com/counter/' ] }, purge: false };
