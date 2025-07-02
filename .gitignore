@@ -1,17 +1,27 @@
-# hidden files
-.*
-
-# python compiled files
-*.pyc
-
-# jekyll debug
-_site
-
-# Jeykll Gemfile.lock
+# Bundler cache
+.bundle
+vendor
 Gemfile.lock
 
-# yui-compressor
-*.jar
+# Jekyll cache
+.jekyll-cache
+.jekyll-metadata
+_site
 
-# bundle cache
-vendor
+# RubyGems
+*.gem
+
+# NPM dependencies
+node_modules
+package-lock.json
+
+# IDE configurations
+.idea
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+
+# Misc
+_sass/vendors
+assets/js/dist

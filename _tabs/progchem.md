@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Programming for Chemists
-sidebar_title: Programming Course
+title: Programming Course
+subtitle: Programming for Chemists
 order: 4
 icon: "fas fa-newspaper"
 tags: [programming, chemistry, python, me, adam, baskerville]

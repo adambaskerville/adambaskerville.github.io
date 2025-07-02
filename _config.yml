@@ -1,5 +1,7 @@
+# The Site Configuration
+
 # Import the theme
-#theme: jekyll-theme-chirpy
+theme: jekyll-theme-chirpy
 
 # The language of the webpage › http://www.lingoes.net/en/translator/langcode.htm
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
@@ -12,23 +14,24 @@ timezone: Europe/London
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: Dr Adam Luke Baskerville  # the main title
+title: Dr Adam Luke Baskerville # the main title
 
-tagline: Quantum Physicist <a href=https://www.kvantify.com/>@Kvantify</a>  # it will display as the sub-title
+tagline: Quantum Physicist <a href=https://www.kvantify.com/>@Kvantify</a> # it will display as the subtitle
 
-description: >-                        # used by seo meta and the atom feed
+description: >- # used by seo meta and the atom feed
   The personal website of Adam Luke Baskerville
   Contains information and T>T blog containing
   mathematics and science content
 
-# Replace with the website url, e.g. 'https://username.github.io'
-url: 'https://adambaskerville.github.io'
+# Fill in the protocol & hostname for your site.
+# E.g. 'https://username.github.io', note that it does not end with a '/'.
+url: "https://adambaskerville.github.io"
 
 github:
-  username: adambaskerville  # change to your github username
+  username: adambaskerville # change to your GitHub username
 
 twitter:
-  username: SciBaskerville         # change to your twitter username
+  username: SciBaskerville # change to your Twitter username
 
 researchgate:
   username: Adam_Baskerville # Change to your researchgate username
@@ -36,19 +39,20 @@ researchgate:
 linkedin:
   username: adam-baskerville-6710811b2 # Change to your linkedin username
 
-author: Adam Luke Baskerville                  # change to your full name
-
-avatar: /assets/img/Baskerville_Bletchley_Crop.jpg   # support internet resources
-
 social:
-  name: Adam Luke Baskerville           # it will shows as the copyright owner in Footer
-  email: adamlukebaskerville@gmail.com             # change to your email address
+  # Change to your full name.
+  # It will be displayed as the default author of the posts and the copyright owner in the Footer
+  name: Adam Baskerville
+  email: adamlukebaskerville@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://twitter.com/SciBaskerville  # change to your twitter homepage
-    # Uncomment below to add more social links
+    - https://twitter.com/SciBaskerville # change to your Twitter homepage
+    - https://github.com/username # change to your GitHub homepage
     - https://www.researchgate.net/profile/Adam_Baskerville
     - https://www.linkedin.com/in/adam-baskerville-6710811b2
+    # Uncomment below to add more social links
+    # - https://www.facebook.com/username
+    # - https://www.linkedin.com/in/username
 
 # Site Verification Settings
 webmaster_verifications:
@@ -67,7 +71,7 @@ analytics:
   google:
     id: # fill in your Google Analytics ID
   goatcounter:
-    id: albaskerville
+    id: albaskerville # fill in your GoatCounter ID
   umami:
     id: # fill in your Umami ID
     domain: # fill in your Umami domain
@@ -96,7 +100,21 @@ pageviews:
 #
 theme_mode: # [light | dark]
 
-# boolean type, global switch for ToC in posts.
+# The CDN endpoint for media resources.
+# Notice that once it is assigned, the CDN url
+# will be added to all media resources (site avatar, posts' images, audio and video files) paths starting with '/'
+#
+# e.g. 'https://cdn.com'
+#cdn: "https://chirpy-img.netlify.app"
+
+# the avatar on sidebar, support local or CORS resources
+avatar: "/assets/img/Baskerville_Bletchley_Crop.jpg"
+
+# The URL of the site-wide social preview image used in SEO `og:image` meta tag.
+# It can be overridden by a customized `page.image` in front matter.
+social_preview_image: # string, local or CORS resources
+
+# boolean type, the global switch for TOC in posts.
 toc: true
 
 comments:
@@ -142,16 +160,8 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: ''
+baseurl: ""
 
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache # Add this line
-  - jekyll-remote-theme
-  
 # ------------ The following options are not recommended to be modified ------------------
 
 kramdown:

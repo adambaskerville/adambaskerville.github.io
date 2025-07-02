@@ -1,6 +1,6 @@
 ---
 title: T>T
-sidebar_title: T>T
+subtitle: T>T
 type: archives
 icon: "fas fa-archive"
 order: 2
