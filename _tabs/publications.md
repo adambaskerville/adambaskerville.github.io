@@ -10,10 +10,10 @@ comments: false
 
 <ol>
 <br/><br/>
-<li><a href="https://arxiv.org/html/2503.11537v1" target="_blank">Basic Stability Tests of Machine Learning Potentials For Molecular Simulations in Computational Drug Discovery</a>:  K. Ranasinghe, A. L. Baskerville, G. Wood, M. Wieder, and G. Koenig</li>
+<li><a href="https://pubs.acs.org/doi/10.1021/acs.jcim.5c01150" target="_blank">Basic Stability Tests of Machine Learning Potentials For Molecular Simulations in Computational Drug Discovery</a>:  K. Ranasinghe, A. L. Baskerville, G. Wood, M. Wieder, and G. Koenig</li>
 
 <br/><br/>
-<li><a href="https://arxiv.org/abs/2501.04406v1" target="_blank">Classically Bound and Quantum Quasi-Bound States of an Electron on a Plane Adjacent to a Magnetic Monopole</a>: J. Martin, A. L. Baskerville, V. L. Campo, J. Minns, J. Pooley, S. T. Carr, C. A. Hooley, G. Möller and J. Quintanilla, 2024</li>
+<li><a href="https://royalsocietypublishing.org/rspa/article-abstract/481/2326/20250072/318383/Classically-bound-and-quantum-quasi-bound-states?redirectedFrom=fulltext" target="_blank">Classically Bound and Quantum Quasi-Bound States of an Electron on a Plane Adjacent to a Magnetic Monopole</a>: J. Martin, A. L. Baskerville, V. L. Campo, J. Minns, J. Pooley, S. T. Carr, C. A. Hooley, G. Möller and J. Quintanilla, 2024</li>
 
 <br/><br/>
 <li><a href="https://pubs.acs.org/doi/full/10.1021/acs.jctc.4c01427" target="_blank">Evaluation of Machine Learning/Molecular Mechanics End-State Corrections with Mechanical Embedding to Calculate Relative Protein–Ligand Binding Free Energies</a>: J. Karwounopoulos, M. Bieniek, Z. Wu, A. L. Baskerville, G. Koenig, B. P. Cossins and G. P. F. Wood, 2024</li>
