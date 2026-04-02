@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pekeris Determinant Visualiser</title>
+    <style>
+        :root {
+            --ink: #1f2937;
+            --muted: #64748b;
+            --line: #dbe4ee;
+            --panel: #ffffff;
+            --bg: #f4f7fb;
+            --blue: #2563eb;
+            --blue-soft: #dbeafe;
+            --blue-mid: #60a5fa;
+            --blue-deep: #1d4ed8;
+            --cell-empty: #eef2f7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, #ffffff 0, #f8fbff 30%, #f4f7fb 70%);
+        }
+
+        .page {
+            max-width: 1320px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .hero h1 {
+            margin: 0 0 10px;
+            font-size: clamp(2rem, 4vw, 2.7rem);
+            line-height: 1.05;
+        }
+
+        .hero p,
+        .note,
+        .small {
+            color: var(--muted);
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: end;
+            margin-top: 18px;
+        }
+
+        .control {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        select,
+        input {
+            min-width: 160px;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            font-size: 1rem;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .matrix-wrap {
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+            padding: 14px;
+        }
+
+        #matrix-grid {
+            display: grid;
+            gap: 2px;
+            justify-content: start;
+        }
+
+        .cell {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            background: var(--cell-empty);
+            cursor: pointer;
+            transition: transform 0.08s ease, background-color 0.08s ease;
+        }
+
+        .cell.nonzero {
+            background: var(--blue-mid);
+        }
+
+        .cell:hover {
+            transform: scale(1.06);
+            background: #93c5fd;
+        }
+
+        .cell.active {
+            background: var(--blue-deep) !important;
+            box-shadow: inset 0 0 0 2px #fff;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 720px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .stat {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .stat .label {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+        }
+
+        .stat .value {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .equation {
+            background: var(--bg);
+            border-left: 4px solid var(--blue);
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin: 14px 0;
+            font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 0.95rem;
+            overflow: auto;
+        }
+
+        .details h2,
+        .matrix-panel h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .contrib {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 12px;
+            background: #fbfdff;
+        }
+
+        .contrib-title {
+            font-weight: bold;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 4px 0;
+            font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 0.9rem;
+        }
+
+        .inline-code {
+            font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 0.95rem;
+        }
+
+        .legend {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .swatch {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <section class="panel hero">
+        <h1>Pekeris Determinant Visualiser</h1>
+        <p>
+            This visualiser follows the 1958 Pekeris ground-state helium construction directly.
+            Each row is one truncated Eq. (22) recurrence for a basis state <span class="inline-code">A(l,m,n)</span>.
+            Each column is one coefficient <span class="inline-code">A(l',m',n')</span> in the symmetric basis.
+            Clicking a coloured square shows exactly which shifted terms from Eq. (22) land in that matrix entry.
+        </p>
+
+        <div class="controls">
+            <div class="control">
+                <label for="omegaSelect">Polynomial Order ω</label>
+                <select id="omegaSelect">
+                    <option value="1">ω = 1</option>
+                    <option value="2">ω = 2</option>
+                    <option value="3" selected>ω = 3</option>
+                    <option value="4">ω = 4</option>
+                    <option value="5">ω = 5</option>
+                </select>
+            </div>
+            <div class="control">
+                <label for="epsilonInput">Evaluate At ε</label>
+                <input id="epsilonInput" type="number" step="0.000001" value="1.704032">
+            </div>
+            <div class="control">
+                <label for="zInput">Nuclear Charge Z</label>
+                <input id="zInput" type="number" step="1" value="2">
+            </div>
+        </div>
+
+        <div class="summary-grid">
+            <div class="stat">
+                <div class="label">Basis Size</div>
+                <div class="value" id="basisSize">-</div>
+            </div>
+            <div class="stat">
+                <div class="label">Nonzero Entries</div>
+                <div class="value" id="nonzeroCount">-</div>
+            </div>
+            <div class="stat">
+                <div class="label">Selected Row</div>
+                <div class="value" id="selectedRowState">-</div>
+            </div>
+            <div class="stat">
+                <div class="label">Selected Col</div>
+                <div class="value" id="selectedColState">-</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="layout">
+        <section class="panel matrix-panel">
+            <h2>Determinant Pattern</h2>
+            <p class="note">
+                A filled square means the row state <span class="inline-code">(l,m,n)</span> couples to the column state
+                <span class="inline-code">(l',m',n')</span> after the Eq. (22) shifts are truncated to
+                <span class="inline-code">l+m+n \le \omega</span> and folded into the singlet symmetry
+                <span class="inline-code">A(l,m,n)=A(m,l,n)</span>.
+            </p>
+            <div class="matrix-wrap">
+                <div id="matrix-grid"></div>
+            </div>
+            <div class="legend">
+                <span><span class="swatch" style="background: var(--cell-empty);"></span>zero entry</span>
+                <span><span class="swatch" style="background: var(--blue-mid);"></span>nonzero entry</span>
+                <span><span class="swatch" style="background: var(--blue-deep);"></span>selected entry</span>
+            </div>
+            <p class="small" id="matrixCaption">Building determinant...</p>
+        </section>
+
+        <section class="panel details">
+            <h2>Selected Entry</h2>
+            <div id="detailsContent">
+                <p class="note">
+                    Click a nonzero square to inspect how Pekeris' shifted coefficients
+                    accumulate into one determinant entry.
+                </p>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    function stateKey(state) {
+        return state.join(",");
+    }
+
+    function formatState(state) {
+        return `(${state[0]}, ${state[1]}, ${state[2]})`;
+    }
+
+    function formatNumber(value) {
+        if (Math.abs(value) < 1e-12) {
+            return "0";
+        }
+        return Number(value).toFixed(6).replace(/\.?0+$/, "");
+    }
+
+    function generateBasis(omega) {
+        const basis = [];
+        for (let ww = 0; ww <= omega; ww++) {
+            for (let vv = 0; vv <= ww; vv++) {
+                for (let uu = 0; uu <= vv; uu++) {
+                    const l = uu;
+                    const m = vv - uu;
+                    const n = ww - vv;
+                    if (l + m + n <= omega && l <= m) {
+                        basis.push([l, m, n]);
+                    }
+                }
+            }
+        }
+        return basis;
+    }
+
+    function canonicalSingletState(l, m, n) {
+        return l <= m ? [l, m, n] : [m, l, n];
+    }
+
+    function eq22Terms(l, m, n, z) {
+        const terms = [];
+        const add = (shift, a, b, label) => terms.push({ shift, a, b, label });
+
+        add([2, 0, 0], -4 * (l + 1) * (l + 2) * z, 4 * (l + 1) * (l + 2) * (1 + m + n), "A(l+2,m,n)");
+        add([0, 2, 0], -4 * (m + 1) * (m + 2) * z, 4 * (m + 1) * (m + 2) * (1 + l + n), "A(l,m+2,n)");
+        add([1, 1, 0], 4 * (l + 1) * (m + 1) * (1 - 2 * z), 4 * (l + 1) * (m + 1) * (2 + l + m), "A(l+1,m+1,n)");
+        add([1, 0, 1], 2 * (l + 1) * (n + 1) * (1 - 2 * z), 2 * (l + 1) * (n + 1) * (2 + 2 * m + n), "A(l+1,m,n+1)");
+        add([0, 1, 1], 2 * (m + 1) * (n + 1) * (1 - 2 * z), 2 * (m + 1) * (n + 1) * (2 + 2 * l + n), "A(l,m+1,n+1)");
+        add([0, 0, 2], (n + 1) * (n + 2), 0, "A(l,m,n+2)");
+
+        add([1, 0, 0],
+            (l + 1) * (4 * z * (4 * l + 4 * m + 2 * n + 7) - 8 * m - 4 * n - 6),
+            -2 * (l + 1) * ((m + n) * (4 * m + 12 * l) + n * n + 12 * l + 18 * m + 15 * n + 14),
+            "A(l+1,m,n)");
+        add([0, 1, 0],
+            (m + 1) * (4 * z * (4 * l + 4 * m + 2 * n + 7) - 8 * l - 4 * n - 6),
+            -2 * (m + 1) * ((l + n) * (4 * l + 12 * m) + n * n + 12 * m + 18 * l + 15 * n + 14),
+            "A(l,m+1,n)");
+        add([0, 0, 1],
+            4 * (n + 1) * (z * (2 * l + 2 * m + 2) - l - m - n - 2),
+            4 * (n + 1) * (l * l + m * m - 4 * l * m - 2 * l * n - 2 * m * n - 3 * l - 3 * m - 2 * n - 2),
+            "A(l,m,n+1)");
+
+        add([0, 2, -1], 0, 4 * (m + 1) * (m + 2) * n, "A(l,m+2,n-1)");
+        add([2, 0, -1], 0, 4 * (l + 1) * (l + 2) * n, "A(l+2,m,n-1)");
+        add([-1, 0, 2], 0, 2 * l * (n + 1) * (n + 2), "A(l-1,m,n+2)");
+        add([0, -1, 2], 0, 2 * m * (n + 1) * (n + 2), "A(l,m-1,n+2)");
+
+        add([0, 0, 0],
+            4 * (2 * l + 1) * (2 * m + 1)
+                + 4 * (2 * n + 1) * (l + m + 1)
+                + 6 * n * n
+                + 6 * n
+                + 2
+                - 4 * z * ((l + m) * (6 * l + 6 * m + 4 * n + 12) - 4 * l * m + 4 * n + 8),
+            4 * (
+                (l + m) * (10 * l * m + 10 * m * n + 10 * l * n + 10 * l + 10 * m + 18 * n + 4 * n * n + 16)
+                + l * m * (4 - 12 * n)
+                + 8
+                + 12 * n
+                + 4 * n * n
+            ),
+            "A(l,m,n)");
+
+        add([-1, 1, 0], 4 * l * (m + 1) * (1 - 2 * z), 4 * l * (m + 1) * (1 + l + m), "A(l-1,m+1,n)");
+        add([1, -1, 0], 4 * (l + 1) * m * (1 - 2 * z), 4 * (l + 1) * m * (1 + l + m), "A(l+1,m-1,n)");
+        add([-1, 0, 1], 2 * l * (n + 1) * (1 - 2 * z), 2 * l * (n + 1) * (2 * m - 4 * l - n), "A(l-1,m,n+1)");
+        add([0, -1, 1], 2 * m * (n + 1) * (1 - 2 * z), 2 * m * (n + 1) * (2 * l - 4 * m - n), "A(l,m-1,n+1)");
+        add([1, 0, -1], 2 * (l + 1) * n * (1 - 2 * z), 2 * (l + 1) * n * (2 * m - 4 * l - n - 3), "A(l+1,m,n-1)");
+        add([0, 1, -1], 2 * (m + 1) * n * (1 - 2 * z), 2 * (m + 1) * n * (2 * l - 4 * m - n - 3), "A(l,m+1,n-1)");
+
+        add([-1, 0, 0],
+            2 * l * (-(4 * m + 2 * n + 3) + z * (8 * l + 8 * m + 4 * n + 6)),
+            -2 * l * ((m + n + 1) * (12 * l + 4 * m + 2) + n + n * n),
+            "A(l-1,m,n)");
+        add([0, -1, 0],
+            2 * m * (-(4 * l + 2 * n + 3) + z * (8 * l + 8 * m + 4 * n + 6)),
+            -2 * m * ((l + n + 1) * (12 * m + 4 * l + 2) + n + n * n),
+            "A(l,m-1,n)");
+        add([0, 0, -1],
+            4 * n * (-(l + m + n + 1) + z * (2 * l + 2 * m + 2)),
+            -4 * n * ((l + m) * (1 + 2 * n - l - m) + 6 * l * m + 2 * n),
+            "A(l,m,n-1)");
+        add([1, 0, -2], 0, 2 * n * (n - 1) * (l + 1), "A(l+1,m,n-2)");
+        add([0, 1, -2], 0, 2 * n * (n - 1) * (m + 1), "A(l,m+1,n-2)");
+        add([-2, 0, 1], 0, 4 * l * (l - 1) * (n + 1), "A(l-2,m,n+1)");
+        add([0, -2, 1], 0, 4 * m * (m - 1) * (n + 1), "A(l,m-2,n+1)");
+        add([-2, 0, 0], -4 * l * (l - 1) * z, 4 * l * (l - 1) * (1 + m + n), "A(l-2,m,n)");
+        add([0, -2, 0], -4 * m * (m - 1) * z, 4 * m * (m - 1) * (1 + l + n), "A(l,m-2,n)");
+        add([0, 0, -2], n * (n - 1), 0, "A(l,m,n-2)");
+        add([-1, -1, 0], 4 * l * m * (1 - 2 * z), 4 * l * m * (l + m), "A(l-1,m-1,n)");
+        add([-1, 0, -1], 2 * l * n * (1 - 2 * z), 2 * l * n * (2 * m + n + 1), "A(l-1,m,n-1)");
+        add([0, -1, -1], 2 * m * n * (1 - 2 * z), 2 * m * n * (2 * l + n + 1), "A(l,m-1,n-1)");
+
+        return terms;
+    }
+
+    function buildDeterminant(omega, z) {
+        const basis = generateBasis(omega);
+        const index = new Map(basis.map((state, idx) => [stateKey(state), idx]));
+        const size = basis.length;
+        const cells = Array.from({ length: size }, () =>
+            Array.from({ length: size }, () => ({ a: 0, b: 0, terms: [] }))
+        );
+
+        for (let row = 0; row < size; row++) {
+            const [l, m, n] = basis[row];
+            const rowTerms = eq22Terms(l, m, n, z);
+            rowTerms.forEach((term) => {
+                const [dl, dm, dn] = term.shift;
+                const lp = l + dl;
+                const mp = m + dm;
+                const np = n + dn;
+
+                if (lp < 0 || mp < 0 || np < 0) {
+                    return;
+                }
+                if (lp + mp + np > omega) {
+                    return;
+                }
+
+                const canonical = canonicalSingletState(lp, mp, np);
+                const col = index.get(stateKey(canonical));
+                if (col === undefined) {
+                    return;
+                }
+
+                cells[row][col].a += term.a;
+                cells[row][col].b += term.b;
+                cells[row][col].terms.push({
+                    label: term.label,
+                    rawTarget: [lp, mp, np],
+                    canonicalTarget: canonical,
+                    shift: term.shift,
+                    a: term.a,
+                    b: term.b
+                });
+            });
+        }
+
+        return { basis, cells };
+    }
+
+    const omegaSelect = document.getElementById("omegaSelect");
+    const epsilonInput = document.getElementById("epsilonInput");
+    const zInput = document.getElementById("zInput");
+    const matrixGrid = document.getElementById("matrix-grid");
+    const matrixCaption = document.getElementById("matrixCaption");
+    const detailsContent = document.getElementById("detailsContent");
+    const basisSizeEl = document.getElementById("basisSize");
+    const nonzeroCountEl = document.getElementById("nonzeroCount");
+    const selectedRowStateEl = document.getElementById("selectedRowState");
+    const selectedColStateEl = document.getElementById("selectedColState");
+
+    let current = null;
+
+    function render() {
+        const omega = Number(omegaSelect.value);
+        const epsilon = Number(epsilonInput.value);
+        const z = Number(zInput.value);
+
+        current = buildDeterminant(omega, z);
+        const size = current.basis.length;
+        let nonzeroCount = 0;
+
+        matrixGrid.innerHTML = "";
+        matrixGrid.style.gridTemplateColumns = `repeat(${size}, 24px)`;
+
+        for (let row = 0; row < size; row++) {
+            for (let col = 0; col < size; col++) {
+                const entry = current.cells[row][col];
+                const isNonzero = Math.abs(entry.a) > 1e-12 || Math.abs(entry.b) > 1e-12;
+                if (isNonzero) {
+                    nonzeroCount += 1;
+                }
+
+                const cell = document.createElement("div");
+                cell.className = "cell";
+                if (isNonzero) {
+                    cell.classList.add("nonzero");
+                    const mag = Math.abs(entry.a + epsilon * entry.b);
+                    cell.style.opacity = String(Math.max(0.28, Math.min(1, 0.25 + mag / 80)));
+                }
+                cell.title = `row ${row + 1}, col ${col + 1}`;
+                cell.addEventListener("click", () => selectCell(row, col, cell));
+                matrixGrid.appendChild(cell);
+            }
+        }
+
+        basisSizeEl.textContent = String(size);
+        nonzeroCountEl.textContent = String(nonzeroCount);
+        selectedRowStateEl.textContent = "-";
+        selectedColStateEl.textContent = "-";
+        matrixCaption.textContent =
+            `Table I symmetric ordering, size ${size} × ${size}. Row k means "write Eq. (22) for basis state k"; column k means "coefficient of basis state k".`;
+        detailsContent.innerHTML = `
+            <p class="note">
+                Click a square to see how one recurrence row contributes to one determinant entry.
+                The entry is always shown as <span class="inline-code">a[j,k] + ε b[j,k]</span>.
+            </p>
+            <div class="equation">\\sum_k (a_{jk} + \\epsilon b_{jk}) B_k = 0</div>
+        `;
+    }
+
+    function selectCell(row, col, selectedEl) {
+        const epsilon = Number(epsilonInput.value);
+        document.querySelectorAll(".cell").forEach((cell) => cell.classList.remove("active"));
+        selectedEl.classList.add("active");
+
+        const rowState = current.basis[row];
+        const colState = current.basis[col];
+        const entry = current.cells[row][col];
+        const value = entry.a + epsilon * entry.b;
+
+        selectedRowStateEl.textContent = formatState(rowState);
+        selectedColStateEl.textContent = formatState(colState);
+
+        let html = `
+            <div class="equation">
+                Row ${row + 1}: Eq. (22) written for A${formatState(rowState)}<br>
+                Column ${col + 1}: coefficient of A${formatState(colState)}
+            </div>
+            <div class="equation">
+                a[j,k] = ${formatNumber(entry.a)}<br>
+                b[j,k] = ${formatNumber(entry.b)}<br>
+                a[j,k] + ε b[j,k] = ${formatNumber(entry.a)} + (${formatNumber(epsilon)})(${formatNumber(entry.b)}) = ${formatNumber(value)}
+            </div>
+        `;
+
+        if (entry.terms.length === 0) {
+            html += `<p class="note">This entry is zero because no shifted term from Eq. (22) lands on this basis state after truncation and singlet folding.</p>`;
+        } else {
+            html += `<p class="note">Contributions that land in this entry:</p>`;
+            entry.terms.forEach((term, idx) => {
+                html += `
+                    <div class="contrib">
+                        <div class="contrib-title">${idx + 1}. ${term.label}</div>
+                        <div class="row"><span>Shift (α,β,γ)</span><span>${formatState(term.shift)}</span></div>
+                        <div class="row"><span>Raw target</span><span>${formatState(term.rawTarget)}</span></div>
+                        <div class="row"><span>Canonical singlet target</span><span>${formatState(term.canonicalTarget)}</span></div>
+                        <div class="row"><span>Constant part a</span><span>${formatNumber(term.a)}</span></div>
+                        <div class="row"><span>ε-coefficient b</span><span>${formatNumber(term.b)}</span></div>
+                    </div>
+                `;
+            });
+        }
+
+        detailsContent.innerHTML = html;
+    }
+
+    omegaSelect.addEventListener("change", render);
+    epsilonInput.addEventListener("input", render);
+    zInput.addEventListener("input", render);
+
+    render();
+</script>
+</body>
+</html>
