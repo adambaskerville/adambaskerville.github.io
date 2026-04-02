@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Call C++ From Python Without Wrapping"
-date: 2019-08-29
+date: 2020-08-29
 excerpt: "Using subprocess to quickly and easily call a C++ program, whilst keeping input pipe open."
 tags: [Science, Mathematics, Programming, subprocess, minimisation]
 comments: false

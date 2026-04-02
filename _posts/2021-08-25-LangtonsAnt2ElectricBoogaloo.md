@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Langton's Ant 2: Electric Boogaloo"
-date: 2020-08-25
+date: 2021-08-25
 excerpt: "Further investigation into the complex emergent behaviour of langton's ant."
 tags: [science, mathematics, programming, matplotlib, numpy, langtons, ant, python, fractal]
 comments: false

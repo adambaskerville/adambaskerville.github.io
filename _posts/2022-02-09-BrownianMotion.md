@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Brownian Motion"
-date: 2021-02-09
+date: 2022-02-09
 excerpt: "Programming a simple program to a gas molecule moving in a box."
 tags: [science, mathematics, programming, matplotlib, script, brownian, motion, chemistry]
 comments: false

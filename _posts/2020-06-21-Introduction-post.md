@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Introduction"
-date: 2019-06-21
+date: 2020-06-21
 excerpt: "Welcome to this blog."
 tags: [Science, Mathematics, Programming, TT]
 comments: false

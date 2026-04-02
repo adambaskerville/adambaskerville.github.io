@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Buffon's Needle: Estimating π using Toothpicks"
-date: 2023-02-08
+date: 2024-02-08
 excerpt: ""
 tags: [science, mathematics, buffons, pi]
 comments: false

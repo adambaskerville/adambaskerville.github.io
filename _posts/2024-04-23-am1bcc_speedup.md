@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Turbocharging AM1BCC Charge Calculations"
-date: 2023-04-23
+date: 2024-04-23
 excerpt: ""
 tags: [computational chemistry, python, optimisation, ambertools, am1bcc]
 comments: false

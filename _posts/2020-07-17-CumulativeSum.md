@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Optimising Cumulative Sums in Python"
-date: 2019-07-23 
+date: 2020-07-23 
 excerpt: "Methods to optimise cumulative sums in python."
 tags: [Science, Mathematics, Programming, for loops, optimising, JIT]
 comments: false

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: High-Precision Eigenvalue Computations Made Efficient in C++"
-date: 2022-11-03
+date: 2023-11-03
 excerpt: ""
 tags: [science, mathematics, programming, eigenvalues, precision, doubledouble, quaddouble, mpfr, mpreal]
 comments: false

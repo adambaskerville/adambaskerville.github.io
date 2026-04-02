@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: From Grid to Gaussian: Accelerating Molecular Similarity Calculations"
-date: 2023-06-18
+date: 2024-06-18
 excerpt: "How replacing 1/r with Gaussian functions can speed up electrostatic similarity calculations by orders of magnitude"
 tags: [computational chemistry, python, gaussian, similarity, electrostatic, mathematics]
 comments: false

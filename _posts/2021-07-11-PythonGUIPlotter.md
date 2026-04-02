@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Simple GUI Graph Plotter in Python"
-date: 2020-07-11
+date: 2021-07-11
 excerpt: "Programming a simple python plotter with GUI."
 tags: [science, mathematics, programming, matplotlib, script, gui, pysimplegui, plotting, python]
 comments: false

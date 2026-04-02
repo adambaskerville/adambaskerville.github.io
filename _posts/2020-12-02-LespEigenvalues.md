@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: When Double Precision is Not Enough"
-date: 2019-12-02
+date: 2020-12-02
 excerpt: "Using greater than double precision to calculate the eigenvalues of the lesp matrix."
 tags: [Science, Mathematics, Programming, matrix, eigenvalues, lesp, Python]
 comments: false

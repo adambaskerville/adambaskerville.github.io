@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Writing and Running Python Programs Locally"
-date: 2021-12-03
+date: 2022-12-03
 excerpt: "In this post we setup a simple solution for writing and running Python codes on your own computer."
 tags: [science, mathematics, programming, vscode, python]
 comments: false

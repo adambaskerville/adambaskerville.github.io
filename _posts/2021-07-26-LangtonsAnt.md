@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Order from Chaos: Langton's Ant"
-date: 2020-07-26
+date: 2021-07-26
 excerpt: "Investigating the complex emergent behaviour of langton's ant using Python."
 tags: [science, mathematics, programming, matplotlib, script, langtons, ant, python]
 comments: false

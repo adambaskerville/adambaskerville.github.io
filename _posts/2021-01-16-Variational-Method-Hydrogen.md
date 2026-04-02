@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Solving the Hydrogen Atom Variationally"
-date: 2020-01-16
+date: 2021-01-16
 excerpt: "How to numerically solve the hydrogen atom using the variational method in python."
 tags: [Science, Mathematics, Programming, variational method, hydrogen atom]
 comments: false

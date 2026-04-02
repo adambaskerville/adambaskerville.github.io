@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Hartree Fock Theory in 100 Lines"
-date: 2020-04-12
+date: 2021-04-12
 excerpt: "Understanding Restricted Hartree Fock theory by developing our own simple python program."
 tags: [Science, Mathematics, Programming, Hartree Fock, SCF, electron correlation]
 comments: false

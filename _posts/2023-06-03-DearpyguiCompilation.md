@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: Compiling DearPyGui on Raspberry Pi 32-bit OS"
-date: 2022-06-03
+date: 2023-06-03
 excerpt: "A quick post on how to compile the DearPyGui library on a Raspberry Pi 32-bit OS."
 tags: [science, mathematics, programming, GUI, Raspberry, Pi, Raspberry Pi]
 comments: false
