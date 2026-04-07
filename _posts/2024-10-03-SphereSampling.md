@@ -8,12 +8,6 @@ comments: false
 math: true
 ---
 
-# Try the code yourself!
-
-Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post:
-
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/adambaskerville/adambaskerville.github.io/blob/master/_posts/SphereSamplingCode/sphere_sampling.ipynb)
-
 ## The Problem
 
 I came across an issue on a project I was working on a few years ago which, for whatever reason, popped into my head yesterday whilst building a shed. I was working on a method for reconstructing ESP surfaces using spherical harmonic coefficients, where the surface needs to be sampled at $N$ points distributed around the molecule. For small angular momentum quantum numbers $l$ the result is largely insensitive to the exact point placement, any reasonable distribution works. But as $l$ grows, the reconstruction quality degrades sharply if the sampling is uneven, and the degradation is not subtle. The RMSD between the true and reconstructed ESP surface grows by an order of magnitude past $l \approx 20$ for naive random sampling.
