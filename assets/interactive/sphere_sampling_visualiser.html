@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sphere Sampling Visualiser</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    <style>
+        :root {
+            --ink: #1f2937;
+            --muted: #64748b;
+            --line: #dbe4ee;
+            --panel: #ffffff;
+            --bg: #f4f7fb;
+            --blue: #2563eb;
+            --blue-soft: #dbeafe;
+            --blue-mid: #60a5fa;
+            --blue-deep: #1d4ed8;
+            --green: #16a34a;
+            --red: #dc2626;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 24px;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background: radial-gradient(circle at top left, #ffffff 0, #f8fbff 30%, #f4f7fb 70%);
+        }
+
+        .page {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 22px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .hero h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            line-height: 1.15;
+        }
+
+        .hero p {
+            color: var(--muted);
+            margin: 0 0 18px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+
+        .control {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            width: 220px;
+            accent-color: var(--blue);
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 9px 20px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: background 0.15s;
+        }
+
+        .btn:hover { background: var(--blue-deep); }
+
+        .tab-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .tab {
+            padding: 7px 16px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-family: inherit;
+            background: white;
+            color: var(--muted);
+            transition: all 0.15s;
+        }
+
+        .tab.active {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+
+        .plot-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 800px) {
+            .plot-row { grid-template-columns: 1fr; }
+        }
+
+        .plot-panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+        }
+
+        .plot-panel h2 {
+            margin: 0 0 4px;
+            font-size: 1.05rem;
+            color: var(--ink);
+        }
+
+        .plot-panel .subtitle {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin: 0 0 10px;
+        }
+
+        .plot-area {
+            width: 100%;
+            height: 400px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .stat {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 14px 16px;
+        }
+
+        .stat .slabel {
+            font-size: 0.76rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 6px;
+        }
+
+        .stat .svalue {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--ink);
+        }
+
+        .svalue.good { color: var(--green); }
+        .svalue.bad  { color: var(--red); }
+
+        .legend-row {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        .swatch {
+            display: inline-block;
+            width: 32px;
+            height: 10px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        .note {
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- ── Hero / Controls ──────────────────────────────────────────── -->
+    <section class="panel hero">
+        <h1>Sphere Sampling Visualiser</h1>
+        <p>
+            Compare <strong>uniform random</strong> and <strong>Fibonacci lattice</strong> point distributions
+            on the unit sphere. Each point is coloured by its nearest-neighbour distance:
+            <strong style="color:#1d4ed8">blue = clustered</strong>,
+            <strong style="color:#dc2626">red = isolated</strong> (in a void).
+            For a perfectly uniform distribution all points would be the same colour.
+        </p>
+        <div class="controls">
+            <div class="control">
+                <label>Points: <strong id="nVal">500</strong></label>
+                <input type="range" id="nSlider" min="50" max="10000" value="500" step="50">
+            </div>
+            <button class="btn" id="regenBtn">↺ New Random Sample</button>
+            <div class="control">
+                <label>View mode</label>
+                <div class="tab-row">
+                    <button class="tab active" data-view="3d">3D Sphere</button>
+                    <button class="tab"        data-view="2d">2D Map (φ vs θ)</button>
+                </div>
+            </div>
+            <div class="control">
+                <label>Sphere surface</label>
+                <div class="tab-row">
+                    <button class="tab active" data-opacity="transparent">Transparent</button>
+                    <button class="tab"        data-opacity="opaque">Opaque</button>
+                </div>
+            </div>
+        </div>
+        <div class="legend-row">
+            <span>
+                <span class="swatch"
+                    style="background: linear-gradient(to right, #1d4ed8, #60a5fa, #fbbf24, #ef4444, #dc2626);">
+                </span>
+                Nearest-neighbour distance (low → high)
+            </span>
+        </div>
+    </section>
+
+    <!-- ── Sphere plots ──────────────────────────────────────────────── -->
+    <div class="plot-row">
+        <div class="plot-panel">
+            <h2>Random Sampling</h2>
+            <p class="subtitle">arccos(2u − 1) transformation · correct marginal distribution · Poisson voids</p>
+            <div class="plot-area" id="plotRandom"></div>
+        </div>
+        <div class="plot-panel">
+            <h2>Fibonacci Lattice</h2>
+            <p class="subtitle">Golden angle φ<sub>i</sub> = 2πi/φ<sub>gr</sub> · deterministic · near-optimal coverage</p>
+            <div class="plot-area" id="plotFib"></div>
+        </div>
+    </div>
+
+    <!-- ── Stats ─────────────────────────────────────────────────────── -->
+    <section class="panel">
+        <h2 style="margin:0 0 4px; font-size:1.05rem;">Coverage Uniformity Metrics</h2>
+        <p class="note">
+            Lower is better for all metrics. A perfect lattice would give ratio&thinsp;=&thinsp;1 and CV&thinsp;=&thinsp;0%.
+        </p>
+        <div class="stats-grid">
+            <div class="stat">
+                <div class="slabel">Random · Max/Min NN ratio</div>
+                <div class="svalue bad" id="sRandRatio">—</div>
+            </div>
+            <div class="stat">
+                <div class="slabel">Fibonacci · Max/Min NN ratio</div>
+                <div class="svalue good" id="sFibRatio">—</div>
+            </div>
+            <div class="stat">
+                <div class="slabel">Random · Coeff. of Variation</div>
+                <div class="svalue bad" id="sRandCV">—</div>
+            </div>
+            <div class="stat">
+                <div class="slabel">Fibonacci · Coeff. of Variation</div>
+                <div class="svalue good" id="sFibCV">—</div>
+            </div>
+            <div class="stat">
+                <div class="slabel">Random · Points in voids (&gt;1.5× mean)</div>
+                <div class="svalue" id="sRandVoid">—</div>
+            </div>
+            <div class="stat">
+                <div class="slabel">Fibonacci · Points in voids (&gt;1.5× mean)</div>
+                <div class="svalue good" id="sFibVoid">—</div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+// ── Point generators ─────────────────────────────────────────────────────────
+
+const R_POINTS = 1.02; // push points just above the sphere surface to avoid clipping
+
+function generateRandom(n) {
+    const x = new Float64Array(n);
+    const y = new Float64Array(n);
+    const z = new Float64Array(n);
+    for (let i = 0; i < n; i++) {
+        const cosT = 2.0 * Math.random() - 1.0;
+        const sinT = Math.sqrt(Math.max(0.0, 1.0 - cosT * cosT));
+        const phi  = 2.0 * Math.PI * Math.random();
+        x[i] = R_POINTS * sinT * Math.cos(phi);
+        y[i] = R_POINTS * sinT * Math.sin(phi);
+        z[i] = R_POINTS * cosT;
+    }
+    return { x, y, z };
+}
+
+function generateFibonacci(n) {
+    const x   = new Float64Array(n);
+    const y   = new Float64Array(n);
+    const z   = new Float64Array(n);
+    const gr  = (1.0 + Math.sqrt(5.0)) / 2.0;
+    for (let i = 0; i < n; i++) {
+        const cosT = 1.0 - 2.0 * (i + 0.5) / n;
+        const sinT = Math.sqrt(Math.max(0.0, 1.0 - cosT * cosT));
+        const phi  = 2.0 * Math.PI * i / gr;
+        x[i] = R_POINTS * sinT * Math.cos(phi);
+        y[i] = R_POINTS * sinT * Math.sin(phi);
+        z[i] = R_POINTS * cosT;
+    }
+    return { x, y, z };
+}
+
+// ── Nearest-neighbour distances O(N²) ────────────────────────────────────────
+
+function nnDists(pts) {
+    const n = pts.x.length;
+    const d = new Float64Array(n).fill(Infinity);
+    for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+            const dx = pts.x[i] - pts.x[j];
+            const dy = pts.y[i] - pts.y[j];
+            const dz = pts.z[i] - pts.z[j];
+            const r  = Math.sqrt(dx*dx + dy*dy + dz*dz);
+            if (r < d[i]) d[i] = r;
+            if (r < d[j]) d[j] = r;
+        }
+    }
+    return d;
+}
+
+// ── Statistics ───────────────────────────────────────────────────────────────
+
+function computeStats(d) {
+    let sum = 0, mn = Infinity, mx = -Infinity;
+    for (let i = 0; i < d.length; i++) {
+        sum += d[i];
+        if (d[i] < mn) mn = d[i];
+        if (d[i] > mx) mx = d[i];
+    }
+    const mean = sum / d.length;
+    let vsum = 0;
+    for (let i = 0; i < d.length; i++) vsum += (d[i] - mean) * (d[i] - mean);
+    const std = Math.sqrt(vsum / d.length);
+    let voids = 0;
+    for (let i = 0; i < d.length; i++) if (d[i] > 1.5 * mean) voids++;
+    return { mean, std, min: mn, max: mx, ratio: mx / mn, cv: std / mean, voids };
+}
+
+// ── Colour mapping ───────────────────────────────────────────────────────────
+
+// Blue (clustered) → white (average) → red (isolated)
+const COLORSCALE = [
+    [0.0,  '#1d4ed8'],
+    [0.25, '#60a5fa'],
+    [0.5,  '#f0f9ff'],
+    [0.75, '#fca5a5'],
+    [1.0,  '#dc2626'],
+];
+
+function normalise(d) {
+    let mn = Infinity, mx = -Infinity;
+    for (let i = 0; i < d.length; i++) {
+        if (d[i] < mn) mn = d[i];
+        if (d[i] > mx) mx = d[i];
+    }
+    const range = mx - mn || 1;
+    const out = new Float64Array(d.length);
+    for (let i = 0; i < d.length; i++) out[i] = (d[i] - mn) / range;
+    return out;
+}
+
+// ── Plotly helpers ───────────────────────────────────────────────────────────
+
+function makeSurface(opaque) {
+    const M = 60;
+    const sx = [], sy = [], sz = [];
+    for (let i = 0; i <= M; i++) {
+        const row_x = [], row_y = [], row_z = [];
+        const theta = Math.PI * i / M;
+        const sinT  = Math.sin(theta);
+        const cosT  = Math.cos(theta);
+        for (let j = 0; j <= M; j++) {
+            const phi = 2.0 * Math.PI * j / M;
+            row_x.push(sinT * Math.cos(phi));
+            row_y.push(sinT * Math.sin(phi));
+            row_z.push(cosT);
+        }
+        sx.push(row_x); sy.push(row_y); sz.push(row_z);
+    }
+    const col = opaque
+        ? 'rgba(230,237,248,1.0)'
+        : 'rgba(219,234,254,0.15)';
+    return {
+        type: 'surface', x: sx, y: sy, z: sz,
+        colorscale: [[0, col], [1, col]],
+        showscale: false, hoverinfo: 'none',
+        lighting: { ambient: 0.9, diffuse: 0.4, specular: 0.1, roughness: 0.8 },
+        lightposition: { x: 1, y: 1, z: 2 },
+        contours: { x: { show: false }, y: { show: false }, z: { show: false } },
+        opacity: opaque ? 1.0 : 1.0,
+    };
+}
+
+function makeScatter3D(pts, col, opaque) {
+    // In opaque mode we render two traces: front hemisphere fully visible,
+    // rear hemisphere hidden (opacity 0) so the solid sphere surface occludes them.
+    const n = pts.x.length;
+    if (!opaque) {
+        return [{
+            type: 'scatter3d', mode: 'markers',
+            x: Array.from(pts.x), y: Array.from(pts.y), z: Array.from(pts.z),
+            marker: {
+                size: 4, opacity: 0.92,
+                color: Array.from(col), colorscale: COLORSCALE,
+                cmin: 0, cmax: 1, showscale: false,
+                line: { width: 0 },
+            },
+            hovertemplate: 'x:%{x:.3f} y:%{y:.3f} z:%{z:.3f}<extra></extra>',
+        }];
+    }
+
+    // Camera eye direction approximated as (1,1,0.55) normalised → dot product
+    // with point gives front vs rear. We use a fixed "towards viewer" vector
+    // matching the default camera eye (1.35, 1.35, 0.75).
+    const ex = 1.35, ey = 1.35, ez = 0.75;
+    const em = Math.sqrt(ex*ex + ey*ey + ez*ez);
+    const fx = [], fy = [], fz = [], fc = [];  // front
+    for (let i = 0; i < n; i++) {
+        const dot = (pts.x[i]*ex + pts.y[i]*ey + pts.z[i]*ez) / em;
+        if (dot >= 0) {
+            fx.push(pts.x[i]); fy.push(pts.y[i]); fz.push(pts.z[i]);
+            fc.push(col[i]);
+        }
+    }
+    return [{
+        type: 'scatter3d', mode: 'markers',
+        x: fx, y: fy, z: fz,
+        marker: {
+            size: 4, opacity: 0.95,
+            color: fc, colorscale: COLORSCALE,
+            cmin: 0, cmax: 1, showscale: false,
+            line: { width: 0 },
+        },
+        hovertemplate: 'x:%{x:.3f} y:%{y:.3f} z:%{z:.3f}<extra></extra>',
+    }];
+}
+
+function makeScatter2D(pts, col) {
+    const theta = Array.from(pts.z).map(zz =>
+        Math.acos(Math.max(-1, Math.min(1, zz))) * 180 / Math.PI);
+    const phi = Array.from(pts.x).map((xx, i) =>
+        Math.atan2(pts.y[i], xx) * 180 / Math.PI);
+    return {
+        type: 'scatter', mode: 'markers',
+        x: phi, y: theta,
+        marker: {
+            size: 5, opacity: 0.85,
+            color: Array.from(col), colorscale: COLORSCALE,
+            cmin: 0, cmax: 1, showscale: false,
+            line: { width: 0 },
+        },
+        hovertemplate: 'φ:%{x:.1f}° θ:%{y:.1f}°<extra></extra>',
+    };
+}
+
+const CFG = { responsive: true, displaylogo: false,
+              modeBarButtonsToRemove: ['toImage', 'orbitRotation'] };
+
+const LAYOUT_3D = {
+    paper_bgcolor: 'rgba(0,0,0,0)', margin: { l: 0, r: 0, t: 0, b: 0 },
+    scene: {
+        bgcolor: '#f8fbff',
+        aspectmode: 'cube',
+        xaxis: { showgrid: false, zeroline: false, showticklabels: false, title: '' },
+        yaxis: { showgrid: false, zeroline: false, showticklabels: false, title: '' },
+        zaxis: { showgrid: false, zeroline: false, showticklabels: false, title: '' },
+        camera: { eye: { x: 1.35, y: 1.35, z: 0.75 } },
+    },
+    showlegend: false,
+};
+
+const LAYOUT_2D = {
+    paper_bgcolor: 'rgba(0,0,0,0)',
+    plot_bgcolor: '#f8fbff',
+    margin: { l: 55, r: 15, t: 10, b: 50 },
+    xaxis: {
+        title: 'Azimuthal angle φ (°)', range: [-180, 180],
+        gridcolor: '#e5e7eb', zerolinecolor: '#d1d5db',
+    },
+    yaxis: {
+        title: 'Polar angle θ (°)', range: [0, 180],
+        gridcolor: '#e5e7eb', zerolinecolor: '#d1d5db',
+    },
+    showlegend: false,
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+
+let randPts, fibPts, randD, fibD, view = '3d', opaque = false;
+
+// ── Render ────────────────────────────────────────────────────────────────────
+
+function render() {
+    const rc = normalise(randD);
+    const fc = normalise(fibD);
+    if (view === '3d') {
+        const surf = makeSurface(opaque);
+        // Transparent: no surface (surface depth-buffer would occlude rear points)
+        // Opaque: surface first so depth test hides rear scatter, then front points only
+        const randTraces = opaque ? [surf, ...makeScatter3D(randPts, rc, true)] : makeScatter3D(randPts, rc, false);
+        const fibTraces  = opaque ? [surf, ...makeScatter3D(fibPts,  fc, true)] : makeScatter3D(fibPts,  fc, false);
+        Plotly.react('plotRandom', randTraces, LAYOUT_3D, CFG);
+        Plotly.react('plotFib',    fibTraces,  LAYOUT_3D, CFG);
+    } else {
+        Plotly.react('plotRandom', [makeScatter2D(randPts, rc)], LAYOUT_2D, CFG);
+        Plotly.react('plotFib',    [makeScatter2D(fibPts,  fc)], LAYOUT_2D, CFG);
+    }
+}
+
+function updateStats() {
+    const rs = computeStats(randD);
+    const fs = computeStats(fibD);
+
+    document.getElementById('sRandRatio').textContent = rs.ratio.toFixed(2) + '×';
+    document.getElementById('sFibRatio').textContent  = fs.ratio.toFixed(2) + '×';
+    document.getElementById('sRandCV').textContent    = (rs.cv * 100).toFixed(1) + '%';
+    document.getElementById('sFibCV').textContent     = (fs.cv * 100).toFixed(1) + '%';
+    document.getElementById('sRandVoid').textContent  =
+        rs.voids + ' (' + (rs.voids / randD.length * 100).toFixed(1) + '%)';
+    document.getElementById('sFibVoid').textContent   =
+        fs.voids + ' (' + (fs.voids / fibD.length * 100).toFixed(1) + '%)';
+}
+
+function rebuild(n) {
+    randPts = generateRandom(n);
+    fibPts  = generateFibonacci(n);
+    randD   = nnDists(randPts);
+    fibD    = nnDists(fibPts);
+    render();
+    updateStats();
+}
+
+// ── Events ────────────────────────────────────────────────────────────────────
+
+document.getElementById('nSlider').addEventListener('input', function () {
+    const n = +this.value;
+    document.getElementById('nVal').textContent = n;
+    rebuild(n);
+});
+
+document.getElementById('regenBtn').addEventListener('click', function () {
+    rebuild(+document.getElementById('nSlider').value);
+});
+
+document.querySelectorAll('[data-view]').forEach(t => {
+    t.addEventListener('click', function () {
+        document.querySelectorAll('[data-view]').forEach(x => x.classList.remove('active'));
+        this.classList.add('active');
+        view = this.dataset.view;
+        render();
+    });
+});
+
+document.querySelectorAll('[data-opacity]').forEach(t => {
+    t.addEventListener('click', function () {
+        document.querySelectorAll('[data-opacity]').forEach(x => x.classList.remove('active'));
+        this.classList.add('active');
+        opaque = this.dataset.opacity === 'opaque';
+        render();
+    });
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+rebuild(500);
+</script>
+</body>
+</html>
