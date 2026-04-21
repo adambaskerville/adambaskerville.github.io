@@ -851,7 +851,7 @@ Beta  orbital energies: [-0.83044585  0.55351898]
 Spin contamination = -0.0000
 ```
 
-The SCF converges in 6 iterations. The $\alpha$ and $\beta$ orbital energies are clearly different, confirming a genuinely unrestricted solution. For a doublet state the exact $\langle S^2\rangle = 0.75$ which is confirmed via our calculation which also shows that there is no spin contamination.
+The SCF converges in 11 iterations. The $\alpha$ and $\beta$ orbital energies are clearly different, confirming a genuinely unrestricted solution. For a doublet state the exact $\langle S^2\rangle = 0.75$ which is confirmed via our calculation which also shows that there is no spin contamination.
 
 # Unrestricted Hartree Fock Theory in UNDER 100 Lines!
 
