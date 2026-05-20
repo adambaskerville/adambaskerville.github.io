@@ -541,6 +541,7 @@ Every term in the Hartree-Fock Fock matrix reduces to one of four integral types
 The ERI is the most important and most expensive component. Its quartic count is why Hartree-Fock is not used for large systems, why integral screening is essential even for medium-sized molecules, and why the entire enterprise of post-HF methods is built on the assumption that these integrals have already been computed and can be stored.
 
 For a new person to the field I personally think understanding where these numbers come from not just how to call a library function that computes them gives a much clearer picture of why Hartree-Fock has the structure it does, and why every method built on top of it inherits both its strengths and its limitations.
+
 ---
 
 ## Further Reading
