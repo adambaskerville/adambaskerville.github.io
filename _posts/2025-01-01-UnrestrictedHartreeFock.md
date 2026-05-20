@@ -7,6 +7,13 @@ tags: [Science, Mathematics, Programming, Hartree Fock, unrestricted, UHF, SCF, 
 comments: false
 math: true
 ---
+**This post is part of a series on Hartree-Fock theory:**
+- [Restricted Hartree-Fock in 100 Lines]({% post_url 2021-04-12-HartreeFockGuide %}): The original post; start here if new to HF
+- **Unrestricted Hartree-Fock in 100 Lines**: You are here
+- [The Integrals at the Heart of Hartree-Fock Theory]({% post_url 2026-05-10-HFIntegrals %}): Derives every integral used across both posts from scratch, with interactive visualisers. This is useful when you get to the integral pasrt of this post.
+
+---
+
 # Try the code yourself!
 
 Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post:

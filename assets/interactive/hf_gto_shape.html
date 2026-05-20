@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>GTO vs STO Shape Explorer</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      background: #0f0f0f; font-family: -apple-system, sans-serif; color: white;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      flex-shrink: 0;
+      display: flex; align-items: flex-start; gap: 28px;
+      padding: 10px 20px; background: #161616;
+      border-bottom: 1px solid #2a2a2a; flex-wrap: wrap;
+    }
+    .ctrl-group { display: flex; flex-direction: column; gap: 4px; min-width: 160px; }
+    .ctrl-group label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+    .ctrl-group input[type=range] { accent-color: #56B4E9; width: 160px; cursor: pointer; }
+    .ctrl-val { font-size: 14px; font-weight: 700; color: #d4d4ff; font-family: monospace; }
+    #panels { flex: 1; min-height: 0; display: flex; width: 100%; }
+    #left-plot { flex: 1; min-width: 0; min-height: 0; }
+    #divider { width: 1px; background: #2a2a2a; flex-shrink: 0; }
+    #right-plot { flex: 1; min-width: 0; min-height: 0; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <div class="ctrl-group">
+      <label>α — GTO exponent</label>
+      <input type="range" id="sl-alpha" min="0.1" max="3.0" step="0.05" value="1.0" oninput="update()">
+      <div class="ctrl-val" id="v-alpha">1.00</div>
+    </div>
+    <div class="ctrl-group">
+      <label>ζ — STO exponent</label>
+      <input type="range" id="sl-zeta" min="0.1" max="3.0" step="0.05" value="1.0" oninput="update()">
+      <div class="ctrl-val" id="v-zeta">1.00</div>
+    </div>
+  </div>
+  <div id="panels">
+    <div id="left-plot"></div>
+    <div id="divider"></div>
+    <div id="right-plot"></div>
+  </div>
+
+  <script>
+    const NX = 500;
+    const xs_full = Array.from({length: NX}, (_, i) => -4 + i * 8 / (NX - 1));
+    const xs_zoom = Array.from({length: NX}, (_, i) => -1 + i * 2 / (NX - 1));
+
+    const darkLayout = {
+      paper_bgcolor: '#0f0f0f',
+      plot_bgcolor: '#0f0f0f',
+      font: { color: '#cccccc', family: '-apple-system, sans-serif' },
+      xaxis: { gridcolor: '#2a2a2a', zerolinecolor: '#444', color: '#aaa' },
+      yaxis: { gridcolor: '#2a2a2a', zerolinecolor: '#444', color: '#aaa' },
+      legend: { bgcolor: 'rgba(0,0,0,0)', bordercolor: '#2a2a2a' },
+      margin: { t: 70, r: 30, b: 60, l: 60 }
+    };
+
+    function gto(alpha, x) { return Math.exp(-alpha * x * x); }
+    function sto(zeta, x)  { return Math.exp(-zeta * Math.abs(x)); }
+
+    function init() {
+      const alpha = parseFloat(document.getElementById('sl-alpha').value);
+      const zeta  = parseFloat(document.getElementById('sl-zeta').value);
+
+      const gto_full  = xs_full.map(x => gto(alpha, x));
+      const sto_full  = xs_full.map(x => sto(zeta, x));
+      const gto_zoom  = xs_zoom.map(x => gto(alpha, x));
+      const sto_zoom  = xs_zoom.map(x => sto(zeta, x));
+
+      // Left panel
+      const leftTraces = [
+        {
+          x: xs_full, y: gto_full,
+          name: 'GTO: exp(−αx²)',
+          line: { color: '#56B4E9', width: 2.5 },
+          type: 'scatter', mode: 'lines'
+        },
+        {
+          x: xs_full, y: sto_full,
+          name: 'STO: exp(−ζ|x|)',
+          line: { color: '#D55E00', width: 2.5, dash: 'dash' },
+          type: 'scatter', mode: 'lines'
+        }
+      ];
+
+      const leftLayout = Object.assign({}, darkLayout, {
+        title: { text: 'Full radial profile — x from −4 to 4 bohr', font: { size: 13, color: '#ddd' } },
+        xaxis: Object.assign({}, darkLayout.xaxis, { title: { text: 'x (bohr)', font: { color: '#aaa' } }, range: [-4, 4] }),
+        yaxis: Object.assign({}, darkLayout.yaxis, { title: { text: 'φ(x) (normalised to 1 at origin)', font: { color: '#aaa' } }, range: [-0.05, 1.15] }),
+        annotations: [
+          {
+            x: 2.5, y: gto(alpha, 2.5),
+            xref: 'x', yref: 'y',
+            text: 'GTO tail decays too fast<br>(Gaussian vs exponential)',
+            showarrow: true, arrowhead: 2, arrowcolor: '#56B4E9',
+            font: { color: '#56B4E9', size: 11 },
+            ax: 0, ay: -40
+          }
+        ]
+      });
+
+      Plotly.newPlot('left-plot', leftTraces, leftLayout, { autosize: true, responsive: true });
+
+      // Right panel
+      const rightTraces = [
+        {
+          x: xs_zoom, y: gto_zoom,
+          name: 'GTO: exp(−αx²)',
+          line: { color: '#56B4E9', width: 2.5 },
+          type: 'scatter', mode: 'lines'
+        },
+        {
+          x: xs_zoom, y: sto_zoom,
+          name: 'STO: exp(−ζ|x|)',
+          line: { color: '#D55E00', width: 2.5, dash: 'dash' },
+          type: 'scatter', mode: 'lines'
+        }
+      ];
+
+      const rightLayout = Object.assign({}, darkLayout, {
+        title: {
+          text: 'Cusp region |x| < 1 bohr<br><sub>STO has a kink at x=0 — GTO is smooth but physically wrong</sub>',
+          font: { size: 13, color: '#ddd' }
+        },
+        xaxis: Object.assign({}, darkLayout.xaxis, { title: { text: 'x (bohr)', font: { color: '#aaa' } }, range: [-1, 1] }),
+        yaxis: Object.assign({}, darkLayout.yaxis, { title: { text: 'φ(x) (normalised to 1 at origin)', font: { color: '#aaa' } }, range: [-0.05, 1.15] }),
+        annotations: [
+          {
+            x: 0.2, y: sto(zeta, 0.2),
+            xref: 'x', yref: 'y',
+            text: `STO cusp: slope = −ζ (${zeta.toFixed(2)})`,
+            showarrow: true, arrowhead: 3, arrowcolor: '#D55E00',
+            font: { color: '#D55E00', size: 11 },
+            ax: 40, ay: -30
+          },
+          {
+            x: -0.3, y: gto(alpha, -0.3),
+            xref: 'x', yref: 'y',
+            text: 'GTO: zero slope at x=0',
+            showarrow: true, arrowhead: 3, arrowcolor: '#56B4E9',
+            font: { color: '#56B4E9', size: 11 },
+            ax: -50, ay: -30
+          }
+        ]
+      });
+
+      Plotly.newPlot('right-plot', rightTraces, rightLayout, { autosize: true, responsive: true });
+    }
+
+    function update() {
+      const alpha = parseFloat(document.getElementById('sl-alpha').value);
+      const zeta  = parseFloat(document.getElementById('sl-zeta').value);
+      document.getElementById('v-alpha').textContent = alpha.toFixed(2);
+      document.getElementById('v-zeta').textContent  = zeta.toFixed(2);
+
+      const gto_full = xs_full.map(x => gto(alpha, x));
+      const sto_full = xs_full.map(x => sto(zeta, x));
+      const gto_zoom = xs_zoom.map(x => gto(alpha, x));
+      const sto_zoom = xs_zoom.map(x => sto(zeta, x));
+
+      Plotly.update('left-plot',
+        { y: [gto_full, sto_full] },
+        {
+          annotations: [{
+            x: 2.5, y: gto(alpha, 2.5),
+            xref: 'x', yref: 'y',
+            text: 'GTO tail decays too fast<br>(Gaussian vs exponential)',
+            showarrow: true, arrowhead: 2, arrowcolor: '#56B4E9',
+            font: { color: '#56B4E9', size: 11 },
+            ax: 0, ay: -40
+          }]
+        }
+      );
+
+      Plotly.update('right-plot',
+        { y: [gto_zoom, sto_zoom] },
+        {
+          annotations: [
+            {
+              x: 0.2, y: sto(zeta, 0.2),
+              xref: 'x', yref: 'y',
+              text: `STO cusp: slope = −ζ (${zeta.toFixed(2)})`,
+              showarrow: true, arrowhead: 3, arrowcolor: '#D55E00',
+              font: { color: '#D55E00', size: 11 },
+              ax: 40, ay: -30
+            },
+            {
+              x: -0.3, y: gto(alpha, -0.3),
+              xref: 'x', yref: 'y',
+              text: 'GTO: zero slope at x=0',
+              showarrow: true, arrowhead: 3, arrowcolor: '#56B4E9',
+              font: { color: '#56B4E9', size: 11 },
+              ax: -50, ay: -30
+            }
+          ]
+        }
+      );
+    }
+
+    init();
+    update();
+  </script>
+</body>
+</html>

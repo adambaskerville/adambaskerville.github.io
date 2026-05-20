@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Nuclear Attraction &amp; Boys Function</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      background: #0f0f0f; font-family: -apple-system, sans-serif; color: white;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      flex-shrink: 0;
+      display: flex; align-items: flex-start; gap: 28px;
+      padding: 10px 20px; background: #161616;
+      border-bottom: 1px solid #2a2a2a; flex-wrap: wrap;
+    }
+    .ctrl-group { display: flex; flex-direction: column; gap: 4px; min-width: 160px; }
+    .ctrl-group label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+    .ctrl-group input[type=range] { accent-color: #56B4E9; width: 160px; cursor: pointer; }
+    .ctrl-val { font-size: 14px; font-weight: 700; color: #d4d4ff; font-family: monospace; }
+    #panels { flex: 1; min-height: 0; display: flex; width: 100%; }
+    #left-plot { flex: 1; min-width: 0; min-height: 0; }
+    #divider { width: 1px; background: #2a2a2a; flex-shrink: 0; }
+    #right-plot { flex: 1; min-width: 0; min-height: 0; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <div class="ctrl-group">
+      <label>α — GTO exponent</label>
+      <input type="range" id="sl-alpha" min="0.1" max="2.0" step="0.05" value="0.5" oninput="update()">
+      <div class="ctrl-val" id="v-alpha">0.50</div>
+    </div>
+    <div class="ctrl-group">
+      <label>C — nucleus position (bohr)</label>
+      <input type="range" id="sl-C" min="-3.0" max="3.0" step="0.1" value="1.5" oninput="update()">
+      <div class="ctrl-val" id="v-C">1.5</div>
+    </div>
+  </div>
+  <div id="panels">
+    <div id="left-plot"></div>
+    <div id="divider"></div>
+    <div id="right-plot"></div>
+  </div>
+
+  <script>
+    // Math helpers
+    function erf(x) {
+      if (x < 0) return -erf(-x);
+      const t = 1/(1 + 0.3275911*x);
+      return 1 - t*(0.254829592+t*(-0.284496736+t*(1.421413741+t*(-1.453152027+t*1.061405429))))*Math.exp(-x*x);
+    }
+    function F0(t) { if (t < 1e-9) return 1.0; return 0.5*Math.sqrt(Math.PI/t)*erf(Math.sqrt(t)); }
+
+    // V(C) = -(2/sqrt(pi)) * sqrt(2*alpha) * F0(2*alpha*C^2)
+    function Vdiag(alpha, C) {
+      return -(2.0 / Math.sqrt(Math.PI)) * Math.sqrt(2 * alpha) * F0(2 * alpha * C * C);
+    }
+
+    const NX = 400, NC = 300;
+    const xs = Array.from({length: NX}, (_, i) => -4 + i * 8 / (NX - 1));
+    const Cs = Array.from({length: NC}, (_, i) => -4 + i * 8 / (NC - 1));
+
+    const darkBase = {
+      paper_bgcolor: '#0f0f0f',
+      plot_bgcolor: '#0f0f0f',
+      font: { color: '#cccccc', family: '-apple-system, sans-serif' },
+      legend: { bgcolor: 'rgba(0,0,0,0)', bordercolor: '#2a2a2a' },
+      margin: { t: 80, r: 30, b: 60, l: 70 }
+    };
+    const axStyle = { gridcolor: '#2a2a2a', zerolinecolor: '#444', color: '#aaa' };
+
+    function computeLeftData(alpha, C) {
+      const density = xs.map(x => Math.exp(-2 * alpha * x * x));
+      const integrand = xs.map(x => {
+        const d = Math.abs(x - C);
+        const inv = d < 0.05 ? 1/0.05 : 1/d;
+        return Math.exp(-2 * alpha * x * x) * Math.min(inv, 3.0);
+      });
+      return { density, integrand };
+    }
+
+    function computeVcurve(alpha) {
+      return Cs.map(C => Vdiag(alpha, C));
+    }
+
+    function init() {
+      const alpha = 0.5, C = 1.5;
+      const { density, integrand } = computeLeftData(alpha, C);
+      const Vcurve = computeVcurve(alpha);
+      const V_at_C = Vdiag(alpha, C);
+      const V_at_0 = Vdiag(alpha, 0);
+
+      // F0 scaled trace: F0(2alpha*C^2) * prefactor where prefactor = V(0) (since F0(0)=1)
+      const F0scaled = Cs.map(C2 => F0(2 * alpha * C2 * C2) * V_at_0);
+
+      // Classical -1/C (clipped)
+      const classical = Cs.map(C2 => {
+        if (Math.abs(C2) < 0.2) return null;
+        return Math.max(-6, -1 / Math.abs(C2));
+      });
+
+      const vMin = Math.min(...Vcurve.filter(v => isFinite(v)));
+      const yMin = Math.max(vMin * 1.1, -6);
+
+      // Left panel
+      const leftTraces = [
+        {
+          x: xs, y: density, name: 'Gaussian density ρ(x)',
+          fill: 'tozeroy', fillcolor: 'rgba(86,180,233,0.25)',
+          line: { color: '#56B4E9', width: 2.0 }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: xs, y: integrand, name: 'Integrand ρ·1/|x−C| (clipped)',
+          fill: 'tozeroy', fillcolor: 'rgba(0,158,115,0.20)',
+          line: { color: '#009E73', width: 2.0 }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: [C, C], y: [-0.05, 3.1], name: 'Nucleus at C',
+          line: { color: '#F0E442', width: 2.0, dash: 'dash' },
+          type: 'scatter', mode: 'lines', showlegend: false
+        },
+        {
+          x: [C], y: [0], name: 'Z=1 nucleus',
+          marker: { symbol: 'triangle-up', size: 14, color: '#F0E442' },
+          type: 'scatter', mode: 'markers+text',
+          text: ['Z=1'], textposition: 'top center',
+          textfont: { color: '#F0E442', size: 11 }
+        }
+      ];
+
+      const leftLayout = Object.assign({}, darkBase, {
+        title: {
+          text: 'Integrand: ρ(x) · 1/|x−C|<br><sub>Blue = Gaussian density ρ, Green = integrand (clipped), Gold = nucleus at C</sub>',
+          font: { size: 13, color: '#ddd' }
+        },
+        xaxis: Object.assign({}, axStyle, { title: { text: 'x (bohr)', font: { color: '#aaa' } }, range: [-4, 4] }),
+        yaxis: Object.assign({}, axStyle, { title: { text: 'Density / Integrand', font: { color: '#aaa' } }, range: [-0.05, 3.1] })
+      });
+
+      Plotly.newPlot('left-plot', leftTraces, leftLayout, { autosize: true, responsive: true });
+
+      // Right panel
+      const rightTraces = [
+        {
+          x: Cs, y: Vcurve, name: 'V_μμ(C) — nuclear attraction',
+          line: { color: '#56B4E9', width: 2.5 }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: Cs, y: F0scaled, name: 'F₀(2αC²) × prefactor',
+          line: { color: '#CC79A7', width: 2.0, dash: 'dash' }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: Cs, y: classical, name: 'Classical −1/C',
+          line: { color: '#D55E00', width: 1.5, dash: 'dash' },
+          type: 'scatter', mode: 'lines',
+          connectgaps: false
+        },
+        {
+          x: [C, C], y: [yMin, 0.2], name: 'Current C',
+          line: { color: '#F0E442', width: 1.5, dash: 'dot' },
+          type: 'scatter', mode: 'lines', showlegend: false
+        },
+        {
+          x: [C], y: [V_at_C], name: 'V at C',
+          marker: { color: '#F0E442', size: 10 },
+          type: 'scatter', mode: 'markers', showlegend: false
+        }
+      ];
+
+      const rightLayout = Object.assign({}, darkBase, {
+        title: {
+          text: 'V_μμ vs nucleus position C<br><sub>Boys function F₀ (purple) determines the shape — it IS the nuclear attraction</sub>',
+          font: { size: 13, color: '#ddd' }
+        },
+        xaxis: Object.assign({}, axStyle, { title: { text: 'C (bohr)', font: { color: '#aaa' } }, range: [-4, 4] }),
+        yaxis: Object.assign({}, axStyle, { title: { text: 'V_μμ (hartree)', font: { color: '#aaa' } }, range: [yMin, 0.2] }),
+        annotations: [
+          {
+            x: 0.1, y: 0.97, xref: 'paper', yref: 'paper',
+            text: 'V(0) = max attraction', showarrow: false,
+            font: { color: '#aaa', size: 11 }, xanchor: 'left'
+          },
+          {
+            x: 0.6, y: 0.10, xref: 'paper', yref: 'paper',
+            text: 'V(C) → −1/C at large C', showarrow: false,
+            font: { color: '#aaa', size: 11 }, xanchor: 'left'
+          }
+        ]
+      });
+
+      Plotly.newPlot('right-plot', rightTraces, rightLayout, { autosize: true, responsive: true });
+    }
+
+    function update() {
+      const alpha = parseFloat(document.getElementById('sl-alpha').value);
+      const C     = parseFloat(document.getElementById('sl-C').value);
+      document.getElementById('v-alpha').textContent = alpha.toFixed(2);
+      document.getElementById('v-C').textContent     = C.toFixed(1);
+
+      const { density, integrand } = computeLeftData(alpha, C);
+      const Vcurve = computeVcurve(alpha);
+      const V_at_C = Vdiag(alpha, C);
+      const V_at_0 = Vdiag(alpha, 0);
+      const F0scaled = Cs.map(C2 => F0(2 * alpha * C2 * C2) * V_at_0);
+      const classical = Cs.map(C2 => {
+        if (Math.abs(C2) < 0.2) return null;
+        return Math.max(-6, -1 / Math.abs(C2));
+      });
+      const vMin = Math.min(...Vcurve.filter(v => isFinite(v)));
+      const yMin = Math.max(vMin * 1.1, -6);
+
+      // Update left panel
+      Plotly.update('left-plot',
+        {
+          y: [density, integrand, [-0.05, 3.1], [0]],
+          x: [xs, xs, [C, C], [C]]
+        },
+        {}
+      );
+
+      // Update right panel
+      Plotly.update('right-plot',
+        {
+          y: [Vcurve, F0scaled, classical, [yMin, 0.2], [V_at_C]],
+          x: [Cs, Cs, Cs, [C, C], [C]]
+        },
+        { 'yaxis.range': [yMin, 0.2] }
+      );
+    }
+
+    init();
+  </script>
+</body>
+</html>

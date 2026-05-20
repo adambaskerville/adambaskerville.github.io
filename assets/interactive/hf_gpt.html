@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Gaussian Product Theorem Explorer</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      background: #0f0f0f; font-family: -apple-system, sans-serif; color: white;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      flex-shrink: 0;
+      display: flex; align-items: flex-start; gap: 28px;
+      padding: 12px 20px; background: #161616;
+      border-bottom: 1px solid #2a2a2a; flex-wrap: wrap;
+    }
+    .ctrl-group { display: flex; flex-direction: column; gap: 4px; min-width: 140px; }
+    .ctrl-group label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+    .ctrl-group input[type=range] { accent-color: #56B4E9; width: 140px; cursor: pointer; }
+    .ctrl-val { font-size: 14px; font-weight: 700; color: #d4d4ff; font-family: monospace; }
+    #infobox {
+      background: #0d0d1f; border: 1px solid #2a2a5a; border-radius: 7px;
+      padding: 9px 15px; font-size: 12px; font-family: monospace; line-height: 1.95;
+      align-self: center; min-width: 230px;
+    }
+    #infobox .lbl { color: #777; }
+    #infobox .val { font-weight: 600; }
+    #plot { flex: 1; min-height: 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <div class="ctrl-group">
+      <label>α₁ — exponent of φ₁</label>
+      <input type="range" id="sl-a1" min="0.1" max="3.0" step="0.05" value="0.5" oninput="update()">
+      <div class="ctrl-val" id="v-a1">0.50</div>
+    </div>
+    <div class="ctrl-group">
+      <label>α₂ — exponent of φ₂</label>
+      <input type="range" id="sl-a2" min="0.1" max="3.0" step="0.05" value="0.5" oninput="update()">
+      <div class="ctrl-val" id="v-a2">0.50</div>
+    </div>
+    <div class="ctrl-group">
+      <label>d — separation (bohr)</label>
+      <input type="range" id="sl-d" min="0" max="5.0" step="0.1" value="2.0" oninput="update()">
+      <div class="ctrl-val" id="v-d">2.0</div>
+    </div>
+    <div id="infobox">
+      <span class="lbl">p  = α₁+α₂             = </span><span class="val" id="ib-p" style="color:#56B4E9">—</span><br>
+      <span class="lbl">P  = product centre     = </span><span class="val" id="ib-P" style="color:#F0E442">—</span> bohr<br>
+      <span class="lbl">K  = exp(−α₁α₂d²/p)   = </span><span class="val" id="ib-K" style="color:#009E73">—</span><br>
+      <span class="lbl">S  = N₁N₂(π/p)^(3/2)K = </span><span class="val" id="ib-S" style="color:#CC79A7">—</span>
+    </div>
+  </div>
+  <div id="plot"></div>
+
+  <script>
+    // Wong (2011) colourblind-safe palette
+    const C_PHI1   = '#56B4E9';  // sky blue
+    const C_PHI2   = '#E69F00';  // orange
+    const C_PROD   = '#009E73';  // bluish green
+    const C_CENTRE = '#F0E442';  // yellow
+
+    const NX = 500, XMIN = -5, XMAX = 5;
+    const xs = Array.from({length: NX}, (_, i) => XMIN + i * (XMAX - XMIN) / (NX - 1));
+
+    function norm3d(a) { return Math.pow(2.0 * a / Math.PI, 0.75); }
+
+    function init() {
+      const traces = [
+        { x: xs, y: xs.map(()=>0), name: 'φ₁(x)', line:{color:C_PHI1,width:2.5}, type:'scatter', mode:'lines' },
+        { x: xs, y: xs.map(()=>0), name: 'φ₂(x)', line:{color:C_PHI2,width:2.5}, type:'scatter', mode:'lines' },
+        {
+          x: xs, y: xs.map(()=>0), name: 'φ₁(x) · φ₂(x)',
+          fill:'tozeroy', fillcolor:'rgba(0,158,115,0.20)',
+          line:{color:C_PROD,width:2.5}, type:'scatter', mode:'lines'
+        },
+        {
+          x:[0,0], y:[0,1.1], name:'Product centre P',
+          line:{color:C_CENTRE,width:2,dash:'dash'},
+          type:'scatter', mode:'lines'
+        },
+        {
+          x:[0], y:[0], name:'Centre A (φ₁)', mode:'markers',
+          marker:{color:C_PHI1,size:10,symbol:'triangle-down'}, type:'scatter'
+        },
+        {
+          x:[0], y:[0], name:'Centre B (φ₂)', mode:'markers',
+          marker:{color:C_PHI2,size:10,symbol:'triangle-down'}, type:'scatter'
+        },
+      ];
+
+      const layout = {
+        autosize: true,
+        paper_bgcolor:'#0f0f0f', plot_bgcolor:'#111111',
+        font:{color:'white', size:12},
+        title:{
+          text:'<b>Gaussian Product Theorem</b>  —  φ₁(x)·φ₂(x) = K·exp(−p(x−P)²)',
+          x:0.5, xanchor:'center', font:{size:14}
+        },
+        xaxis:{title:'x  (bohr)', range:[XMIN,XMAX], gridcolor:'#1e1e1e', zeroline:true, zerolinecolor:'#2e2e2e'},
+        yaxis:{title:'Amplitude', range:[-0.05,1.15], gridcolor:'#1e1e1e', zeroline:false},
+        legend:{bgcolor:'rgba(0,0,0,0)', bordercolor:'#333', borderwidth:1, x:0.01, y:0.99, xanchor:'left', yanchor:'top'},
+        margin:{t:55, b:50, l:60, r:20},
+      };
+
+      Plotly.newPlot('plot', traces, layout, {responsive:true, displayModeBar:false});
+      update();
+    }
+
+    function update() {
+      const a1 = parseFloat(document.getElementById('sl-a1').value);
+      const a2 = parseFloat(document.getElementById('sl-a2').value);
+      const d  = parseFloat(document.getElementById('sl-d').value);
+
+      document.getElementById('v-a1').textContent = a1.toFixed(2);
+      document.getElementById('v-a2').textContent = a2.toFixed(2);
+      document.getElementById('v-d').textContent  = d.toFixed(1);
+
+      const A = -d/2, B = +d/2;
+      const p = a1 + a2;
+      const P = (a1*A + a2*B) / p;
+      const K = Math.exp(-a1*a2/p * d*d);
+      const S = norm3d(a1) * norm3d(a2) * Math.pow(Math.PI/p, 1.5) * K;
+
+      document.getElementById('ib-p').textContent = p.toFixed(4);
+      document.getElementById('ib-P').textContent = P.toFixed(4);
+      document.getElementById('ib-K').textContent = K.toFixed(4);
+      document.getElementById('ib-S').textContent = S.toFixed(4);
+
+      const phi1 = xs.map(x => Math.exp(-a1*(x-A)**2));
+      const phi2 = xs.map(x => Math.exp(-a2*(x-B)**2));
+      const prod = phi1.map((v,i) => v * phi2[i]);
+      const ymax = Math.max(1.0, Math.max(...prod)) * 1.15;
+
+      Plotly.restyle('plot', {y:[phi1]}, [0]);
+      Plotly.restyle('plot', {y:[phi2]}, [1]);
+      Plotly.restyle('plot', {y:[prod]}, [2]);
+      Plotly.restyle('plot', {x:[[P,P]], y:[[0,ymax]]}, [3]);
+      Plotly.restyle('plot', {x:[[A]], y:[[0]]}, [4]);
+      Plotly.restyle('plot', {x:[[B]], y:[[0]]}, [5]);
+      Plotly.relayout('plot', {'yaxis.range':[-0.05, ymax]});
+    }
+
+    init();
+  </script>
+</body>
+</html>

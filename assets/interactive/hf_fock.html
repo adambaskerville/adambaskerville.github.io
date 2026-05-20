@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Fock Matrix Builder — HeH Minimal Basis</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      background: #0f0f0f; font-family: -apple-system, sans-serif; color: white;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      flex-shrink: 0;
+      display: flex; align-items: flex-start; gap: 28px;
+      padding: 10px 20px; background: #161616;
+      border-bottom: 1px solid #2a2a2a; flex-wrap: wrap;
+    }
+    .ctrl-group { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
+    .ctrl-group label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+    .ctrl-group input[type=range] { accent-color: #56B4E9; width: 200px; cursor: pointer; }
+    .ctrl-val { font-size: 14px; font-weight: 700; color: #d4d4ff; font-family: monospace; }
+    .ctrl-note { font-size: 11px; color: #666; margin-top: 2px; }
+    #panels { flex: 1; min-height: 0; display: flex; width: 100%; }
+
+    /* Left side: matrix cards */
+    #left-side {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column;
+      justify-content: center; padding: 15px; gap: 12px;
+    }
+    .matrix-row { display: flex; gap: 12px; flex: 1; min-height: 0; }
+    .matrix-card {
+      flex: 1; background: #161616; border: 1px solid #2a2a2a; border-radius: 8px;
+      padding: 10px; display: flex; flex-direction: column;
+    }
+    .matrix-title { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+    .matrix-table { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .matrix-row-cells { display: flex; gap: 4px; flex: 1; }
+    .matrix-cell {
+      flex: 1; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: monospace; font-size: 13px; font-weight: 600; color: white;
+      min-height: 40px;
+    }
+
+    #divider { width: 1px; background: #2a2a2a; flex-shrink: 0; }
+    #right-plot { flex: 1; min-width: 0; min-height: 0; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <div class="ctrl-group">
+      <label>R — H–He bond length (bohr)</label>
+      <input type="range" id="sl-R" min="0.8" max="4.0" step="0.05" value="1.5117" oninput="update()">
+      <div class="ctrl-val" id="v-R">1.51</div>
+      <div class="ctrl-note">Equilibrium ≈ 1.51 bohr</div>
+    </div>
+  </div>
+  <div id="panels">
+    <div id="left-side">
+      <div class="matrix-row">
+        <div class="matrix-card" id="card-S">
+          <div class="matrix-title">S — Overlap</div>
+          <div class="matrix-table" id="mt-S"></div>
+        </div>
+        <div class="matrix-card" id="card-T">
+          <div class="matrix-title">T — Kinetic Energy</div>
+          <div class="matrix-table" id="mt-T"></div>
+        </div>
+      </div>
+      <div class="matrix-row">
+        <div class="matrix-card" id="card-V">
+          <div class="matrix-title">V — Nuclear Attraction</div>
+          <div class="matrix-table" id="mt-V"></div>
+        </div>
+        <div class="matrix-card" id="card-Hcore">
+          <div class="matrix-title">H_core = T + V</div>
+          <div class="matrix-table" id="mt-Hcore"></div>
+        </div>
+      </div>
+    </div>
+    <div id="divider"></div>
+    <div id="right-plot"></div>
+  </div>
+
+  <script>
+    // Math helpers
+    function erf(x) {
+      if (x < 0) return -erf(-x);
+      const t = 1/(1 + 0.3275911*x);
+      return 1 - t*(0.254829592+t*(-0.284496736+t*(1.421413741+t*(-1.453152027+t*1.061405429))))*Math.exp(-x*x);
+    }
+    function F0(t) { if (t < 1e-9) return 1.0; return 0.5*Math.sqrt(Math.PI/t)*erf(Math.sqrt(t)); }
+    function norm(a) { return Math.pow(2*a/Math.PI, 0.75); }
+    function dist2(A,B) { return A.reduce((s,_,i) => s+(A[i]-B[i])**2, 0); }
+
+    function overlap(a,A,b,B) {
+      const p=a+b;
+      return norm(a)*norm(b)*Math.pow(Math.PI/p,1.5)*Math.exp(-a*b/p*dist2(A,B));
+    }
+    function kinetic(a,A,b,B) {
+      const p=a+b, AB2=dist2(A,B);
+      return a*b/p*(3-2*a*b/p*AB2)*overlap(a,A,b,B);
+    }
+    function nuclear(a,A,b,B,Z,C) {
+      const p=a+b;
+      const P=A.map((_,i)=>(a*A[i]+b*B[i])/p);
+      return norm(a)*norm(b)*(-2*Math.PI*Z/p)*F0(p*dist2(P,C))*Math.exp(-a*b/p*dist2(A,B));
+    }
+
+    function computeMatrices(R) {
+      const aH = 0.4166, aHe = 0.7739;
+      const AH = [0,0,0], AHe = [0,0,R];
+      const CH = [0,0,0], CHe = [0,0,R];
+
+      const S = [[overlap(aH,AH,aH,AH), overlap(aH,AH,aHe,AHe)],
+                 [overlap(aHe,AHe,aH,AH), overlap(aHe,AHe,aHe,AHe)]];
+      const T = [[kinetic(aH,AH,aH,AH), kinetic(aH,AH,aHe,AHe)],
+                 [kinetic(aHe,AHe,aH,AH), kinetic(aHe,AHe,aHe,AHe)]];
+      const V = [[0,0],[0,0]];
+      for (let i=0; i<2; i++) {
+        const ai = i===0?aH:aHe, Ai = i===0?AH:AHe;
+        for (let j=0; j<2; j++) {
+          const aj = j===0?aH:aHe, Aj = j===0?AH:AHe;
+          V[i][j] += nuclear(ai,Ai,aj,Aj,1,CH);
+          V[i][j] += nuclear(ai,Ai,aj,Aj,2,CHe);
+        }
+      }
+      const Hcore = T.map((row,i) => row.map((v,j) => v + V[i][j]));
+
+      // Symmetrise
+      [S, T, V, Hcore].forEach(M => {
+        const avg01 = (M[0][1] + M[1][0]) / 2;
+        M[0][1] = M[1][0] = avg01;
+      });
+
+      return {S, T, V, Hcore};
+    }
+
+    function cellColor(v, scale) {
+      const t = Math.max(-1, Math.min(1, v / scale));
+      if (t > 0) {
+        return `rgb(${Math.round(t*86)}, ${Math.round(t*180)}, ${Math.round(t*233)})`;
+      } else if (t < 0) {
+        const a = Math.abs(t);
+        return `rgb(${Math.round(a*213)}, ${Math.round(a*94)}, 15)`;
+      }
+      return 'rgb(17,17,17)';
+    }
+
+    function renderMatrix(tableId, M, scale) {
+      const el = document.getElementById(tableId);
+      el.innerHTML = '';
+      for (let i = 0; i < 2; i++) {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'matrix-row-cells';
+        for (let j = 0; j < 2; j++) {
+          const cell = document.createElement('div');
+          cell.className = 'matrix-cell';
+          const v = M[i][j];
+          cell.style.background = cellColor(v, scale);
+          cell.textContent = v.toFixed(4);
+          rowEl.appendChild(cell);
+        }
+        el.appendChild(rowEl);
+      }
+    }
+
+    // Precompute curve arrays
+    const NR_curve = 200;
+    const Rvals = Array.from({length: NR_curve}, (_, i) => 0.5 + i * 3.5 / (NR_curve - 1));
+
+    const arr_S01 = [], arr_T01 = [], arr_Hcore01 = [], arr_Hcore00 = [];
+    Rvals.forEach(r => {
+      const { S, T, Hcore } = computeMatrices(r);
+      arr_S01.push(S[0][1]);
+      arr_T01.push(T[0][1]);
+      arr_Hcore01.push(Hcore[0][1]);
+      arr_Hcore00.push(Hcore[0][0]);
+    });
+
+    const darkBase = {
+      paper_bgcolor: '#0f0f0f',
+      plot_bgcolor: '#0f0f0f',
+      font: { color: '#cccccc', family: '-apple-system, sans-serif' },
+      legend: { bgcolor: 'rgba(0,0,0,0)', bordercolor: '#2a2a2a' },
+      margin: { t: 80, r: 30, b: 60, l: 70 }
+    };
+    const axStyle = { gridcolor: '#2a2a2a', zerolinecolor: '#444', color: '#aaa' };
+
+    function getDotsY(R) {
+      const { S, T, Hcore } = computeMatrices(R);
+      return [S[0][1], T[0][1], Hcore[0][1], Hcore[0][0]];
+    }
+
+    function init() {
+      const R0 = 1.5117;
+      const { S, T, V, Hcore } = computeMatrices(R0);
+
+      renderMatrix('mt-S', S, 1.0);
+      renderMatrix('mt-T', T, 1.5);
+      renderMatrix('mt-V', V, 3.5);
+      renderMatrix('mt-Hcore', Hcore, 4.0);
+
+      const dotsY = getDotsY(R0);
+
+      const traces = [
+        {
+          x: Rvals, y: arr_S01, name: 'S[0,1] — overlap',
+          line: { color: '#009E73', width: 2.5 }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: Rvals, y: arr_T01, name: 'T[0,1] — kinetic',
+          line: { color: '#E69F00', width: 2.5 }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: Rvals, y: arr_Hcore01, name: 'H_core[0,1]',
+          line: { color: '#56B4E9', width: 2.5 }, type: 'scatter', mode: 'lines'
+        },
+        {
+          x: Rvals, y: arr_Hcore00, name: 'H_core[0,0] (diagonal)',
+          line: { color: '#CC79A7', width: 2.0, dash: 'dash' }, type: 'scatter', mode: 'lines'
+        },
+        // Vertical line at current R
+        {
+          x: [R0, R0], y: [-6, 2],
+          line: { color: 'white', width: 1.5, dash: 'dot' },
+          type: 'scatter', mode: 'lines', showlegend: false
+        },
+        // Dots on each curve at current R
+        {
+          x: [R0, R0, R0, R0],
+          y: dotsY,
+          marker: { color: ['#009E73','#E69F00','#56B4E9','#CC79A7'], size: 10 },
+          type: 'scatter', mode: 'markers', showlegend: false
+        }
+      ];
+
+      const layout = Object.assign({}, darkBase, {
+        title: {
+          text: 'Matrix elements vs bond length R<br><sub>Off-diagonal elements → 0 as R→∞, H_core[0,0] becomes less negative (He attraction weakens)</sub>',
+          font: { size: 13, color: '#ddd' }
+        },
+        xaxis: Object.assign({}, axStyle, { title: { text: 'R (bohr)', font: { color: '#aaa' } }, range: [0.5, 4.0] }),
+        yaxis: Object.assign({}, axStyle, { title: { text: 'Matrix element (hartree)', font: { color: '#aaa' } } })
+      });
+
+      Plotly.newPlot('right-plot', traces, layout, { autosize: true, responsive: true });
+    }
+
+    function update() {
+      const R = parseFloat(document.getElementById('sl-R').value);
+      document.getElementById('v-R').textContent = R.toFixed(2);
+
+      const { S, T, V, Hcore } = computeMatrices(R);
+      renderMatrix('mt-S', S, 1.0);
+      renderMatrix('mt-T', T, 1.5);
+      renderMatrix('mt-V', V, 3.5);
+      renderMatrix('mt-Hcore', Hcore, 4.0);
+
+      const dotsY = getDotsY(R);
+
+      Plotly.restyle('right-plot', {
+        x: [[R, R], [R, R, R, R]],
+        y: [[-6, 2], dotsY]
+      }, [4, 5]);
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Integral Screening: Exponential Decay of K_AB</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      background: #0f0f0f; font-family: -apple-system, sans-serif; color: white;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      flex-shrink: 0;
+      display: flex; align-items: flex-start; gap: 28px;
+      padding: 10px 20px; background: #161616;
+      border-bottom: 1px solid #2a2a2a; flex-wrap: wrap;
+    }
+    .ctrl-group { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
+    .ctrl-group label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.06em; }
+    .ctrl-group input[type=range] { accent-color: #56B4E9; width: 200px; cursor: pointer; }
+    .ctrl-val { font-size: 14px; font-weight: 700; color: #d4d4ff; font-family: monospace; }
+    #panels { flex: 1; min-height: 0; display: flex; width: 100%; }
+    #left-plot { flex: 1; min-width: 0; min-height: 0; }
+    #divider { width: 1px; background: #2a2a2a; flex-shrink: 0; }
+    #right-plot { flex: 1; min-width: 0; min-height: 0; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <div class="ctrl-group">
+      <label>α — GTO exponent (equal pair)</label>
+      <input type="range" id="sl-alpha" min="0.1" max="3.0" step="0.05" value="1.0" oninput="update()">
+      <div class="ctrl-val" id="v-alpha">1.00</div>
+    </div>
+    <div class="ctrl-group">
+      <label>ε — screening threshold</label>
+      <input type="range" id="sl-eps" min="-10" max="-1" step="0.1" value="-6" oninput="update()">
+      <div class="ctrl-val" id="v-eps">1e-6</div>
+    </div>
+  </div>
+  <div id="panels">
+    <div id="left-plot"></div>
+    <div id="divider"></div>
+    <div id="right-plot"></div>
+  </div>
+
+  <script>
+    const NR = 400, N_alpha = 300;
+    const alphaFixed = [0.5, 1.0, 2.0, 3.0];
+    const alphaColors = ['#56B4E9', '#009E73', '#E69F00', '#D55E00'];
+
+    const Rs = Array.from({length: NR}, (_, i) => i * 8 / (NR - 1));
+    const alphas = Array.from({length: N_alpha}, (_, i) => 0.05 + i * 2.95 / (N_alpha - 1));
+
+    const darkBase = {
+      paper_bgcolor: '#0f0f0f',
+      plot_bgcolor: '#0f0f0f',
+      font: { color: '#cccccc', family: '-apple-system, sans-serif' },
+      legend: { bgcolor: 'rgba(0,0,0,0)', bordercolor: '#2a2a2a' },
+      margin: { t: 80, r: 30, b: 60, l: 70 }
+    };
+    const axStyle = { gridcolor: '#2a2a2a', zerolinecolor: '#444', color: '#aaa' };
+
+    function Kab(alpha, R) { return Math.exp(-alpha / 2 * R * R); }
+    function Rscreen(alpha, eps) {
+      const v = -2 * Math.log(eps) / alpha;
+      return v > 0 ? Math.sqrt(v) : 0;
+    }
+
+    function init() {
+      const eps = 1e-6;
+      const alpha_cur = 1.0;
+
+      // Left panel traces: 4 fixed curves + threshold line + shaded region + 4 vertical dotted lines
+      const leftTraces = [];
+
+      // 4 K_AB curves
+      alphaFixed.forEach((a, i) => {
+        leftTraces.push({
+          x: Rs,
+          y: Rs.map(r => Kab(a, r)),
+          name: `α = ${a}`,
+          line: { color: alphaColors[i], width: 2.5 },
+          type: 'scatter', mode: 'lines'
+        });
+      });
+
+      // Screened region fill (shaded below threshold)
+      leftTraces.push({
+        x: [...Rs, ...Rs.slice().reverse()],
+        y: [...Rs.map(() => eps), ...Rs.map(() => 0)],
+        fill: 'toself',
+        fillcolor: 'rgba(255,255,255,0.05)',
+        line: { width: 0 },
+        name: 'Screened region',
+        type: 'scatter', mode: 'lines',
+        showlegend: true
+      });
+
+      // Threshold horizontal line
+      leftTraces.push({
+        x: [0, 8], y: [eps, eps],
+        name: 'Threshold ε',
+        line: { color: 'white', width: 1.5, dash: 'dash' },
+        type: 'scatter', mode: 'lines'
+      });
+
+      // 4 vertical R_screen dotted lines
+      alphaFixed.forEach((a, i) => {
+        const rs = Rscreen(a, eps);
+        leftTraces.push({
+          x: [rs, rs], y: [-0.02, 1.1],
+          name: `R_screen (α=${a})`,
+          line: { color: alphaColors[i], width: 1.5, dash: 'dot', opacity: 0.5 },
+          type: 'scatter', mode: 'lines',
+          showlegend: false,
+          opacity: 0.5
+        });
+      });
+
+      const leftLayout = Object.assign({}, darkBase, {
+        title: {
+          text: 'K_AB decay controls which integrals can be screened<br><sub>Pairs with K_AB &lt; ε can be skipped — dashed verticals show screening radius R_screen</sub>',
+          font: { size: 13, color: '#ddd' }
+        },
+        xaxis: Object.assign({}, axStyle, { title: { text: 'R = |A−B| (bohr)', font: { color: '#aaa' } }, range: [0, 8] }),
+        yaxis: Object.assign({}, axStyle, { title: { text: 'K_AB = exp(−αR²/2)', font: { color: '#aaa' } }, range: [-0.02, 1.1] }),
+        annotations: [
+          {
+            x: 0.5, y: 0.15, xref: 'paper', yref: 'paper',
+            text: 'R_screen = √(−2 ln ε / α)', showarrow: false,
+            font: { color: 'white', size: 12 }, xanchor: 'left'
+          }
+        ]
+      });
+
+      Plotly.newPlot('left-plot', leftTraces, leftLayout, { autosize: true, responsive: true });
+
+      // Right panel: R_screen vs alpha curve + dot
+      const RscreenCurve = alphas.map(a => Rscreen(a, eps));
+      const rs_cur = Rscreen(alpha_cur, eps);
+
+      const rightTraces = [
+        {
+          x: alphas, y: RscreenCurve,
+          name: 'R_screen(α)',
+          line: { color: '#56B4E9', width: 2.5 },
+          type: 'scatter', mode: 'lines'
+        },
+        {
+          x: [alpha_cur], y: [rs_cur],
+          name: 'Current α',
+          marker: { color: '#F0E442', size: 12 },
+          type: 'scatter', mode: 'markers', showlegend: false
+        }
+      ];
+
+      const rightLayout = Object.assign({}, darkBase, {
+        title: {
+          text: 'Screening radius R_screen vs exponent α<br><sub>For current ε — drag threshold slider to see how the landscape shifts</sub>',
+          font: { size: 13, color: '#ddd' }
+        },
+        xaxis: Object.assign({}, axStyle, { title: { text: 'α (exponent)', font: { color: '#aaa' } }, range: [0, 3] }),
+        yaxis: Object.assign({}, axStyle, { title: { text: 'R_screen (bohr)', font: { color: '#aaa' } }, range: [0, 9] }),
+        annotations: [
+          {
+            x: 0.5, y: 0.92, xref: 'paper', yref: 'paper',
+            text: 'Compact GTOs (large α) screen at shorter range',
+            showarrow: false, font: { color: '#888', size: 11 }, xanchor: 'center'
+          },
+          {
+            x: 0.1, y: 0.25, xref: 'paper', yref: 'paper',
+            text: 'Diffuse GTOs (small α) need large separation before screening',
+            showarrow: false, font: { color: '#888', size: 11 }, xanchor: 'left'
+          }
+        ]
+      });
+
+      Plotly.newPlot('right-plot', rightTraces, rightLayout, { autosize: true, responsive: true });
+    }
+
+    function update() {
+      const alpha = parseFloat(document.getElementById('sl-alpha').value);
+      const epsExp = parseFloat(document.getElementById('sl-eps').value);
+      const eps = Math.pow(10, epsExp);
+
+      document.getElementById('v-alpha').textContent = alpha.toFixed(2);
+      // Format as 1eN
+      document.getElementById('v-eps').textContent = `1e${epsExp % 1 === 0 ? epsExp : epsExp.toFixed(1)}`;
+
+      // Update left panel: threshold line (trace index 5), shaded region (trace index 4), vertical lines (traces 6-9)
+      // Trace order: [0-3] = 4 curves, [4] = shaded fill, [5] = threshold line, [6-9] = vertical dotted lines
+
+      const thresholdY = [eps, eps];
+      // Shaded fill
+      const shadedY = [...Rs.map(() => eps), ...Rs.map(() => 0)];
+      const shadedX = [...Rs, ...Rs.slice().reverse()];
+
+      const updateY = {};
+      const updateX = {};
+      // Threshold line is trace 5
+      updateY[5] = thresholdY;
+      // Shaded fill is trace 4
+      updateY[4] = shadedY;
+
+      // Vertical dotted lines are traces 6-9
+      alphaFixed.forEach((a, i) => {
+        const rs = Rscreen(a, eps);
+        updateX[6 + i] = [rs, rs];
+        updateY[6 + i] = [-0.02, 1.1];
+      });
+
+      // Convert to arrays for Plotly.update
+      const maxIdx = 10;
+      const yArr = Array.from({length: maxIdx}, (_, i) => updateY[i] !== undefined ? updateY[i] : undefined);
+      const xArr = Array.from({length: maxIdx}, (_, i) => updateX[i] !== undefined ? updateX[i] : undefined);
+
+      // Filter out undefined — use restyle instead for selective updates
+      const traceIndices = [4, 5, 6, 7, 8, 9];
+      Plotly.restyle('left-plot', {
+        y: [shadedY, thresholdY,
+            [Rscreen(alphaFixed[0], eps), Rscreen(alphaFixed[0], eps)],
+            [Rscreen(alphaFixed[1], eps), Rscreen(alphaFixed[1], eps)],
+            [Rscreen(alphaFixed[2], eps), Rscreen(alphaFixed[2], eps)],
+            [Rscreen(alphaFixed[3], eps), Rscreen(alphaFixed[3], eps)]
+        ],
+        x: [shadedX, [0, 8],
+            [Rscreen(alphaFixed[0], eps), Rscreen(alphaFixed[0], eps)],
+            [Rscreen(alphaFixed[1], eps), Rscreen(alphaFixed[1], eps)],
+            [Rscreen(alphaFixed[2], eps), Rscreen(alphaFixed[2], eps)],
+            [Rscreen(alphaFixed[3], eps), Rscreen(alphaFixed[3], eps)]
+        ]
+      }, [4, 5, 6, 7, 8, 9]);
+
+      // Update right panel: curve changes with eps, dot moves with alpha
+      const RscreenCurve = alphas.map(a => Rscreen(a, eps));
+      const rs_cur = Rscreen(alpha, eps);
+
+      Plotly.restyle('right-plot', {
+        y: [RscreenCurve, [rs_cur]],
+        x: [alphas, [alpha]]
+      }, [0, 1]);
+    }
+
+    init();
+  </script>
+</body>
+</html>

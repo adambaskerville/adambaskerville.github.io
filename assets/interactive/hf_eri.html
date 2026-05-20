@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Two-Electron Integral Explorer</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%; overflow: hidden;
+      background: #0f0f0f; font-family: -apple-system, sans-serif; color: white;
+      display: flex; flex-direction: column;
+    }
+    #controls {
+      flex-shrink: 0;
+      display: flex; align-items: flex-start; gap: 32px;
+      padding: 14px 24px; background: #161616;
+      border-bottom: 1px solid #2a2a2a; flex-wrap: wrap;
+    }
+    .ctrl-group { display: flex; flex-direction: column; gap: 5px; min-width: 180px; }
+    .ctrl-group label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+    .ctrl-group input[type=range] { accent-color: #56B4E9; width: 180px; cursor: pointer; }
+    .ctrl-val { font-size: 15px; font-weight: 700; color: #d4d4ff; font-family: monospace; }
+    #infobox {
+      background: #0d0d1f; border: 1px solid #2a2a5a; border-radius: 8px;
+      padding: 10px 18px; font-size: 12.5px; font-family: monospace; line-height: 2.1;
+      align-self: center; min-width: 260px;
+    }
+    #infobox .lbl { color: #888; }
+    #infobox .val { color: #b0b0ff; font-weight: 600; }
+    .view-btn {
+      background: #252525; color: #ccc; border: 1px solid #444; border-radius: 5px;
+      padding: 5px 14px; font-size: 12px; cursor: pointer;
+    }
+    .view-btn.active { background: #4a4fc4; border-color: #7b7ff0; color: #fff; font-weight: 600; }
+    #plot { flex: 1; min-height: 0; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <div class="ctrl-group">
+      <label>α — GTO exponent (all four)</label>
+      <input type="range" id="sl-alpha" min="0.1" max="3.0" step="0.05" value="0.5" oninput="update()">
+      <div class="ctrl-val" id="v-alpha">0.50</div>
+    </div>
+    <div class="ctrl-group">
+      <label>Show classical 1/R</label>
+      <div style="display:flex;gap:8px;margin-top:4px;">
+        <button class="view-btn active" id="btn-show-coulomb" onclick="toggleCoulomb()">1/R reference</button>
+        <button class="view-btn active" id="btn-show-fill" onclick="toggleFill()">quantum correction</button>
+      </div>
+    </div>
+    <div id="infobox">
+      <span class="lbl">α                = </span><span class="val" id="ib-a">—</span><br>
+      <span class="lbl">(AA|AA) self-rep  = </span><span class="val" id="ib-self">—</span> hartree<br>
+      <span class="lbl">classical 1/R at R=0.5 = </span><span class="val" id="ib-cl">2.000</span><br>
+      <span class="lbl">(AA|BB) at R=0.5 = </span><span class="val" id="ib-val">—</span> hartree<br>
+      <span class="lbl">deviation from 1/R   = </span><span class="val" id="ib-dev">—</span>
+    </div>
+  </div>
+  <div id="plot"></div>
+
+  <script>
+    // Wong (2011) colourblind-safe palette
+    const C_ERI     = '#56B4E9';  // sky blue
+    const C_COULOMB = '#D55E00';  // vermillion
+    const C_FILL    = 'rgba(86,180,233,0.12)';
+
+    const NR = 500;
+    const RMAX = 6.0;
+    const rs = Array.from({length: NR}, (_, i) => 0.001 + i * (RMAX - 0.001) / (NR - 1));
+
+    let showCoulomb = true;
+    let showFill = true;
+
+    function erf(x) {
+      if (x < 0) return -erf(-x);
+      const t = 1.0 / (1.0 + 0.3275911 * x);
+      const poly = t * (0.254829592 + t * (-0.284496736 + t * (1.421413741 + t * (-1.453152027 + t * 1.061405429))));
+      return 1.0 - poly * Math.exp(-x * x);
+    }
+
+    function F0(t) {
+      if (t < 1e-9) return 1.0;
+      return 0.5 * Math.sqrt(Math.PI / t) * erf(Math.sqrt(t));
+    }
+
+    function eri_AABB(alpha, R) {
+      return (2.0 / Math.sqrt(Math.PI)) * Math.sqrt(alpha) * F0(alpha * R * R);
+    }
+
+    function eri_self(alpha) {
+      return (2.0 / Math.sqrt(Math.PI)) * Math.sqrt(alpha);
+    }
+
+    function init() {
+      const alpha = 0.5;
+      const eri_y    = rs.map(r => eri_AABB(alpha, r));
+      const coulomb_y = rs.map(r => Math.min(1.0 / r, 5.0));
+
+      const traces = [
+        // Fill anchor — bottom edge at ERI (trace 0)
+        {
+          x: rs, y: eri_y,
+          name: '', fill: 'tonexty', fillcolor: 'rgba(213,94,0,0.10)',
+          line: {width: 0}, type: 'scatter', mode: 'none',
+          showlegend: false,
+        },
+        // Classical 1/R (trace 1)
+        {
+          x: rs, y: coulomb_y,
+          name: 'Classical Coulomb  1/R',
+          line: {color: C_COULOMB, width: 1.8, dash: 'dash'},
+          type: 'scatter', mode: 'lines', visible: true,
+        },
+        // ERI curve (trace 2)
+        {
+          x: rs, y: eri_y,
+          name: '(μμ|νν)  two-electron integral',
+          line: {color: C_ERI, width: 3},
+          type: 'scatter', mode: 'lines',
+        },
+        // Fill top boundary (trace 3)
+        {
+          x: rs, y: coulomb_y,
+          name: 'Quantum correction (finite size)',
+          fill: 'tonexty', fillcolor: 'rgba(213,94,0,0.10)',
+          line: {width: 0}, type: 'scatter', mode: 'none',
+          showlegend: true, visible: true,
+        },
+      ];
+
+      const layout = {
+        autosize: true,
+        paper_bgcolor: '#0f0f0f', plot_bgcolor: '#111111',
+        font: {color: 'white', size: 12},
+        title: {
+          text: '<b>Two-Electron Integral (μμ|νν)</b>  —  Coulomb repulsion between two Gaussian charge clouds',
+          x: 0.5, xanchor: 'center', font: {size: 13}
+        },
+        xaxis: {
+          title: 'R = |A − B|  (bohr)', range: [0, RMAX],
+          gridcolor: '#1e1e1e', zeroline: true, zerolinecolor: '#333'
+        },
+        yaxis: {
+          title: 'Integral value  (hartree)', range: [-0.05, 4.5],
+          gridcolor: '#1e1e1e', zeroline: false
+        },
+        legend: {
+          bgcolor: 'rgba(0,0,0,0)', bordercolor: '#333', borderwidth: 1,
+          x: 0.98, y: 0.99, xanchor: 'right', yanchor: 'top'
+        },
+        margin: {t: 60, b: 60, l: 65, r: 20},
+        annotations: [
+          {
+            text: 'At R=0: ERI = 2√α/√π  (finite self-repulsion)',
+            x: 0.25, y: 0.96, xref: 'paper', yref: 'paper',
+            showarrow: false, font: {color: '#666', size: 11}
+          },
+          {
+            text: 'R → ∞: ERI → 1/R  (Coulomb)',
+            x: 0.72, y: 0.20, xref: 'paper', yref: 'paper',
+            showarrow: false, font: {color: '#666', size: 11}
+          }
+        ]
+      };
+
+      Plotly.newPlot('plot', traces, layout, {responsive: true, displayModeBar: false});
+      update();
+    }
+
+    function update() {
+      const alpha = parseFloat(document.getElementById('sl-alpha').value);
+      document.getElementById('v-alpha').textContent = alpha.toFixed(2);
+
+      const eri_y  = rs.map(r => eri_AABB(alpha, r));
+      const coul_y = rs.map(r => Math.min(1.0 / r, 5.0));
+      const self   = eri_self(alpha);
+
+      const R_ref  = 0.5;
+      const eri_ref = eri_AABB(alpha, R_ref);
+      const dev = ((eri_ref - 1.0 / R_ref) / (1.0 / R_ref) * 100).toFixed(2);
+
+      document.getElementById('ib-a').textContent    = alpha.toFixed(2);
+      document.getElementById('ib-self').textContent  = self.toFixed(4);
+      document.getElementById('ib-val').textContent   = eri_ref.toFixed(4);
+      document.getElementById('ib-dev').textContent   = dev + ' %';
+
+      Plotly.restyle('plot', {y: [eri_y]},  [0]);
+      Plotly.restyle('plot', {y: [coul_y]}, [1]);
+      Plotly.restyle('plot', {y: [eri_y]},  [2]);
+      Plotly.restyle('plot', {y: [coul_y]}, [3]);
+    }
+
+    function toggleCoulomb() {
+      showCoulomb = !showCoulomb;
+      document.getElementById('btn-show-coulomb').classList.toggle('active', showCoulomb);
+      Plotly.restyle('plot', {visible: [showCoulomb]}, [1]);
+      Plotly.restyle('plot', {visible: [showCoulomb && showFill]}, [3]);
+    }
+
+    function toggleFill() {
+      showFill = !showFill;
+      document.getElementById('btn-show-fill').classList.toggle('active', showFill);
+      Plotly.restyle('plot', {visible: [showCoulomb && showFill]}, [3]);
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -8,6 +8,13 @@ comments: false
 math: true
 ---
 
+**This post is part of a series on Hartree-Fock theory:**
+- **Restricted Hartree-Fock in 100 Lines**: You are here
+- [Unrestricted Hartree-Fock in 100 Lines]({% post_url 2025-01-01-UnrestrictedHartreeFock %}): This lifts the closed-shell restriction, adds spin degrees of freedom
+- [The Integrals at the Heart of Hartree-Fock Theory]({% post_url 2026-05-10-HFIntegrals %}): Derives every integral used in this post from scratch, with interactive visualisers. This is useful when you get to the integral pasrt of this post.
+
+---
+
 # Try the code yourself!
 
 Click the following button to launch an ipython notebook on Google Colab which implements the code developed in this post:
