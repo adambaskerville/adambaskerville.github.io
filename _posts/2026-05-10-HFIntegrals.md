@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "T>T: The Integrals at the Heart of Hartree-Fock Theory"
-date: 2025-04-18
+date: 2025-05-10
 excerpt: "Every Hartree-Fock calculation rests on a small set of definite integrals. This post derives each one from first principles, explains the mathematics that makes Gaussians uniquely tractable, and also provides some interactive tools for building intuition about why these integrals look the way they do."
 tags: [science, mathematics, programming, python, quantum chemistry, hartree-fock, integrals, gaussian, boys function, two-electron integrals, basis set, visualisation]
 comments: false
@@ -282,7 +282,7 @@ $$
 (\mu\nu|\lambda\sigma) = \int\!\int \phi_\mu(\mathbf{r}_1)\,\phi_\nu(\mathbf{r}_1)\,\frac{1}{|\mathbf{r}_1 - \mathbf{r}_2|}\,\phi_\lambda(\mathbf{r}_2)\,\phi_\sigma(\mathbf{r}_2)\,\mathrm{d}\mathbf{r}_1\,\mathrm{d}\mathbf{r}_2.
 $$
 
-It represents the electrostatic repulsion between the **charge distribution** $\phi_{\mu}(\mathbf{r}_{1})\phi_{\nu}(\mathbf{r}_{1})$ and the charge distribution $\phi_{\lambda}(\mathbf{r}_{2})\phi_{\sigma}(\mathbf{r}_{2})$. In the Fock matrix, Coulomb integrals of the form $(\mu\nu\mid\sigma\lambda)$ represent the average repulsion felt by an electron in the $(\mu,\nu)$ distribution from all other electrons, and exchange integrals $(\mu\lambda\mid\sigma\nu)$ arise from the antisymmetry of the wavefunction.
+It represents the electrostatic repulsion between the **charge distribution** $\phi_{\mu}(\mathbf r_1)\phi_{\nu}(\mathbf r_1)$ and the charge distribution $\phi_{\lambda}(\mathbf r_2)\phi_{\sigma}(\mathbf r_2)$. In the Fock matrix, Coulomb integrals of the form $(\mu\nu\mid\sigma\lambda)$ represent the average repulsion felt by an electron in the $(\mu,\nu)$ distribution from all other electrons, and exchange integrals $(\mu\lambda\mid\sigma\nu)$ arise from the antisymmetry of the wavefunction.
 
 ### Analytic Evaluation
 
@@ -291,7 +291,7 @@ Apply the Gaussian product theorem separately to each pair:
 - Pair $(\mu,\nu)$: product Gaussian at $\mathbf{P}$ with exponent $p = \alpha_\mu + \alpha_\nu$
 - Pair $(\lambda,\sigma)$: product Gaussian at $\mathbf{Q}$ with exponent $q = \alpha_\lambda + \alpha_\sigma$
 
-The integral now involves two one-centre Gaussians interacting via $1/\vert\mathbf{r}_{1} - \mathbf{r}_{2}\vert$. Apply the same integral representation of $1/r_{12}$ used for the nuclear attraction case. Both electron integrations become Gaussian integrals and can be evaluated in closed form. The remaining $t$-integral again yields a Boys function:
+The integral now involves two one-centre Gaussians interacting via $1/r_{12}$. Apply the same integral representation used for the nuclear attraction case. Both electron integrations become Gaussian integrals and can be evaluated in closed form. The remaining $t$-integral again yields a Boys function:
 
 $$
 (\mu\nu|\lambda\sigma) = \frac{2\pi^{5/2}}{pq\sqrt{p+q}}\,K_{\mu\nu}\,K_{\lambda\sigma}\,F_0\!\left(\zeta|\mathbf{P}-\mathbf{Q}|^2\right)\,N_\mu\,N_\nu\,N_\lambda\,N_\sigma,
@@ -358,7 +358,7 @@ $$
 (\mu\nu|\lambda\sigma) = (\nu\mu|\lambda\sigma) = (\mu\nu|\sigma\lambda) = (\nu\mu|\sigma\lambda) = (\lambda\sigma|\mu\nu) = (\sigma\lambda|\mu\nu) = (\lambda\sigma|\nu\mu) = (\sigma\lambda|\nu\mu).
 $$
 
-The first four follow because the integrand is symmetric under swapping $\mu \leftrightarrow \nu$ or $\lambda \leftrightarrow \sigma$. The second four follow because the Coulomb operator is symmetric under swapping the two electrons $\mathbf{r}_{1} \leftrightarrow \mathbf{r}_{2}$. For a basis of $K$ functions, the number of unique ERIs is:
+The first four follow because the integrand is symmetric under swapping $\mu \leftrightarrow \nu$ or $\lambda \leftrightarrow \sigma$. The second four follow because the Coulomb operator is symmetric under swapping the two electrons $\mathbf r_1 \leftrightarrow \mathbf r_2$. For a basis of $K$ functions, the number of unique ERIs is:
 
 $$
 N_{\text{unique}} = \frac{K(K+1)}{2} \cdot \frac{\frac{K(K+1)}{2}+1}{2} = \frac{K(K+1)(K^2+K+2)}{8}.
