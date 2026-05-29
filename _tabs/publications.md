@@ -10,7 +10,7 @@ comments: false
 
 <ol>
 <br/><br/>
-<li><a href="https://pubs.acs.org/doi/10.1021/acs.jcim.5c01150" target="_blank">Basic Stability Tests of Machine Learning Potentials For Molecular Simulations in Computational Drug Discovery</a>:  K. Ranasinghe, A. L. Baskerville, G. Wood, M. Wieder, and G. Koenig</li>
+<li><a href="https://pubs.acs.org/doi/10.1021/acs.jcim.5c01150" target="_blank">Basic Stability Tests of Machine Learning Potentials For Molecular Simulations in Computational Drug Discovery</a>:  K. Ranasinghe, A. L. Baskerville, G. Wood, M. Wieder, and G. Koenig, 2025</li>
 
 <br/><br/>
 <li><a href="https://royalsocietypublishing.org/rspa/article-abstract/481/2326/20250072/318383/Classically-bound-and-quantum-quasi-bound-states?redirectedFrom=fulltext" target="_blank">Classically Bound and Quantum Quasi-Bound States of an Electron on a Plane Adjacent to a Magnetic Monopole</a>: J. Martin, A. L. Baskerville, V. L. Campo, J. Minns, J. Pooley, S. T. Carr, C. A. Hooley, G. Möller and J. Quintanilla, 2024</li>
