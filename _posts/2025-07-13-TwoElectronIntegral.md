@@ -94,35 +94,62 @@ Here is the core logic of the new implementation. It drops the C++ overhead enti
 import mpmath
 import time
 
-# Set precision to 50 decimal places to absorb cancellation
+# Set arbitrary precision to 50 decimal places
 mpmath.mp.dps = 50
 
+
 def get_gauss_laguerre_mp(N):
-    """Generates exact Gauss-Laguerre roots and weights using Golub-Welsch."""
+    """
+    Generates Gauss-Laguerre roots and weights using the Golub-Welsch
+    algorithm in arbitrary precision.
+    """
     T = mpmath.matrix(N, N)
     for i in range(N):
+        # Diagonal elements: alpha_i = 2i + 1
         T[i, i] = mpmath.mpf(2 * i + 1)
         if i < N - 1:
+            # Off-diagonal elements: sqrt(beta_i) = i + 1
             val = mpmath.mpf(i + 1)
             T[i, i + 1] = val
             T[i + 1, i] = val
-            
+
+    # Diagonalize the symmetric Jacobi matrix
     E, ER = mpmath.eigsy(T)
+
     roots = [E[i] for i in range(N)]
-    weights = [ER[0, i]**2 for i in range(N)]
+    # Weights are the square of the first component of each normalised eigenvector
+    weights = [ER[0, i] ** 2 for i in range(N)]
+
     return roots, weights
 
-def generate_canonical_integrals(m, A):
+
+def generate_canonical_integrals_mp(m, A):
+    """
+    Computes and canonically sorts the unique (pq|uv) two-electron repulsion
+    integrals using arbitrary precision Gauss-Laguerre Quadrature.
+    """
     N = 2 * m + 1
+
+    print(
+        f"-> Generating Gauss-Laguerre grid (N={N}) at {mpmath.mp.dps} decimal places..."
+    )
     roots, weights = get_gauss_laguerre_mp(N)
-    
+
+    print("-> Pre-computing coordinate grid and Laguerre polynomials...")
     # 2D Grid: X_jk = x_j + 0.5 * x_k
-    X_jk = [[roots[j] + mpmath.mpf('0.5') * roots[k] for k in range(N)] for j in range(N)]
-    
-    # Precompute Laguerre Polynomials
-    L_grid = [[[mpmath.laguerre(p, 0, X_jk[j][k]) for k in range(N)] for j in range(N)] for p in range(m)]
-        
-    # Evaluate inner sums (Separation of Variables)
+    X_jk = [
+        [roots[j] + mpmath.mpf("0.5") * roots[k] for k in range(N)] for j in range(N)
+    ]
+
+    L_grid = []
+    for p in range(m):
+        # mpmath.laguerre(n, alpha, x)
+        grid_p = [
+            [mpmath.laguerre(p, 0, X_jk[j][k]) for k in range(N)] for j in range(N)
+        ]
+        L_grid.append(grid_p)
+
+    print("-> Separating 3D integral and evaluating inner sums S_pq...")
     S = {}
     for p in range(m):
         for q in range(p, m):
@@ -130,15 +157,22 @@ def generate_canonical_integrals(m, A):
             for k in range(N):
                 val = mpmath.mpf(0)
                 for j in range(N):
-                    val += weights[j] * X_jk[j][k] * L_grid[p][j][k] * L_grid[q][j][k]
+                    term = weights[j] * X_jk[j][k] * L_grid[p][j][k] * L_grid[q][j][k]
+                    val += term
                 S_pq.append(val)
+            # Store symmetrically
             S[(p, q)] = S_pq
             S[(q, p)] = S_pq
 
-    # Assemble unique integrals via canonical sorting
-    scalar = (mpmath.mpf(8) * mpmath.pi**2) / (mpmath.mpf(A)**5)
+    num_pairs = m * (m + 1) // 2
+    total_unique = num_pairs * (num_pairs + 1) // 2
+    print(f"-> Assembling {total_unique} canonically sorted unique integrals...")
+
+    scalar = (mpmath.mpf(8) * mpmath.pi**2) / (mpmath.mpf(A) ** 5)
+
     unique_integrals = []
-    
+    index_1d = 0
+
     # Yoshimine Sort: p >= q, u >= v, pq >= uv
     for p in range(m):
         for q in range(p + 1):
@@ -146,22 +180,58 @@ def generate_canonical_integrals(m, A):
             for u in range(m):
                 for v in range(u + 1):
                     idx_uv = u * (u + 1) // 2 + v
-                    
+
                     if idx_pq >= idx_uv:
+                        # Final contraction over k
                         val = mpmath.mpf(0)
                         for k in range(N):
-                            val += weights[k] * S[(p, q)][k] * S[(u, v)][k]
-                        
-                        unique_integrals.append((p+1, q+1, u+1, v+1, scalar * val))
-                        
+                            term = weights[k] * S[(p, q)][k] * S[(u, v)][k]
+                            val += term
+
+                        final_val = scalar * val
+                        unique_integrals.append((index_1d, p, q, u, v, final_val))
+                        index_1d += 1
+
     return unique_integrals
 
+
+# ==========================================
+# Execution Example
+# ==========================================
 if __name__ == "__main__":
     m_basis = 20
-    A_val = 1.0 
-    
-    print(f"Calculating and sorting unique integrals for m = {m_basis}...")
-    canonical_integrals = generate_canonical_integrals(m_basis, A_val)
-    print(f"Extracted {len(canonical_integrals)} unique integrals.")
+    A_val = 1.0  # Set to 1.0 for unscaled reference validation
+
+    start_time = time.time()
+    canonical_integrals = generate_canonical_integrals_mp(m_basis, A_val)
+    elapsed = time.time() - start_time
+
+    total_unique = len(canonical_integrals)
+    print(f"\nCompleted {total_unique} integrals in {elapsed:.2f} seconds.")
+
+    output_filename = f"canonical_integrals_mpmath_m{m_basis}.txt"
+    print(f"Writing arbitrary-precision output to {output_filename}...")
+
+    with open(output_filename, "w") as f:
+        f.write(f"# Canonical Two-Electron Integrals (m={m_basis}, A={A_val})\n")
+        f.write(f"# Computed with mpmath at {mpmath.mp.dps} decimal places\n")
+        f.write("# Format: 1D_Index | p  q  u  v | Integral_Value\n")
+        f.write("-" * 65 + "\n")
+
+        for row in canonical_integrals:
+            idx = int(row[0])
+            # +1 shift for 1-based orbital index notation
+            p = int(row[1]) + 1
+            q = int(row[2]) + 1
+            u = int(row[3]) + 1
+            v = int(row[4]) + 1
+
+            # Print to 30 decimal places
+            val_str = mpmath.nstr(row[5], 30, min_fixed=0)
+
+            # Formatting to handle negative signs cleanly
+            f.write(f"{idx:6d} | {p:2d} {q:2d} {u:2d} {v:2d} |  {val_str}\n")
+
+    print("Done.")
 ```
 This code is **much** simpler than the original and significantly faster whilst offering the required accuracy for each integral. Even better on my MacBook I can generate all 22155 integrals for a 20-term Hartree Fock wavefunction in just 3.7 seconds! The more you learn.
