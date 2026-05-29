@@ -2,14 +2,16 @@
 title: Presentations
 order: 3
 icon: fas fa-newspaper
-# List of presentations
-# v2.0
-# https://github.com/cotes2020/jekyll-theme-chirpy
-# © 2017-2019 Cotes Chung
+
 # MIT License
 ---
 
 ## Talks
+
+* <p>"Running Real-World Computational
+Chemistry on Real Quantum Computers​​" - Bio-IT, Boston, 2026<br> 
+
+* <p>"Binding Free Energies from Following Ligands On The Way Out​" - Free Energy Workshop, Barcelona, 2026<br> 
 
 * <p>"PhysicsML: A Python Ecosystem for​ Molecular Machine Learning​" - University of Nottingham, UK, 2024<br> 
 
