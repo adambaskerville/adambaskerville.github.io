@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The First Solution is Rarely the Best: A Lesson in Numerical Integration"
+title: "T>T: The First Solution is Rarely the Best: A Lesson in Numerical Integration"
 date: 2025-07-13
 categories: [Computational Chemistry, Python, Mathematics]
 tags: [Hartree-Fock, Numerical Integration, Arbitrary Precision, mpmath, Python]
