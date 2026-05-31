@@ -83,6 +83,38 @@ I have used Gaussian quadrature numerous times before and automatically think of
 
 By mapping the integral to the quadrature nodes, the 3D integral algebraically separates into independent 1D projections. The $O(m^7)$ nightmare collapses into an $O(m^4)$ dynamic evaluation. 
 
+### Why Gaussian Quadrature is Exact in This Instance (Not an Approximation)
+
+When I hear "numerical integration," I think of Riemann sums or the Trapezoidal rule that chop an area into tiny pieces to get a "good enough" approximation. I was mistakenly placing Gaussian quadrature in this category, but it is different. 
+
+The fundamental theorem of Gaussian quadrature states that an $N$-point rule will integrate a polynomial of degree up to $2N - 1$ with **mathematical exactness**. There is no truncation error and no missing area; the numerical sum is analytically equivalent to the true integral.
+
+To make this clearer for our two-electron integrals, we just need to count the polynomial degrees in our perimetric integrand. 
+
+Once we separate the exponential decay $e^{-A(r_1+r_2)}$ (which the Gauss-Laguerre method natively absorbs into its weight functions), we are left analysing a pure polynomial. Let's look at the maximum possible degree in any single coordinate (e.g., $z_1$) for a basis set of size $m$:
+
+1. **The Basis Functions:** We are multiplying four Laguerre polynomials together to form the $(pq\|uv)$ integral: $L_p \times L_q \times L_u \times L_v$. Since the maximum index of our basis functions is $m-1$, multiplying four of them together yields a maximum polynomial degree of $4(m-1) = 4m - 4$.
+2. **The Jacobian Volume Element:** Converting the Cartesian volume to perimetric coordinates introduces the polynomial $(z_2+z_3)(z_3+z_1)(z_1+z_2)$. If you expand this out, the highest power any single coordinate will reach (e.g., $z_1^2$) is exactly 2.
+
+Adding these together, the absolute highest polynomial degree we will ever encounter along a single integration axis is
+
+$$(4m - 4) + 2 = \mathbf{4m - 2}$$
+
+Now, we just apply the Gaussian quadrature rule:
+
+$$
+\begin{aligned}
+    2N - 1 &\ge 4m - 2 \\
+    2N &\ge 4m - 1 \\
+    N &\ge 2m - 0.5
+\end{aligned}
+$$
+
+
+This tells us that an $N = 2m$ point grid is mathematically sufficient. By setting our code to $N = 2m + 1$, we guarantee that the highest degree terms of our largest basis functions are captured exactly. 
+
+We didn't swap an exact analytical method for an approximate numerical one. We swapped a computationally inefficient exact method (the binomial expansion) for a highly stable, computationally elegant exact method.
+
 ### The Arbitrary Precision Solution with Python
 
 Even with quadrature, the massive polynomial values at $m=20$ still cause precision issues in standard `NumPy` float arrays. But instead of relying on heavy C++ binaries, we can solve this cleanly in pure Python using `mpmath` for arbitrary precision.
