@@ -427,7 +427,7 @@ Both were trained against the same continuous Mandelbrot target, and their outpu
 <style>
   .mandelbrot-visualiser-frame {
     width: 100%;
-    height: 1600px;
+    height: 1400px;
     border: 1px solid #dbe4ee;
     border-radius: 12px;
     background: #f8fbff;
