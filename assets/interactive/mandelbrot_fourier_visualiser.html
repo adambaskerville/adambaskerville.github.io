@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandelbrot Convergence Visualiser</title>
+    <style>
+        :root {
+            --ink: #1f2937;
+            --muted: #64748b;
+            --line: #dbe4ee;
+            --panel: #ffffff;
+            --bg: #f4f7fb;
+            --blue: #2563eb;
+            --blue-deep: #1d4ed8;
+            --amber: #d97706;
+            --amber-soft: #fef3c7;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 14px;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background: radial-gradient(circle at top left, #ffffff 0, #f8fbff 28%, #f4f7fb 72%);
+        }
+
+        .page {
+            max-width: 1220px;
+            margin: 0 auto;
+            display: grid;
+            gap: 12px;
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        }
+
+        h1, h2, h3, p {
+            margin-top: 0;
+        }
+
+        .hero h1 {
+            margin-bottom: 6px;
+            font-size: clamp(1.35rem, 2.1vw, 1.85rem);
+            line-height: 1.08;
+        }
+
+        .hero p,
+        .subtext,
+        .small {
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr auto auto;
+            gap: 12px;
+            align-items: end;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 920px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .control {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 0.88rem;
+            font-weight: bold;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--blue);
+        }
+
+        .tab-row,
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tab,
+        .btn {
+            border: 1px solid var(--line);
+            background: #fff;
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.93rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .tab.active,
+        .btn.primary {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue);
+        }
+
+        .tab:hover,
+        .btn:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        .tab.active:hover,
+        .btn.primary:hover {
+            color: #fff;
+            background: var(--blue-deep);
+            border-color: var(--blue-deep);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.9fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 920px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compare-card h2,
+        .side-card h3 {
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
+        .compare-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: 12px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            overflow: hidden;
+            background: #0b1021;
+            margin-top: 10px;
+        }
+
+        .compare-frame img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .overlay-wrap {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.15);
+            pointer-events: none;
+        }
+
+        .handle {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            background: #ffffff;
+            border: 2px solid rgba(15, 23, 42, 0.22);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.18);
+        }
+
+        .compare-tags {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--ink);
+            font-size: 0.78rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .side-stack {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 9px;
+        }
+
+        @media (max-width: 560px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat {
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 11px;
+        }
+
+        .stat .label {
+            color: var(--muted);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 4px;
+        }
+
+        .stat .value {
+            font-size: 1.22rem;
+            font-weight: bold;
+        }
+
+        .chart-card {
+            background: linear-gradient(180deg, #fbfdff 0%, #f6f9fd 100%);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 12px;
+        }
+
+        #curveSvg {
+            width: 100%;
+            height: 156px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .swatch {
+            display: inline-block;
+            width: 18px;
+            height: 8px;
+            border-radius: 999px;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        details.note {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        details.note summary {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .callout {
+            border-left: 4px solid var(--amber);
+            background: var(--amber-soft);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+    <section class="panel hero">
+        <h1>Mandelbrot Training Visualiser</h1>
+        <p>
+            Real saved training snapshots, not a browser-side simulation. The target stays fixed in the background and the model prediction updates on top of it.
+        </p>
+
+        <div class="controls">
+            <div class="control">
+                <label>Model</label>
+                <div class="tab-row">
+                    <button class="tab active" data-model="vanilla">Vanilla MLP</button>
+                    <button class="tab" data-model="fourier">Fourier Features</button>
+                </div>
+            </div>
+
+            <div class="control">
+                <label for="stepSlider">Saved Snapshot: <span id="stepLabel">160 / 4000</span></label>
+                <input id="stepSlider" type="range" min="0" max="24" value="0" step="1">
+            </div>
+
+            <div class="control">
+                <label for="revealSlider">Overlay Reveal: <span id="revealLabel">55%</span></label>
+                <input id="revealSlider" type="range" min="0" max="100" value="55" step="1">
+            </div>
+
+            <div class="control">
+                <label>Playback</label>
+                <div class="button-row">
+                    <button id="playBtn" class="btn primary">Play</button>
+                    <button id="resetBtn" class="btn">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <details class="note">
+            <summary>How to read this</summary>
+            <div>
+                The true target image is always visible underneath. The moving divider reveals how much of the prediction you want to compare directly against the reference.
+                The error plot is clickable, so you can jump to any saved training snapshot without scrubbing the slider.
+            </div>
+        </details>
+    </section>
+
+    <div class="layout">
+        <section class="panel compare-card">
+            <h2 id="predictionTitle">Vanilla Prediction vs True Target</h2>
+            <p id="predictionText" class="subtext">
+                Early training mostly captures the broad silhouette. The boundary sharpens only slowly, so the fine structure stays blurred for a long time.
+            </p>
+
+            <div class="compare-frame">
+                <img id="targetImage" src="./mandelbrot_convergence/target.png?v=real3" alt="True Mandelbrot target">
+                <div id="overlayWrap" class="overlay-wrap">
+                    <img id="predictionImage" src="./mandelbrot_convergence/vanilla_00.png?v=real3" alt="Current model prediction">
+                </div>
+                <div id="divider" class="divider"></div>
+                <div id="handle" class="handle"></div>
+                <div class="compare-tags">
+                    <span class="tag">Prediction</span>
+                    <span class="tag">True target</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="side-stack">
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="label">Training Step</div>
+                    <div class="value" id="stepValue">160</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Batch MSE</div>
+                    <div class="value" id="lossValue">0.0000</div>
+                </div>
+                <div class="stat">
+                    <div class="label">Grid MAE</div>
+                    <div class="value" id="maeValue">0.0000</div>
+                </div>
+            </div>
+
+            <div class="panel side-card">
+                <h3 style="margin-bottom: 6px;">Error vs Saved Step</h3>
+                <p class="subtext" style="margin-bottom: 8px;">
+                    Click anywhere on the curve to jump to that snapshot.
+                </p>
+                <svg id="curveSvg" viewBox="0 0 420 156" preserveAspectRatio="none" aria-label="Error curves"></svg>
+                <div class="legend">
+                    <span><span class="swatch" style="background:#2563eb;"></span>Vanilla</span>
+                    <span><span class="swatch" style="background:#d97706;"></span>Fourier</span>
+                    <span><span class="swatch" style="background:#111827;"></span>Current snapshot</span>
+                </div>
+            </div>
+
+            <div class="callout">
+                Same saved target, same training schedule, same base architecture. The main change is the coordinate encoding.
+            </div>
+        </section>
+    </div>
+</div>
+
+<script src="./mandelbrot_convergence/frame_data.js?v=real3"></script>
+<script>
+    const frameData = window.MANDELBROT_FRAME_DATA;
+
+    if (!frameData) {
+        throw new Error("Mandelbrot frame data did not load.");
+    }
+
+    const { FRAME_COUNT, vanillaStats, fourierStats } = frameData;
+    const ASSET_VERSION = "real3";
+
+    const modelCopy = {
+        vanilla: {
+            title: "Vanilla Prediction vs True Target",
+            text: "Early training mostly captures the broad silhouette. The boundary sharpens only slowly, so the fine structure stays blurred for a long time.",
+        },
+        fourier: {
+            title: "Fourier-Feature Prediction vs True Target",
+            text: "The Fourier map gives the network oscillatory coordinate channels immediately, so it starts resolving edge structure much earlier.",
+        },
+    };
+
+    const state = {
+        model: "vanilla",
+        step: 0,
+        reveal: 55,
+        playing: false,
+        timer: null,
+    };
+
+    const modelTabs = Array.from(document.querySelectorAll("[data-model]"));
+    const stepSlider = document.getElementById("stepSlider");
+    const revealSlider = document.getElementById("revealSlider");
+    const stepLabel = document.getElementById("stepLabel");
+    const revealLabel = document.getElementById("revealLabel");
+    const playBtn = document.getElementById("playBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const overlayWrap = document.getElementById("overlayWrap");
+    const divider = document.getElementById("divider");
+    const handle = document.getElementById("handle");
+    const predictionImage = document.getElementById("predictionImage");
+    const predictionTitle = document.getElementById("predictionTitle");
+    const predictionText = document.getElementById("predictionText");
+    const stepValue = document.getElementById("stepValue");
+    const lossValue = document.getElementById("lossValue");
+    const maeValue = document.getElementById("maeValue");
+    const curveSvg = document.getElementById("curveSvg");
+
+    function currentFrames() {
+        return state.model === "vanilla" ? vanillaStats : fourierStats;
+    }
+
+    function frameStep(frame, index) {
+        return typeof frame.step === "number" ? frame.step : (index + 1) * 160;
+    }
+
+    function frameLoss(frame) {
+        return typeof frame.loss === "number" ? frame.loss : 0.0;
+    }
+
+    function updateTabs() {
+        modelTabs.forEach((tab) => {
+            tab.classList.toggle("active", tab.dataset.model === state.model);
+        });
+    }
+
+    function updateReveal() {
+        overlayWrap.style.width = `${state.reveal}%`;
+        divider.style.left = `${state.reveal}%`;
+        handle.style.left = `${state.reveal}%`;
+        revealLabel.textContent = `${state.reveal}%`;
+    }
+
+    function drawCurves() {
+        const width = 420;
+        const height = 156;
+        const padLeft = 40;
+        const padRight = 10;
+        const padTop = 14;
+        const padBottom = 24;
+        const innerW = width - padLeft - padRight;
+        const innerH = height - padTop - padBottom;
+
+        const allMae = vanillaStats.concat(fourierStats).map((item) => item.mae);
+        const minMae = Math.min(...allMae);
+        const maxMae = Math.max(...allMae);
+
+        const xAt = (index) => padLeft + (index / (FRAME_COUNT - 1)) * innerW;
+        const yAt = (value) => padTop + (1 - (value - minMae) / (maxMae - minMae)) * innerH;
+
+        function polyline(stats) {
+            return stats.map((item, idx) => `${xAt(idx).toFixed(2)},${yAt(item.mae).toFixed(2)}`).join(" ");
+        }
+
+        const markerSet = currentFrames();
+        const marker = markerSet[state.step];
+        const markerX = xAt(state.step);
+        const markerY = yAt(marker.mae);
+
+        const ticks = [0, 6, 12, 18, 24].map((tick) => `
+            <g>
+                <line x1="${xAt(tick)}" y1="${height - padBottom}" x2="${xAt(tick)}" y2="${height - padBottom + 4}" stroke="#94a3b8" stroke-width="1"/>
+                <text x="${xAt(tick)}" y="${height - 6}" text-anchor="middle" font-size="10" fill="#64748b">${tick}</text>
+            </g>
+        `).join("");
+
+        const yTicks = [0, 0.5, 1].map((t) => {
+            const value = minMae + t * (maxMae - minMae);
+            const y = yAt(value);
+            return `
+                <g>
+                    <line x1="${padLeft - 4}" y1="${y}" x2="${padLeft}" y2="${y}" stroke="#94a3b8" stroke-width="1"/>
+                    <line x1="${padLeft}" y1="${y}" x2="${width - padRight}" y2="${y}" stroke="#e5edf6" stroke-width="1"/>
+                    <text x="7" y="${y + 4}" font-size="10" fill="#64748b">${value.toFixed(3)}</text>
+                </g>
+            `;
+        }).join("");
+
+        curveSvg.innerHTML = `
+            <rect x="0" y="0" width="${width}" height="${height}" rx="14" fill="#ffffff"/>
+            ${yTicks}
+            <line x1="${padLeft}" y1="${height - padBottom}" x2="${width - padRight}" y2="${height - padBottom}" stroke="#94a3b8" stroke-width="1.1"/>
+            <line x1="${padLeft}" y1="${padTop}" x2="${padLeft}" y2="${height - padBottom}" stroke="#94a3b8" stroke-width="1.1"/>
+            ${ticks}
+            <polyline fill="none" stroke="#2563eb" stroke-width="2.8" points="${polyline(vanillaStats)}"/>
+            <polyline fill="none" stroke="#d97706" stroke-width="2.8" points="${polyline(fourierStats)}"/>
+            <circle cx="${markerX}" cy="${markerY}" r="5" fill="#111827" stroke="#ffffff" stroke-width="2"/>
+        `;
+    }
+
+    function render() {
+        const frames = currentFrames();
+        const frame = frames[state.step];
+        const finalStep = frameStep(frames[FRAME_COUNT - 1], FRAME_COUNT - 1);
+
+        stepSlider.value = String(state.step);
+        stepLabel.textContent = `${frameStep(frame, state.step)} / ${finalStep}`;
+        predictionImage.src = `./mandelbrot_convergence/${frame.src}?v=${ASSET_VERSION}`;
+        predictionTitle.textContent = modelCopy[state.model].title;
+        predictionText.textContent = modelCopy[state.model].text;
+        stepValue.textContent = String(frameStep(frame, state.step));
+        lossValue.textContent = frameLoss(frame).toFixed(4);
+        maeValue.textContent = frame.mae.toFixed(4);
+
+        updateTabs();
+        updateReveal();
+        drawCurves();
+    }
+
+    function stopPlayback() {
+        state.playing = false;
+        playBtn.textContent = "Play";
+        if (state.timer) {
+            clearInterval(state.timer);
+            state.timer = null;
+        }
+    }
+
+    function startPlayback() {
+        stopPlayback();
+        state.playing = true;
+        playBtn.textContent = "Pause";
+        state.timer = setInterval(() => {
+            state.step = (state.step + 1) % FRAME_COUNT;
+            render();
+        }, 420);
+    }
+
+    stepSlider.addEventListener("input", (event) => {
+        state.step = Number(event.target.value);
+        render();
+    });
+
+    revealSlider.addEventListener("input", (event) => {
+        state.reveal = Number(event.target.value);
+        updateReveal();
+    });
+
+    modelTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+            state.model = tab.dataset.model;
+            render();
+        });
+    });
+
+    playBtn.addEventListener("click", () => {
+        if (state.playing) {
+            stopPlayback();
+        } else {
+            startPlayback();
+        }
+    });
+
+    resetBtn.addEventListener("click", () => {
+        stopPlayback();
+        state.step = 0;
+        render();
+    });
+
+    curveSvg.addEventListener("click", (event) => {
+        const rect = curveSvg.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const ratio = Math.min(Math.max(x / rect.width, 0), 1);
+        state.step = Math.round(ratio * (FRAME_COUNT - 1));
+        render();
+    });
+
+    render();
+</script>
+</body>
+</html>
