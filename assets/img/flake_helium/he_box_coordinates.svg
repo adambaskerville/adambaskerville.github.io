@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">From three particles to a box</title>
+  <desc id="desc">The helium atom is described by r1, r2 and r12. Hylleraas coordinates s, t, u live in a wedge |t| &lt;= u &lt;= s. Dividing out s gives box coordinates xi = u/s in [0,1] and eta = t/u in [-1,1], in which every basis function is a product of a radial factor and an angular factor.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .math { fill: #111827; font-family: "Times New Roman", Times, serif; font-style: italic; }
+      .mathr { fill: #111827; font-family: "Times New Roman", Times, serif; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; }
+      .thin { stroke: #64748b; stroke-width: 2; fill: none; }
+      .dash { stroke: #64748b; stroke-width: 2; stroke-dasharray: 6 5; fill: none; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="560"/>
+
+  <!-- panel 1: the atom -->
+  <rect class="panel" x="30" y="30" width="340" height="500" rx="18"/>
+  <text class="ink" x="55" y="72" font-size="24" font-weight="700">1. The atom</text>
+  <circle cx="200" cy="330" r="22" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+  <text class="ink" x="186" y="338" font-size="20" font-weight="700">2+</text>
+  <circle cx="95" cy="180" r="15" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <circle cx="300" cy="200" r="15" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <text class="ink" x="70" y="160" font-size="18">e₁</text>
+  <text class="ink" x="310" y="178" font-size="18">e₂</text>
+  <line x1="107" y1="193" x2="186" y2="314" stroke="#2563eb" stroke-width="3"/>
+  <line x1="290" y1="213" x2="214" y2="314" stroke="#2563eb" stroke-width="3"/>
+  <line x1="110" y1="182" x2="285" y2="198" stroke="#e11d48" stroke-width="3" stroke-dasharray="7 5"/>
+  <text class="math" x="118" y="262" font-size="26">r</text><text class="mathr" x="130" y="268" font-size="16">1</text>
+  <text class="math" x="262" y="270" font-size="26">r</text><text class="mathr" x="274" y="276" font-size="16">2</text>
+  <text class="math" x="180" y="176" font-size="26" fill="#e11d48">r</text><text class="mathr" x="192" y="182" font-size="16">12</text>
+  <text class="muted" x="55" y="420" font-size="17">For the ground state (an S state)</text>
+  <text class="muted" x="55" y="446" font-size="17">only three distances matter:</text>
+  <text class="math" x="55" y="486" font-size="24">Ψ = Ψ(r₁, r₂, r₁₂)</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M 378 280 L 418 280"/>
+
+  <!-- panel 2: Hylleraas wedge -->
+  <rect class="panel" x="425" y="30" width="340" height="500" rx="18"/>
+  <text class="ink" x="450" y="72" font-size="24" font-weight="700">2. Hylleraas</text>
+  <text class="math" x="450" y="112" font-size="22">s = r₁ + r₂ ,  t = r₁ − r₂ ,  u = r₁₂</text>
+  <!-- wedge in (t,u) at fixed s -->
+  <line x1="480" y1="400" x2="730" y2="400" class="thin" marker-end="url(#arrow)"/>
+  <line x1="595" y1="420" x2="595" y2="150" class="thin" marker-end="url(#arrow)"/>
+  <text class="math" x="735" y="406" font-size="20">t</text>
+  <text class="math" x="603" y="160" font-size="20">u</text>
+  <polygon points="595,400 485,190 705,190" fill="#dbeafe" stroke="#2563eb" stroke-width="3" opacity="0.9"/>
+  <line x1="485" y1="190" x2="705" y2="190" stroke="#2563eb" stroke-width="3"/>
+  <text class="math" x="712" y="196" font-size="18">u = s</text>
+  <text class="math" x="466" y="296" font-size="18" fill="#1d4ed8">u = −t</text>
+  <text class="math" x="660" y="296" font-size="18" fill="#1d4ed8">u = t</text>
+  <text class="muted" x="450" y="448" font-size="17">Triangle inequalities give a wedge:</text>
+  <text class="math" x="450" y="486" font-size="24">|t| ≤ u ≤ s ,  0 ≤ s &lt; ∞</text>
+
+  <path class="line" marker-end="url(#arrow)" d="M 773 280 L 813 280"/>
+
+  <!-- panel 3: the box -->
+  <rect class="panel" x="820" y="30" width="350" height="500" rx="18"/>
+  <text class="ink" x="845" y="72" font-size="24" font-weight="700">3. Box coordinates</text>
+  <text class="math" x="845" y="112" font-size="22">ξ = u / s ∈ [0, 1] ,  η = t / u ∈ [−1, 1]</text>
+  <rect x="890" y="160" width="210" height="150" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text class="math" x="985" y="336" font-size="20">η</text>
+  <text class="math" x="866" y="240" font-size="20">ξ</text>
+  <text class="mathr" x="882" y="330" font-size="15">−1</text><text class="mathr" x="1094" y="330" font-size="15">1</text>
+  <text class="mathr" x="872" y="312" font-size="15">0</text><text class="mathr" x="872" y="170" font-size="15">1</text>
+  <text class="muted" x="905" y="240" font-size="15">× s ∈ [0, ∞)</text>
+  <text class="muted" x="845" y="372" font-size="17">Every Schwartz function factorises:</text>
+  <text class="math" x="845" y="410" font-size="21">φ = [ sˡ (ln s)ᵖ e⁻ˢ ] × [ ξˣ ηᵇ ]</text>
+  <text class="muted" x="845" y="446" font-size="17">and so does the volume element:</text>
+  <text class="math" x="845" y="486" font-size="21">dτ ∝ s⁵ ds · ξ²(1 − ξ²η²) dξ dη</text>
+  <text class="muted" x="845" y="516" font-size="16">⇒  S = S_radial ⊗ S_angular  exactly</text>
+</svg>

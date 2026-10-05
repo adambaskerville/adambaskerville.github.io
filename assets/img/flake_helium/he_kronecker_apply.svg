@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">The Hamiltonian as a sum of Kronecker products</title>
+  <desc id="desc">The wavefunction coefficients are stored as a grid with radial functions as rows and angular functions as columns. Applying the Hamiltonian is a sum of 27 terms, each a small radial matrix times the grid times a small angular matrix. A dense matrix for 80,437 functions would need 414 GB at 128 digits; the Kronecker factors need 2.9 GB.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .math { fill: #111827; font-family: "Times New Roman", Times, serif; font-style: italic; }
+    </style>
+    <pattern id="grid" width="12" height="12" patternUnits="userSpaceOnUse">
+      <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#bfdbfe" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect class="bg" width="1200" height="600"/>
+  <text class="ink" x="40" y="58" font-size="28" font-weight="700">Applying H without ever forming H</text>
+  <text class="muted" x="40" y="92" font-size="18">Coefficients live on a grid: rows = radial functions (l, p), columns = angular functions (x, b).</text>
+
+  <!-- equation row -->
+  <text class="math" x="40" y="300" font-size="40">H·C =</text>
+  <text class="math" x="165" y="312" font-size="64">Σ</text>
+  <text class="math" x="160" y="352" font-size="18">j = 1…27</text>
+  <text class="math" x="222" y="300" font-size="34">c</text><text class="math" x="239" y="308" font-size="18">j</text>
+
+  <!-- R_j -->
+  <rect x="265" y="190" width="150" height="150" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/>
+  <text class="math" x="318" y="272" font-size="34">R</text><text class="math" x="342" y="280" font-size="18">j</text>
+  <text class="muted" x="268" y="370" font-size="15">radial, ≤ 444 × 444</text>
+
+  <!-- C grid -->
+  <rect x="440" y="190" width="330" height="150" fill="url(#grid)" stroke="#334155" stroke-width="3"/>
+  <polygon points="440,190 470,190 470,215 545,215 545,340 440,340" fill="#fde68a" opacity="0.45"/>
+  <polygon points="440,340 440,265 770,340" fill="#93c5fd" opacity="0.5"/>
+  <text class="math" x="592" y="272" font-size="34">C</text>
+  <text class="muted" x="470" y="370" font-size="15">coefficients, ≤ 444 × 1296, masked</text>
+
+  <!-- A_j^T -->
+  <rect x="795" y="150" width="230" height="230" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+  <text class="math" x="880" y="272" font-size="34">A</text><text class="math" x="905" y="280" font-size="18">j</text><text class="math" x="917" y="258" font-size="18">T</text>
+  <text class="muted" x="800" y="405" font-size="15">angular, ≤ 1296 × 1296</text>
+
+  <!-- footer panels -->
+  <rect class="panel" x="40" y="440" width="540" height="130" rx="14"/>
+  <text class="ink" x="62" y="476" font-size="19" font-weight="700">Why it is exact</text>
+  <text class="muted" x="62" y="504" font-size="16">Kinetic energy = products of ∂s, ∂t, ∂u, each a short sum</text>
+  <text class="muted" x="62" y="528" font-size="16">of (radial ⊗ angular) shifts. Potential × measure is a polynomial:</text>
+  <text class="math" x="62" y="556" font-size="18">(s² − t²) u [ −2(1/r₁ + 1/r₂) + 1/u ] = −8 s u + s² − t²</text>
+
+  <rect class="panel" x="610" y="440" width="550" height="130" rx="14"/>
+  <text class="ink" x="632" y="476" font-size="19" font-weight="700">Why it fits on a laptop (N = 80 437)</text>
+  <text class="muted" x="632" y="506" font-size="16">dense H at 128 digits:  N² × 64 bytes ≈ 414 GB</text>
+  <text class="muted" x="632" y="532" font-size="16">6 radial + 26 angular factor matrices:  2.9 GB</text>
+  <text class="muted" x="632" y="558" font-size="16">one H·C = 2 matrix products per term, all BLAS</text>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">The OFHR pipeline</title>
+  <desc id="desc">Five stages: exact closed-form integrals; exact whitening of small radial and angular Gram matrices; a Kronecker operator built once; a Davidson eigensolver on float64 BLAS with digit planes; and an independent arbitrary-precision certification of the Rayleigh quotient. Exact arithmetic is used where conditioning lives, BLAS where volume lives.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="430"/>
+  <text class="ink" x="40" y="52" font-size="26" font-weight="700">The pipeline: exact where conditioning lives, BLAS where volume lives</text>
+
+  <g>
+    <rect x="30" y="90" width="210" height="220" rx="16" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text class="ink" x="48" y="125" font-size="18" font-weight="700">1. Exact integrals</text>
+    <text class="muted" x="48" y="155" font-size="15">closed forms:</text>
+    <text class="muted" x="48" y="178" font-size="15">∫ sⁿ (ln s)ᵖ e⁻²ˢ ds</text>
+    <text class="muted" x="48" y="201" font-size="15">and rationals in ξ, η</text>
+    <text class="muted" x="48" y="240" font-size="15">arbitrary precision</text>
+    <text class="muted" x="48" y="263" font-size="15">(gmpy2 / MPFR)</text>
+
+    <rect x="265" y="90" width="210" height="220" rx="16" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text class="ink" x="283" y="125" font-size="18" font-weight="700">2. Exact whitening</text>
+    <text class="muted" x="283" y="155" font-size="15">inverse Cholesky of</text>
+    <text class="muted" x="283" y="178" font-size="15">the small radial and</text>
+    <text class="muted" x="283" y="201" font-size="15">angular Grams, 3000 bits</text>
+    <text class="muted" x="283" y="240" font-size="15">S becomes exactly I;</text>
+    <text class="muted" x="283" y="263" font-size="15">cancellation removed</text>
+
+    <rect x="500" y="90" width="210" height="220" rx="16" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+    <text class="ink" x="518" y="125" font-size="18" font-weight="700">3. Kronecker H</text>
+    <text class="muted" x="518" y="155" font-size="15">27 terms Rⱼ ⊗ Aⱼ</text>
+    <text class="muted" x="518" y="178" font-size="15">in the white chart,</text>
+    <text class="muted" x="518" y="201" font-size="15">built once (≈ 1 h)</text>
+    <text class="muted" x="518" y="240" font-size="15">serves every smaller</text>
+    <text class="muted" x="518" y="263" font-size="15">space and any mask</text>
+
+    <rect x="735" y="90" width="210" height="220" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text class="ink" x="753" y="125" font-size="18" font-weight="700">4. Davidson</text>
+    <text class="muted" x="753" y="155" font-size="15">H·C by digit planes</text>
+    <text class="muted" x="753" y="178" font-size="15">on float64 GEMM;</text>
+    <text class="muted" x="753" y="201" font-size="15">exact vector algebra;</text>
+    <text class="muted" x="753" y="240" font-size="15">float64 block</text>
+    <text class="muted" x="753" y="263" font-size="15">preconditioner</text>
+
+    <rect x="970" y="90" width="200" height="220" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text class="ink" x="988" y="125" font-size="18" font-weight="700">5. Certify</text>
+    <text class="muted" x="988" y="155" font-size="15">independent code:</text>
+    <text class="muted" x="988" y="178" font-size="15">map back to explicit</text>
+    <text class="muted" x="988" y="201" font-size="15">Ψ, evaluate ⟨H⟩/⟨1⟩</text>
+    <text class="muted" x="988" y="240" font-size="15">at 1600+ bits:</text>
+    <text class="muted" x="988" y="263" font-size="15">a rigorous upper bound</text>
+  </g>
+  <path class="line" marker-end="url(#arrow)" d="M 242 200 L 262 200"/>
+  <path class="line" marker-end="url(#arrow)" d="M 477 200 L 497 200"/>
+  <path class="line" marker-end="url(#arrow)" d="M 712 200 L 732 200"/>
+  <path class="line" marker-end="url(#arrow)" d="M 947 200 L 967 200"/>
+
+  <rect x="30" y="335" width="445" height="60" rx="12" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+  <text class="ink" x="48" y="371" font-size="16">small matrices, huge conditioning → exact arithmetic</text>
+  <rect x="500" y="335" width="445" height="60" rx="12" fill="#ffffff" stroke="#2563eb" stroke-width="2"/>
+  <text class="ink" x="518" y="371" font-size="16">big vectors, benign conditioning → fixed point on BLAS</text>
+  <rect x="970" y="335" width="200" height="60" rx="12" fill="#ffffff" stroke="#16a34a" stroke-width="2"/>
+  <text class="ink" x="988" y="371" font-size="16">trust nothing else</text>
+</svg>

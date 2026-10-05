@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">High precision from float64 matrix multiplication</title>
+  <desc id="desc">Each high-precision matrix is split into 14 planes of 21-bit integers. The product of two planes, summed over at most 1300 terms, needs at most 53 bits, so a float64 matrix multiplication computes it exactly. Plane pairs are recombined with integer shifts; pairs whose weight is below 2^-220 are skipped.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, sans-serif; }
+      .mono { fill: #0f172a; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+      .math { fill: #111827; font-family: "Times New Roman", Times, serif; font-style: italic; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="560"/>
+  <text class="ink" x="40" y="58" font-size="28" font-weight="700">~280-bit arithmetic at float64 BLAS speed</text>
+  <text class="muted" x="40" y="92" font-size="18">Error-free splitting (the Ozaki scheme): every product below is exact in ordinary double precision.</text>
+
+  <!-- the split number -->
+  <text class="ink" x="40" y="150" font-size="19" font-weight="700">1. Split each entry into 14 slices of 21 bits</text>
+  <g>
+    <rect x="40" y="170" width="70" height="44" fill="#1d4ed8"/><rect x="110" y="170" width="70" height="44" fill="#2563eb"/>
+    <rect x="180" y="170" width="70" height="44" fill="#3b82f6"/><rect x="250" y="170" width="70" height="44" fill="#60a5fa"/>
+    <rect x="320" y="170" width="70" height="44" fill="#93c5fd"/><rect x="390" y="170" width="70" height="44" fill="#bfdbfe"/>
+    <rect x="460" y="170" width="70" height="44" fill="#dbeafe"/>
+    <text class="mono" x="545" y="199" font-size="18">… 14 slices = 294 bits</text>
+    <text class="mono" x="58" y="198" font-size="16" fill="#fff">x₀</text><text class="mono" x="128" y="198" font-size="16" fill="#fff">x₁</text>
+    <text class="mono" x="198" y="198" font-size="16" fill="#fff">x₂</text><text class="mono" x="268" y="198" font-size="16">x₃</text>
+  </g>
+  <text class="math" x="40" y="250" font-size="22">x = Σ<tspan font-size="14" baseline-shift="sub">s</tspan> x<tspan font-size="14" baseline-shift="sub">s</tspan> · 2<tspan font-size="14" baseline-shift="super">−21s</tspan> ,   |x<tspan font-size="14" baseline-shift="sub">s</tspan>| &lt; 2<tspan font-size="14" baseline-shift="super">21</tspan>  (small integers held in float64)</text>
+
+  <!-- the pair grid -->
+  <text class="ink" x="40" y="310" font-size="19" font-weight="700">2. Multiply slice pairs with ordinary GEMM</text>
+  <g transform="translate(60,330)">
+    <rect x="0" y="0" width="196" height="196" fill="#ffffff" stroke="#94a3b8"/>
+    <polygon points="0,0 196,0 0,196" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text class="muted" x="20" y="70" font-size="15">keep s + t ≤ 13</text>
+    <text class="muted" x="112" y="160" font-size="15">skip</text>
+    <text class="muted" x="-28" y="100" font-size="15" transform="rotate(-90 -28 100)">slice s of X</text>
+    <text class="muted" x="50" y="220" font-size="15">slice t of M</text>
+  </g>
+  <text class="math" x="290" y="380" font-size="21">(X<tspan font-size="14" baseline-shift="sub">s</tspan> M<tspan font-size="14" baseline-shift="sub">t</tspan><tspan font-size="14" baseline-shift="super">T</tspan>)<tspan font-size="14" baseline-shift="sub">ij</tspan> : ≤ 1300 terms of 21-bit × 21-bit</text>
+  <text class="math" x="290" y="416" font-size="21">≤ 2²¹ · 2²¹ · 2¹¹ = 2⁵³  ⇒  exact in float64</text>
+  <text class="muted" x="290" y="452" font-size="17">≈ 100 BLAS calls replace one high-precision</text><text class="muted" x="290" y="476" font-size="17">matrix product (Apple Accelerate, all cores)</text>
+
+  <!-- recombine -->
+  <rect class="panel" x="820" y="130" width="340" height="400" rx="16"/>
+  <text class="ink" x="842" y="170" font-size="19" font-weight="700">3. Recombine exactly</text>
+  <text class="muted" x="842" y="202" font-size="16">Group products by s + t, convert</text>
+  <text class="muted" x="842" y="226" font-size="16">to int64, shift and add as exact</text>
+  <text class="muted" x="842" y="250" font-size="16">integers. Dropped pairs weigh</text>
+  <text class="muted" x="842" y="274" font-size="16">&lt; 2⁻²²⁰ relative.</text>
+  <text class="ink" x="842" y="330" font-size="17" font-weight="700">Measured at F55 (11-slice build):</text>
+  <text class="mono" x="842" y="364" font-size="16">16-limb software   516 s</text>
+  <text class="mono" x="842" y="392" font-size="16">digit planes        8.5 s</text>
+  <text class="muted" x="842" y="430" font-size="16">energy error of the apply:</text>
+  <text class="mono" x="842" y="458" font-size="16">≈ 2 × 10⁻⁶⁷ hartree</text>
+  <text class="muted" x="842" y="500" font-size="15">Works because the white chart has</text>
+  <text class="muted" x="842" y="520" font-size="15">no cancellation left (next section).</text>
+</svg>

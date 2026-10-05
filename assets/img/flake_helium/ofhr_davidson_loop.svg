@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Matrix-free Davidson loop used by OFHR</title>
+  <desc id="desc">A loop diagram showing warm start, oct-double Hamiltonian application, Ritz solve, residual audit, preconditioned correction, and basis expansion.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .node { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .truth { fill: #ecfeff; stroke: #0891b2; stroke-width: 2; }
+      .approx { fill: #fff7ed; stroke: #ea580c; stroke-width: 2; }
+      .done { fill: #dcfce7; stroke: #16a34a; stroke-width: 2; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .math { fill: #111827; font-family: "Times New Roman", serif; font-style: italic; }
+      .arrow { stroke: #334155; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text class="ink" x="60" y="72" font-size="34" font-weight="700">The solver never needs a dense OD Hamiltonian</text>
+  <text class="muted" x="60" y="110" font-size="21">OD certifies the residual. The preconditioner can be cheaper because it only proposes directions.</text>
+  <rect class="node" x="95" y="210" width="225" height="120" rx="8"/>
+  <text class="ink" x="130" y="255" font-size="22" font-weight="700">Warm start</text>
+  <text class="muted" x="130" y="290" font-size="18">embed previous vector</text>
+  <rect class="truth" x="455" y="155" width="285" height="130" rx="8"/>
+  <text class="ink" x="492" y="202" font-size="22" font-weight="700">Matrix-free OD apply</text>
+  <text class="math" x="492" y="242" font-size="27">v -> H v, S v</text>
+  <rect class="node" x="885" y="210" width="225" height="120" rx="8"/>
+  <text class="ink" x="920" y="255" font-size="22" font-weight="700">Small Ritz solve</text>
+  <text class="math" x="920" y="292" font-size="25">Q* H Q z = E z</text>
+  <rect class="done" x="845" y="455" width="270" height="125" rx="8"/>
+  <text class="ink" x="885" y="500" font-size="22" font-weight="700">Residual audit</text>
+  <text class="math" x="885" y="538" font-size="25">r = H y - E S y</text>
+  <rect class="approx" x="455" y="455" width="285" height="125" rx="8"/>
+  <text class="ink" x="493" y="500" font-size="22" font-weight="700">Precondition</text>
+  <text class="math" x="493" y="538" font-size="25">(H - E S) delta ~= -r</text>
+  <rect class="node" x="95" y="455" width="225" height="125" rx="8"/>
+  <text class="ink" x="130" y="500" font-size="22" font-weight="700">Expand subspace</text>
+  <text class="muted" x="130" y="536" font-size="18">add correction vector</text>
+  <path class="arrow" d="M 320 270 C 365 250, 395 232, 455 224"/>
+  <path class="arrow" d="M 740 224 C 802 234, 835 250, 885 270"/>
+  <path class="arrow" d="M 998 330 C 1020 375, 1018 412, 998 455"/>
+  <path class="arrow" d="M 845 520 H 740"/>
+  <path class="arrow" d="M 455 520 H 320"/>
+  <path class="arrow" d="M 205 455 C 160 395, 162 352, 205 330"/>
+  <text class="ink" x="455" y="635" font-size="21" font-weight="700">Truth path</text>
+  <text class="muted" x="565" y="635" font-size="19">OD matrix-free apply and residual</text>
+  <text class="ink" x="780" y="635" font-size="21" font-weight="700">Direction path</text>
+  <text class="muted" x="915" y="635" font-size="19">mixed precision preconditioner</text>
+</svg>

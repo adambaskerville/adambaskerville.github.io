@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">From raw Hylleraas functions to an orthogonal OFHR basis</title>
+  <desc id="desc">A diagram showing raw monomial functions with a badly conditioned overlap matrix, the high-precision transform T, and the orthogonal Hamiltonian used by the eigensolver.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .card { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .math { fill: #111827; font-family: "Times New Roman", serif; font-style: italic; }
+      .warn { fill: #fee2e2; stroke: #dc2626; }
+      .ok { fill: #dcfce7; stroke: #16a34a; }
+      .work { fill: #dbeafe; stroke: #2563eb; }
+      .arrow { stroke: #334155; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="650"/>
+  <text class="ink" x="60" y="70" font-size="34" font-weight="700">Move the conditioning out of the eigensolver</text>
+  <text class="muted" x="60" y="108" font-size="21">The raw variational problem is mathematically clean but numerically vicious.</text>
+  <rect class="card" x="60" y="165" width="290" height="340" rx="8"/>
+  <text class="ink" x="90" y="215" font-size="24" font-weight="700">Raw basis</text>
+  <text class="math" x="90" y="263" font-size="30">phi_mu</text>
+  <rect class="warn" x="90" y="315" width="230" height="130" rx="8"/>
+  <text class="ink" x="112" y="350" font-size="20" font-weight="700">Overlap S</text>
+  <text class="muted" x="112" y="384" font-size="18">nearly singular</text>
+  <text class="muted" x="112" y="414" font-size="18">huge cancellation</text>
+  <path class="arrow" d="M 370 335 H 490"/>
+  <rect class="work" x="510" y="205" width="180" height="260" rx="8"/>
+  <text class="ink" x="552" y="258" font-size="25" font-weight="700">T</text>
+  <text class="muted" x="548" y="300" font-size="18">orthogonal</text>
+  <text class="muted" x="548" y="328" font-size="18">transform</text>
+  <text class="math" x="540" y="382" font-size="28">psi = T phi</text>
+  <text class="muted" x="535" y="425" font-size="17">OD where needed</text>
+  <path class="arrow" d="M 710 335 H 830"/>
+  <rect class="card" x="850" y="165" width="290" height="340" rx="8"/>
+  <text class="ink" x="880" y="215" font-size="24" font-weight="700">Orthogonal basis</text>
+  <text class="math" x="880" y="263" font-size="31">&lt;psi_a|psi_b&gt; ~= delta_ab</text>
+  <rect class="ok" x="880" y="315" width="230" height="130" rx="8"/>
+  <text class="ink" x="902" y="350" font-size="20" font-weight="700">Ritz solve</text>
+  <text class="math" x="902" y="386" font-size="28">H_orth y = E y</text>
+  <text class="muted" x="902" y="417" font-size="18">ordinary eigenproblem</text>
+  <text class="ink" x="160" y="560" font-size="22" font-weight="700">Bad place</text>
+  <text class="muted" x="96" y="592" font-size="18">every solve sees ill-conditioned S</text>
+  <text class="ink" x="525" y="560" font-size="22" font-weight="700">Controlled place</text>
+  <text class="muted" x="455" y="592" font-size="18">precision is spent building/applying T</text>
+  <text class="ink" x="915" y="560" font-size="22" font-weight="700">Good place</text>
+  <text class="muted" x="862" y="592" font-size="18">Davidson iterates in stable coordinates</text>
+</svg>

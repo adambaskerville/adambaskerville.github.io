@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Anatomy of one Fock-Hylleraas basis function</title>
+  <desc id="desc">A diagram showing how the OFHR basis function combines helium coordinates, a Fock logarithm, and an exponential tail.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .panel { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; }
+      .ink { fill: #0f172a; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .muted { fill: #475569; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .math { fill: #111827; font-family: "Times New Roman", serif; font-style: italic; }
+      .blue { fill: #dbeafe; stroke: #2563eb; }
+      .green { fill: #dcfce7; stroke: #16a34a; }
+      .amber { fill: #fef3c7; stroke: #d97706; }
+      .rose { fill: #ffe4e6; stroke: #e11d48; }
+      .violet { fill: #ede9fe; stroke: #7c3aed; }
+      .line { stroke: #334155; stroke-width: 3; fill: none; }
+      .thin { stroke: #64748b; stroke-width: 2; fill: none; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+  </defs>
+  <rect class="bg" width="1200" height="700"/>
+  <text class="ink" x="60" y="72" font-size="34" font-weight="700">One OFHR basis function</text>
+  <text class="muted" x="60" y="112" font-size="22">The basis is built directly from the correlated helium geometry.</text>
+  <rect class="panel" x="60" y="155" width="1080" height="185" rx="8"/>
+  <text class="math" x="120" y="255" font-size="48">phi</text>
+  <text class="math" x="185" y="268" font-size="28">i,j,m,p</text>
+  <text class="math" x="285" y="255" font-size="48">(s,t,u) =</text>
+  <rect class="blue" x="500" y="205" width="100" height="68" rx="8"/>
+  <text class="math" x="532" y="249" font-size="38">s</text>
+  <text class="math" x="557" y="231" font-size="24">i</text>
+  <rect class="green" x="625" y="205" width="112" height="68" rx="8"/>
+  <text class="math" x="658" y="249" font-size="38">t</text>
+  <text class="math" x="682" y="231" font-size="24">2j</text>
+  <rect class="amber" x="762" y="205" width="104" height="68" rx="8"/>
+  <text class="math" x="795" y="249" font-size="38">u</text>
+  <text class="math" x="822" y="231" font-size="24">m</text>
+  <rect class="rose" x="891" y="205" width="122" height="68" rx="8"/>
+  <text class="math" x="916" y="249" font-size="34">log</text>
+  <text class="math" x="980" y="249" font-size="34">s</text>
+  <text class="math" x="1000" y="231" font-size="24">p</text>
+  <rect class="violet" x="1038" y="205" width="72" height="68" rx="8"/>
+  <text class="math" x="1052" y="249" font-size="34">e</text>
+  <text class="math" x="1072" y="231" font-size="22">-ks</text>
+  <text class="muted" x="520" y="310" font-size="17">radial scale</text>
+  <text class="muted" x="633" y="310" font-size="17">symmetry</text>
+  <text class="muted" x="752" y="310" font-size="17">correlation</text>
+  <text class="muted" x="894" y="310" font-size="17">Fock sector</text>
+  <text class="muted" x="1025" y="310" font-size="17">bound tail</text>
+  <rect class="panel" x="60" y="395" width="500" height="215" rx="8"/>
+  <text class="ink" x="95" y="443" font-size="25" font-weight="700">Coordinates</text>
+  <text class="math" x="105" y="493" font-size="34">s = r1 + r2</text>
+  <text class="muted" x="320" y="493" font-size="19">overall size</text>
+  <text class="math" x="105" y="538" font-size="34">t = r1 - r2</text>
+  <text class="muted" x="320" y="538" font-size="19">exchange coordinate</text>
+  <text class="math" x="105" y="583" font-size="34">u = r12</text>
+  <text class="muted" x="320" y="583" font-size="19">electron separation</text>
+  <rect class="panel" x="635" y="395" width="505" height="215" rx="8"/>
+  <text class="ink" x="670" y="443" font-size="25" font-weight="700">Order shell</text>
+  <line class="thin" x1="700" y1="560" x2="1070" y2="560"/>
+  <line class="thin" x1="700" y1="560" x2="700" y2="470"/>
+  <path class="line" d="M 710 552 C 790 525, 840 485, 895 475 C 970 462, 1010 510, 1060 425" marker-end="url(#arrow)"/>
+  <text class="math" x="745" y="605" font-size="28">Omega = i + 2j + m + p &lt;= F</text>
+  <text class="muted" x="780" y="492" font-size="18">F30</text>
+  <text class="muted" x="895" y="464" font-size="18">F32</text>
+  <text class="muted" x="1032" y="414" font-size="18">F52</text>
+</svg>
