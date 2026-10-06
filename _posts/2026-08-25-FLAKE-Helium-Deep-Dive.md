@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "T>T: Helium to 60 Significant Figures with FLAKE, The Full Story"
+title: "T>T: Helium to 60 Significant Figures with FLAKE"
 date: 2026-08-25
 excerpt: "The long version: every piece of mathematics behind a helium ground-state energy certified to 60 significant figures, computed on a laptop, why each design choice was made, and the months of failed and half-successful attempts that led there."
 image:
