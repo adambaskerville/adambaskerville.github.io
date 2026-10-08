@@ -49,11 +49,7 @@ Will I publish this result? No, because who cares and I do not want to pay the j
 
 The obvious first question you may have from the TLDR is, "why do we need to know the non-relativistic, time independent helium energy to such high accuracy?" and the answer is that we do not. In fact the number is physically incorrect as past ~10 digits relativistic effects and quantum electrodynamic effects, QED, become significant which alters the value.
 
-The aim of this post is to explain and hopefully convince you that it was infact a good use of my spare time (significantly more spare time than I had planned...) and that there is a lot to learn from such an exercise.
-
-At Kvantify we work on solving the most challenging problems in chemistry and biology with speed and precision in order to discover molecules that cure diseases. This is no simple task and often involves dramatically improving the computational speed or accuracy of the algorithms which we develop. Setting oneself a challenge such as the topic in this post, forces us to think outside of the box, to innovate and to learn; learnings which will translate into new ideas and applications that we work on. 
-
-I have worked in the field of high accuracy quantum chemical calculations for many years but in order to solve this problem, I had to learn new techniques and ideas which I highlight as we go through. You might not work in the field of quantum mechanics, so I want you to be able to take away some useful ideas or techniques which you might apply to your own work. 
+The aim of this post is to explain and hopefully convince you that it was infact a good use of my spare time (significantly more spare time than I had planned...) and that there is a lot to learn from such an exercise. I have worked in the field of high accuracy quantum chemical calculations for many years but in order to solve this problem, I had to learn new techniques and ideas which I highlight as we go through. You might not work in the field of quantum mechanics, so I want you to be able to take away some useful ideas or techniques which you might apply to your own work. 
 
 
 
@@ -269,7 +265,7 @@ where $$\alpha,\theta$$ are hyperangles. The first logarithm appears at $$k=2$$ 
 
 When I started my PhD all those millenia ago, I bought a broken ThinkPad T420 off eBay and fixed it. I put that laptop through hell as it calculated a large bulk of the results in my thesis and is still alive and kicking to this day. It is easy to become spoiled with the latest and greatest hardware; the latest NASA grade GPU from the future will run your calculations very fast but you do not need to work as hard for it. 
 
-Having to implement code on the ThinkPad taught me to value implementing new ideas on lesser hardware as it forces you to be smart about your decisions and to utilise every scrap of hardware available to you. When you then move this over to a NASA grade GPU it will be significantly faster than if you had just coded it for the GPU to begin with. This is another principle we use at Kvantify, where we optimise algorithms for "everyday" hardware as not everyone has the money to buy the latest GPUs (especially with data centres mopping up all the GPUs and driving prices through the roof).
+Having to implement code on the ThinkPad taught me to value implementing new ideas on lesser hardware as it forces you to be smart about your decisions and to utilise every scrap of hardware available to you. When you then move this over to a NASA grade GPU it will be significantly faster than if you had just coded it for the GPU to begin with.
 
 With this in mind, we do not have the luxury of a cluster to run this calculation on, we have
 * The CPU, which to Apple's credit they knocked out the park with the M4 architecture
