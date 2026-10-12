@@ -12,6 +12,7 @@ comments: false
 <br/><br/>
 <li><a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15010182/v1" target="_blank">The helium ground-state energy to 60 significant figures on a laptop</a>:  A. L. Baskerville, 2026</li>
 
+<br/><br/>
 <li><a href="https://pubs.acs.org/doi/10.1021/acs.jcim.5c01150" target="_blank">Basic Stability Tests of Machine Learning Potentials For Molecular Simulations in Computational Drug Discovery</a>:  K. Ranasinghe, A. L. Baskerville, G. Wood, M. Wieder, and G. Koenig, J. Chem. Inf. Model, 2025</li>
 
 <br/><br/>
