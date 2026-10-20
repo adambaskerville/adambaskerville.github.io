@@ -10,6 +10,9 @@ comments: false
 
 <ol>
 <br/><br/>
+<li><a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15010676/v1" target="_blank">Obstructions to four-body perimetric coordinates</a>:  A. L. Baskerville, 2026</li>
+
+<br/><br/>
 <li><a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15010182/v1" target="_blank">FLAKE: high-precision energies of helium’s ground and excited S states</a>:  A. L. Baskerville, 2026</li>
 
 <br/><br/>
