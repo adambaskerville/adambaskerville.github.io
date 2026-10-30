@@ -10,6 +10,9 @@ comments: false
 
 <ol>
 <br/><br/>
+<li><a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15011318/v1" target="_blank">FROST: certified Hartree–Fock limits of helium and beryllium to hundreds of significant figures</a>:  A. L. Baskerville, 2026</li>
+
+<br/><br/>
 <li><a href="https://chemrxiv.org/doi/full/10.26434/chemrxiv.15010676/v1" target="_blank">Obstructions to four-body perimetric coordinates</a>:  A. L. Baskerville, 2026</li>
 
 <br/><br/>
