@@ -94,7 +94,7 @@ Z[\rho]= -\frac{\rho'(0)}{2\rho(0)}
 }.
 $$
 
-The density normalisation cancels, which is useful. The spherical averaging is important: Kato's original wavefunction condition is itself an angular-average statement. I originally wrote it as a pointwise radial identity and differentiated under the integral, which is a useful formal mnemonic but is not the cleanest proof. The density cusp theorem is the rigorous statement we need.
+The density normalisation cancels, which is useful. The spherical averaging is important: Kato's original wavefunction condition is itself an angular-average statement. I originally wrote it as a pointwise radial identity and differentiated under the integral, which is a useful formal mnemonic but is not the cleanest proof. The density cusp theorem is the rigorous statement we need; see [Steiner](https://doi.org/10.1063/1.1701443), [Hoffmann-Ostenhof and Seiler](https://doi.org/10.1103/PhysRevA.23.21), and equation (1.12) of [Fournais, Hoffmann-Ostenhof and Sørensen](https://arxiv.org/abs/math-ph/0607004), where it reads $\tilde\rho'(0)=-Z\tilde\rho(0)$ because they write the kinetic energy as $-\Delta$ rather than $-\tfrac12\nabla^2$.
 
 There is also an easy numerical trap here. Most atomic calculations store the radial distribution
 
@@ -139,9 +139,9 @@ $$
 I(Z)=E_1(Z)-E_2(Z),
 $$
 
-where $E_1$ is the energy of the one-electron daughter ion. Exact asymptotic results for many-electron densities connect this spectral gap to the exponential decay of the density; see the work of [Hoffmann-Ostenhof, Hoffmann-Ostenhof and Ahlrichs](https://doi.org/10.1103/PhysRevA.18.328) and [Almbladh and von Barth](https://doi.org/10.1103/PhysRevB.31.3231).
+where $E_1$ is the energy of the one-electron daughter ion. Rigorous results connect this spectral gap to the exponential decay of the density. Upper bounds go back to [Ahlrichs, Hoffmann-Ostenhof and Hoffmann-Ostenhof](https://doi.org/10.1103/PhysRevA.18.328). For the ground state of a two-electron atom, [Ahlrichs, Hoffmann-Ostenhof, Hoffmann-Ostenhof and Morgan](https://doi.org/10.1103/PhysRevA.23.2106) proved a matching lower bound of the same exponential form (see Remark 1.9 of [Fournais, Hoffmann-Ostenhof, Hoffmann-Ostenhof and Sørensen](https://arxiv.org/abs/math-ph/0608022)). In density-functional language the same fact appears as the ionisation-potential theorem of [Almbladh and von Barth](https://doi.org/10.1103/PhysRevB.31.3231).
 
-The conservative statement is
+Squeezed between these bounds, the density obeys a conservative statement that is therefore a theorem:
 
 $$
 \lim_{r\rightarrow\infty}\frac{1}{r}\log\rho_Z(r)
@@ -303,7 +303,7 @@ s\geq0:M_\rho(s)<\infty
 \right\}.
 $$
 
-If $\rho(r)\sim Ar^\beta e^{-\kappa r}$, then $M_\rho(s)$ converges for $s<\kappa$ and diverges for $s>\kappa$. Whether it converges at the single boundary point $s=\kappa$ does not change the supremum. Therefore
+The bounds above squeeze the density: for every $\delta>0$ and all large enough $r$, $c\,e^{-(\kappa+\delta)r}\le\rho(r)\le C\,e^{-(\kappa-\delta)r}$. Hence $M_\rho(s)$ converges for $s<\kappa$ and diverges for $s>\kappa$. Whether it converges at the single boundary point $s=\kappa$ does not change the supremum. Therefore
 
 $$
 \kappa_\star[\rho]=\kappa[\rho]=2\sqrt{2I},

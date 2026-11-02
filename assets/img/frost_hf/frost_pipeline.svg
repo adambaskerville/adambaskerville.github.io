@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-10-29T09:56:30.366374</dc:date>
+    <dc:date>2026-10-29T15:39:35.823846</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -40,7 +40,7 @@ Q 9.99 46.008 9.99 52.6608
 L 9.99 128.0592 
 Q 9.99 134.712 16.686 134.712 
 z
-" clip-path="url(#paf3504f3be)" style="fill: #94a3b8; fill-opacity: 0.133333; stroke: #94a3b8; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: #94a3b8; fill-opacity: 0.133333; stroke: #94a3b8; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 128.286 134.712 
@@ -53,7 +53,7 @@ Q 121.59 46.008 121.59 52.6608
 L 121.59 128.0592 
 Q 121.59 134.712 128.286 134.712 
 z
-" clip-path="url(#paf3504f3be)" style="fill: #2563eb; fill-opacity: 0.133333; stroke: #2563eb; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: #2563eb; fill-opacity: 0.133333; stroke: #2563eb; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 239.886 134.712 
@@ -66,7 +66,7 @@ Q 233.19 46.008 233.19 52.6608
 L 233.19 128.0592 
 Q 233.19 134.712 239.886 134.712 
 z
-" clip-path="url(#paf3504f3be)" style="fill: #d97706; fill-opacity: 0.133333; stroke: #d97706; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: #d97706; fill-opacity: 0.133333; stroke: #d97706; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 351.486 134.712 
@@ -79,7 +79,7 @@ Q 344.79 46.008 344.79 52.6608
 L 344.79 128.0592 
 Q 344.79 134.712 351.486 134.712 
 z
-" clip-path="url(#paf3504f3be)" style="fill: #d97706; fill-opacity: 0.133333; stroke: #d97706; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: #d97706; fill-opacity: 0.133333; stroke: #d97706; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
     <path d="M 463.086 134.712 
@@ -92,17 +92,17 @@ Q 456.39 46.008 456.39 52.6608
 L 456.39 128.0592 
 Q 456.39 134.712 463.086 134.712 
 z
-" clip-path="url(#paf3504f3be)" style="fill: #16a34a; fill-opacity: 0.133333; stroke: #16a34a; stroke-width: 2; stroke-linejoin: miter"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: #16a34a; fill-opacity: 0.133333; stroke: #16a34a; stroke-width: 2; stroke-linejoin: miter"/>
    </g>
    <g id="line2d_1">
     <path d="M 12.78 143.028 
 L 325.26 143.028 
-" clip-path="url(#paf3504f3be)" style="fill: none; stroke: #2563eb; stroke-width: 2; stroke-linecap: square"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: none; stroke: #2563eb; stroke-width: 2; stroke-linecap: square"/>
    </g>
    <g id="line2d_2">
     <path d="M 235.98 148.572 
 L 548.46 148.572 
-" clip-path="url(#paf3504f3be)" style="fill: none; stroke: #d97706; stroke-width: 2; stroke-linecap: square"/>
+" clip-path="url(#p03e6bfe33e)" style="fill: none; stroke: #d97706; stroke-width: 2; stroke-linecap: square"/>
    </g>
    <g id="text_1">
     <text style="font-weight: 700; font-size: 12px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Avant Garde', sans-serif; fill: #0f172a" transform="translate(21.415313 67.73475)">Hartree–Fock</text>
@@ -190,7 +190,7 @@ z
   </g>
  </g>
  <defs>
-  <clipPath id="paf3504f3be">
+  <clipPath id="p03e6bfe33e">
    <rect x="7.2" y="7.2" width="558" height="188.496"/>
   </clipPath>
  </defs>

@@ -19,6 +19,7 @@ math: true
 - [Unrestricted Hartree-Fock in 100 Lines]({% post_url 2025-01-01-UnrestrictedHartreeFock %}): Open shells and spin contamination
 - [The Integrals at the Heart of Hartree-Fock Theory]({% post_url 2026-05-10-HFIntegrals %}): Every integral the basis-set approach needs, derived from scratch
 - **Hartree–Fock to 500 Significant Figures with FROST**: You are here, and we throw the basis set away
+- [FROST II, Certified Hartree–Fock from Neon to Xenon]({% post_url 2026-11-02-FROST-II-Hartree-Fock %}): We add $$p$$ and $$d$$ shells
 
 <style>
 .he-ruler { margin: 1.4rem 0 0.4rem; padding: 1rem 1.1rem; border: 1px solid rgba(100,116,139,.35); border-radius: 10px; overflow-x: auto; }
@@ -324,7 +325,7 @@ For given $$(a, \mu)$$ we can now integrate from 0 to $$R$$. We need the pair fo
 Away from the nucleus the HF equation has two solutions, one decaying as $$e^{-\kappa r}$$ and one growing as $$e^{+\kappa r}$$. If $$\mu$$ is wrong by a relative $$\delta$$, the integrated orbital carries the growing solution with an amplitude proportional to $$\delta$$. It overtakes the true orbital at around $$r \approx \ln(1/\delta)/2\kappa$$:
 
 ![The helium orbital integrated with the correct mu and with mu wrong by 1e-3 and 1e-8, showing the growing mode taking over.]({{ "/assets/img/frost_hf/frost_shooting.svg" | relative_url }})
-_Get $$\mu$$ wrong by $$10^{-8}$$ and the orbital is ruined beyond 8 bohr. The sign of the error decides which way it blows up (the dips are where $$f$$ crosses zero). For 500 digits at 432 bohr, $$\mu$$ has to be right to about 500 digits._
+_Get $$\mu$$ wrong by $$10^{-8}$$ and the orbital is ruined beyond 8 bohr. The sign of the error decides which way it blows up (the dips are where $$f$$ crosses zero). Past 9 bohr the runaway charge has dragged the potential so far down that the orbital starts to oscillate, and both $$10^{-3}$$ curves collapse onto the same wiggle. For 500 digits at 432 bohr, $$\mu$$ has to be right to about 500 digits._
 
 That sensitivity is exactly what makes $$\mu$$ easy to find: $$f(R)$$ is almost perfectly linear in $$\mu$$, because $$\mu$$ just sets the amplitude of the growing mode, a secant iteration converges in two or three integrations.
 
@@ -647,7 +648,7 @@ Things went wrong far less often than with FLAKE, but each failure taught me som
 
 ## What next
 
-- **$$p$$ and $$d$$ shells.** For neon and beyond, exchange brings multipoles $$r_<^k/r_>^{k+1}$$ with $$k\ge1$$. Their integrals over a polynomial element produce logarithms of knot ratios, so the certificate would need rigorous interval enclosures of those logarithms instead of exact rationals. The solver is unchanged
+- **$$p$$ and $$d$$ shells.** For neon and beyond, exchange brings multipoles $$r_<^k/r_>^{k+1}$$ with $$k\ge1$$. Their integrals over a polynomial element produce logarithms of knot ratios, so the certificate would need rigorous interval enclosures of those logarithms instead of exact rationals. The solver is unchanged. *Update: wrong on both counts, see [FROST II]({% post_url 2026-11-02-FROST-II-Hartree-Fock %}), which certifies neon to xenon with no logarithms at all*
 - **Open shells**, starting with lithium, need the restricted open-shell energy expression
 - **Be-like ions** are free: change $$Z$$
 - **A lower bound.** Like FLAKE, the distance to the limit comes from an independent run and a verified law, not a theorem. A certified *lower* bound for a nonlinear eigenproblem at this precision is still an open problem, so answers on a postcard again please
