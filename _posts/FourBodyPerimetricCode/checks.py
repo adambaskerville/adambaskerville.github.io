@@ -206,6 +206,16 @@ for p in (7, 11, 13, 17, 19, 29, 37, 41):
         a, b = next((a, b) for a in range(1, p, 2) for b in range(0, p, 2) if a * a + b * b == p)
         assert residues[p] == (1 + 2 * (a * a - b * b)) % p != 1
 
+
+def a_p(p):  # E: y^2 = x^3 - x has p + 1 - a_p points over F_p
+    squares = {x * x % p for x in range(1, p)}
+    return -sum(0 if v == 0 else (1 if v in squares else -1) for v in ((x ** 3 - x) % p for x in range(p)))
+
+
+# Exact form of the fingerprint: #X(F_p) = (p+1)^2 + a_p^2 (Remark rem:arith).
+assert all(count_cover(p) == (p + 1) ** 2 + a_p(p) ** 2
+           for p in (5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59))
+
 # ---- 6. Minimal degree: no closed rank-1 triangle set carries an RP^2 class ----
 # Over the 20 triangles of the 5-simplex: T is "closed" if every triangle whose
 # three edges lie in E(T) belongs to T (forced by positivity for quadratic F).

@@ -11,7 +11,7 @@ comments: false
 math: true
 ---
 
-> **TLDR:** In this post learn how to extend FROST from atoms with only $$s$$ orbitals to every closed-shell atom from **neon to xenon**, and certify their Hartree–Fock energies as rigorous upper bounds: neon to **504 significant figures** and the nine heavier atoms to **103–106**, where the best previous values had 30 (up to argon) and 25. It takes three new ideas, one common wall for all orbitals, multiple shooting to tame inner shells that want to grow by $$10^{1701}$$, and a homotopy that switches the electrons on slowly, and the certificate needs no logarithms at all, which I said last time it would.
+> **TLDR:** In this post learn how to extend FROST from atoms with only $$s$$ orbitals to every closed-shell atom from **neon to xenon**, and certify their Hartree–Fock energies as rigorous upper bounds: neon to **504 significant figures** and the nine heavier atoms to **102–105**, where the best previous values had 30 (up to argon) and 25. It takes three new ideas, one common wall for all orbitals, multiple shooting to tame inner shells that want to grow by $$10^{1701}$$, and a homotopy that switches the electrons on slowly, and the certificate needs no logarithms at all, which I said last time it would.
 {: .prompt-info }
 
 **This post is part of a series on Hartree-Fock theory:**
@@ -20,6 +20,7 @@ math: true
 - [The Integrals at the Heart of Hartree-Fock Theory]({% post_url 2026-05-10-HFIntegrals %}): Every integral the basis-set approach needs, derived from scratch
 - [Hartree–Fock to 500 Significant Figures with FROST]({% post_url 2026-10-29-FROST-Hartree-Fock %}): We throw the basis set away, for helium and beryllium
 - **FROST II, Certified Hartree–Fock from Neon to Xenon**: You are here, and we add $$p$$ and $$d$$ shells
+- [FROST Fast, the Hartree–Fock Limit in Milliseconds]({% post_url 2026-11-04-FROST-Fast-Hartree-Fock %}): We trade digits for speed
 
 <style>
 .he-ruler { margin: 1.4rem 0 0.4rem; padding: 1rem 1.1rem; border: 1px solid rgba(100,116,139,.35); border-radius: 10px; overflow-x: auto; }
@@ -41,8 +42,8 @@ Blue are the figures that were known before; red are new.
 <div class="he-row">&minus;128.<span class="same">547098109382042376475781341</span><span class="new">993899003173076242596929050687475797069115074707767260398406</span><span class="tail">&hellip; (414 more)</span></div>
 <div class="lab">Krypton: this work (2026), certified, 105 significant figures (previously 25, Cinal 2020)</div>
 <div class="he-row">&minus;2752.<span class="same">054977345576454394449</span><span class="new">13823832623838558702750375949635632950668284523392406620856749046906622359031804</span></div>
-<div class="lab">Xenon: this work (2026), certified, 105 significant figures (previously 25, Cinal 2020)</div>
-<div class="he-row">&minus;7232.<span class="same">138363871840888209289</span><span class="new">21655906040721143376051571848824663105070419520216826044668836058826537419937301</span></div>
+<div class="lab">Xenon: this work (2026), certified, 104 significant figures (previously 25, Cinal 2020)</div>
+<div class="he-row">&minus;7232.<span class="same">138363871840888209289</span><span class="new">2165590604072114337605157184882466310507041952021682604466883605882653741993730</span></div>
 </div>
 
 All ten atoms are in Part IV, along with every one of neon's 504 figures.
@@ -360,13 +361,13 @@ Every atom has a certified run A and an independent run B, which targets 10 more
 | Ne ($$Z$$ = 10) | −128.547098109382042376475781341… | 448.47 | 54 | **504** | 30 |
 | Mg (12) | −199.614636424506710474741636103… | 174.78 | 31 | **103** | 30 |
 | Ar (18) | −526.817512802723355018766093533… | 114.38 | 31 | **105** | 30 |
-| Ca (20) | −676.758185924513454948055751766… | 198.84 | 59 | **103** | 25 |
+| Ca (20) | −676.758185924513454948055751766… | 198.84 | 59 | **102** | 25 |
 | Zn (30) | −1777.84811619136106977844250329… | 162.58 | 71 | **104** | 25 |
 | Kr (36) | −2752.05497734557645439444913823… | 121.44 | 67 | **105** | 25 |
 | Sr (38) | −3131.54568643855718443412415394… | 208.14 | 112 | **103** | 25 |
-| Pd (46) | −4937.92102407010157293228980380… | 151.69 | 99 | **106** | 25 |
-| Cd (48) | −5465.13314253008643367281863127… | 170.84 | 125 | **105** | 25 |
-| Xe (54) | −7232.13836387184088820928921655… | 130.03 | 103 | **105** | 25 |
+| Pd (46) | −4937.92102407010157293228980380… | 151.69 | 99 | **105** | 25 |
+| Cd (48) | −5465.13314253008643367281863127… | 170.84 | 125 | **104** | 25 |
+| Xe (54) | −7232.13836387184088820928921655… | 130.03 | 103 | **104** | 25 |
 
 ![Correct significant figures of the HF energies of the closed-shell atoms from neon to xenon, previous best against FROST II.]({{ "/assets/img/frost2_hf/frost2_records.svg" | relative_url }})
 _Correct significant figures of each certified bound (red) against the previous best (grey), Yamamoto and Hatano up to argon and Cinal beyond, both in quadruple precision. Neon targeted 500 digits, the others 100._
@@ -377,7 +378,7 @@ Here are all 504 correct figures of neon, from the 500-digit run with a wall at 
 
 Three checks are independent of the A/B comparison:
 
-- **Published values.** All 25 digits of Cinal's quadruple-precision energies agree with ours after rounding, for all ten atoms, and so do his 22–25-digit energies of the highest occupied orbital
+- **Published values.** All 25 digits of Cinal's quadruple-precision energies agree with ours after rounding, for all ten atoms, and so do his 22–25-digit energies of the highest occupied orbital, except that of magnesium, which differs from ours by one unit in its last figure
 - **Orthogonality.** The canonical orbitals of each symmetry are orthogonal to the working precision, for example $$\vert S_{ij}\vert\le8\times10^{-114}$$ for krypton, as the common wall says they must be. The certificate does not rely on this
 - **Upper bounds.** Every certified bound lies above the energy of the more accurate run B, as it must
 

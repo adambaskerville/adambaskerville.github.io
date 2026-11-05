@@ -28,8 +28,8 @@ def save(fig, name):
 
 # ------------------------------------------------------------------ records: certified figures against the previous best
 # atom, Z, certified significant figures, previous best (Yamamoto & Hatano 2026 up to Ar, Cinal 2020 beyond)
-REC = [("Ne", 10, 504, 30), ("Mg", 12, 103, 30), ("Ar", 18, 105, 30), ("Ca", 20, 103, 25), ("Zn", 30, 104, 25),
-       ("Kr", 36, 105, 25), ("Sr", 38, 103, 25), ("Pd", 46, 106, 25), ("Cd", 48, 105, 25), ("Xe", 54, 105, 25)]
+REC = [("Ne", 10, 504, 30), ("Mg", 12, 103, 30), ("Ar", 18, 105, 30), ("Ca", 20, 102, 25), ("Zn", 30, 104, 25),
+       ("Kr", 36, 105, 25), ("Sr", 38, 103, 25), ("Pd", 46, 105, 25), ("Cd", 48, 104, 25), ("Xe", 54, 104, 25)]
 x = range(len(REC))
 fig, ax = plt.subplots(figsize=(10, 5.2))
 for i, (_, _, new, old) in zip(x, REC):

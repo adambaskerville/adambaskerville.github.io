@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "T>T: Hartree–Fock to 500 Significant Figures with FROST"
+title: "T>T: FROST I, Hartree–Fock to 500 Significant Figures"
 date: 2026-10-29
 excerpt: "No basis set, no two-electron integrals and no rounding error. How solving the Hartree–Fock equations directly with very high order Taylor series, then checking the answer using nothing but integers, took the helium Hartree–Fock energy from 66 to 503 significant figures and beryllium from 43 to 501, on one core of a laptop."
 image:
@@ -20,6 +20,7 @@ math: true
 - [The Integrals at the Heart of Hartree-Fock Theory]({% post_url 2026-05-10-HFIntegrals %}): Every integral the basis-set approach needs, derived from scratch
 - **Hartree–Fock to 500 Significant Figures with FROST**: You are here, and we throw the basis set away
 - [FROST II, Certified Hartree–Fock from Neon to Xenon]({% post_url 2026-11-02-FROST-II-Hartree-Fock %}): We add $$p$$ and $$d$$ shells
+- [FROST Fast, the Hartree–Fock Limit in Milliseconds]({% post_url 2026-11-04-FROST-Fast-Hartree-Fock %}): We trade digits for speed
 
 <style>
 .he-ruler { margin: 1.4rem 0 0.4rem; padding: 1rem 1.1rem; border: 1px solid rgba(100,116,139,.35); border-radius: 10px; overflow-x: auto; }
