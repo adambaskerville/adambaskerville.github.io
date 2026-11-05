@@ -12,6 +12,9 @@ math: true
 - **Restricted Hartree-Fock in 100 Lines**: You are here
 - [Unrestricted Hartree-Fock in 100 Lines]({% post_url 2025-01-01-UnrestrictedHartreeFock %}): This lifts the closed-shell restriction, adds spin degrees of freedom
 - [The Integrals at the Heart of Hartree-Fock Theory]({% post_url 2026-05-10-HFIntegrals %}): Derives every integral used in this post from scratch, with interactive visualisers. This is useful when you get to the integral pasrt of this post.
+- [Hartree–Fock to 500 Significant Figures with FROST]({% post_url 2026-10-29-FROST-Hartree-Fock %}): We throw the basis set away, for helium and beryllium
+- [FROST II, Certified Hartree–Fock from Neon to Xenon]({% post_url 2026-11-02-FROST-II-Hartree-Fock %}): $$p$$ and $$d$$ shells, and 104 certified figures for xenon
+- [FROST Fast, the Hartree–Fock Limit in Milliseconds]({% post_url 2026-11-04-FROST-Fast-Hartree-Fock %}): We trade digits for speed
 
 ---
 
